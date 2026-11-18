@@ -1,0 +1,1754 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="La Dernière Note : une enquête gratuite à Grasse en 1928, à jouer seule ou de 4 à 6, en 1 h 30.">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>La Dernière Note</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poiret+One&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Courier+Prime:wght@400;700&family=La+Belle+Aurore&display=swap">
+<style>
+/* Univers : Grasse, nuit de la cueillette du jasmin, août 1928. Nuit violette, lignes Art déco dorées, preuves sur étiquettes de flacon ivoire. Thème unique, sombre, choisi exprès. */
+:root{
+  color-scheme:dark;
+  --nuit:#16122a; --nuit2:#211b3c; --jasmin:#f2ecdf; --muted:#b5adc6;
+  --or:#d0a95c; --or-dim:#8c7343;
+  --label:#f3ede0; --label2:#e8dfcc; --ink:#1e1a26; --ink-muted:#655d70; --rule:rgba(30,26,38,.18);
+  --wax:#7a2e3a; --wax2:#a3434f; --ok:#2f6b3a;
+  --deco:"Poiret One", "Futura", "Century Gothic", sans-serif;
+  --serif:"EB Garamond", Garamond, Georgia, serif;
+  --type:"Courier Prime", "Courier New", monospace;
+  --hand:"La Belle Aurore", "Snell Roundhand", cursive;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--nuit)}
+body{background:radial-gradient(1000px 520px at 50% -8%, var(--nuit2), var(--nuit) 72%) fixed, var(--nuit);color:var(--jasmin);font-family:var(--serif);font-size:18px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--nuit)}
+.wrap{max-width:1000px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3,h4{font-family:var(--deco);font-weight:400;line-height:1.15;text-wrap:balance;margin:0;letter-spacing:.03em}
+p{margin:0}
+.type{font-family:var(--type);font-variant-numeric:tabular-nums}
+.label{font-family:var(--deco);font-size:14px;letter-spacing:.22em;text-transform:uppercase;color:var(--or)}
+.note{font-size:17px;color:var(--muted)}
+
+/* Bandeau */
+.hero{position:relative;overflow:hidden;padding-block:44px 40px;border-bottom:1px solid var(--or-dim)}
+.hero::before{content:"";position:absolute;left:50%;top:100%;width:1400px;height:1400px;transform:translate(-50%,-50%);
+  background:repeating-conic-gradient(from 0deg, rgba(208,169,92,.10) 0 1.2deg, transparent 1.2deg 9deg);pointer-events:none}
+.hero .wrap{position:relative;display:grid;gap:20px;justify-items:center;text-align:center}
+.flacon{width:84px;height:auto}
+.hero h1{font-size:clamp(46px,10vw,96px);letter-spacing:.04em;color:var(--jasmin)}
+.hero .tag{font-size:clamp(19px,2.6vw,23px);font-style:italic;max-width:38ch}
+.hero .tag em{color:var(--or);font-style:italic}
+.facts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.chip{font-family:var(--type);font-size:13px;padding:6px 12px;border:1px solid var(--or-dim);color:var(--jasmin)}
+.chip.hot{border-color:var(--wax2);color:#f3c9cf}
+.deco-rule{display:flex;align-items:center;gap:12px;color:var(--or);width:min(420px,100%)}
+.deco-rule::before,.deco-rule::after{content:"";flex:1;height:1px;background:var(--or-dim)}
+
+/* Onglets */
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:rgba(22,18,42,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--or-dim)}
+nav.tabs .wrap{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;justify-content:center}
+nav.tabs a{flex:none;padding:14px 12px;color:var(--muted);text-decoration:none;font-family:var(--deco);font-size:16px;letter-spacing:.08em;border-bottom:2px solid transparent}
+nav.tabs a[aria-current="page"]{color:var(--or);border-color:var(--or)}
+@media (max-width:760px){nav.tabs .wrap{justify-content:flex-start}}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--or);outline-offset:3px}
+
+main section{padding-block:40px 80px}
+.stack{display:grid;gap:30px}
+.intro{display:grid;gap:12px;max-width:68ch}
+.intro h2{font-size:clamp(32px,5.4vw,48px);color:var(--or)}
+.intro p{color:var(--muted)}
+h3.sub{font-size:26px;color:var(--or)}
+
+/* Étiquette de flacon */
+.etiq{background:linear-gradient(170deg,var(--label),var(--label2));color:var(--ink);border-radius:2px;position:relative;box-shadow:0 10px 28px rgba(0,0,0,.35);outline:1px solid var(--ink);outline-offset:-7px}
+.etiq .label{color:var(--wax)}
+.etiq .note{color:var(--ink-muted)}
+.etiq a{color:var(--wax)}
+
+/* Accueil */
+.picker{padding:28px;display:grid;gap:14px;justify-items:start}
+.picker .nums{display:flex;flex-wrap:wrap;gap:8px}
+.picker .nums button{width:54px;height:54px;padding:0;font-size:24px;background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.picker .nums button[aria-pressed="true"]{background:var(--ink);color:var(--label)}
+.picker h3{font-size:30px;color:var(--ink)}
+.picker p{font-size:18px;max-width:62ch}
+.picker .go{font-family:var(--deco);font-size:17px;letter-spacing:.06em;color:var(--label);background:var(--wax);padding:11px 18px;text-decoration:none}
+.picker .go:hover{background:var(--wax2)}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.step{border:1px solid var(--or-dim);padding:20px;display:grid;gap:8px;align-content:start}
+.step h3{font-size:22px}
+.step p{color:var(--muted);font-size:17px}
+@media (max-width:760px){.steps{grid-template-columns:1fr}}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stats div{border-top:1px solid var(--or);padding-top:8px;display:grid}
+.stats b{font-family:var(--deco);font-weight:400;font-size:36px;color:var(--or);line-height:1.1}
+.stats span{font-size:16px;color:var(--muted)}
+.cast{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:760px){.cast{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.cast div{border-top:1px solid var(--or);padding-top:10px;display:grid;gap:2px}
+.cast b{font-family:var(--deco);font-weight:400;font-size:21px}
+.cast span{color:var(--muted);font-size:16px;font-style:italic}
+.cast .opt{border-top-style:dashed;border-top-color:var(--or-dim)}
+.box{padding:26px;display:grid;gap:10px;max-width:70ch}
+.ordre ol{margin:0;padding-left:0;list-style:none;display:grid;gap:10px;counter-reset:o}
+.ordre li{counter-increment:o;display:grid;grid-template-columns:34px 1fr;gap:10px;font-size:17px;align-items:start}
+.ordre li::before{content:counter(o);font-family:var(--deco);font-size:20px;width:30px;height:30px;border:1px solid var(--ink);display:grid;place-items:center}
+.ordre li b{font-weight:600}
+.next{display:inline-block;font-family:var(--deco);font-size:17px;letter-spacing:.06em;color:var(--label);background:var(--wax);padding:11px 18px;text-decoration:none;justify-self:start}
+.next:hover{background:var(--wax2)}
+.etiq a.next{color:var(--label)}
+.progress{font-family:var(--type);font-size:15px;color:var(--or)}
+.persos button{width:auto!important;height:auto!important;padding:10px 14px!important;font-size:18px!important}
+.actes button[aria-pressed="true"]{background:var(--or);color:#1a1408}
+.missions ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.missions li label{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;font-size:18px;cursor:pointer}
+.missions input[type=checkbox]{width:22px;height:22px;margin-top:3px;accent-color:var(--wax)}
+.missions li.done span{text-decoration:line-through;color:var(--ink-muted)}
+.box h3{font-size:24px}
+.readaloud{padding:26px;display:grid;gap:12px}
+.readaloud p{font-size:19px;line-height:1.6}
+
+/* Déroulé */
+.timeline{display:grid;border-left:1px solid var(--or-dim);margin-left:8px}
+.tl{position:relative;padding:0 0 28px 26px;display:grid;gap:10px}
+.tl::before{content:"";position:absolute;left:-7px;top:9px;width:12px;height:12px;transform:rotate(45deg);background:var(--nuit);border:1px solid var(--or)}
+.tl h3{font-size:24px}
+.tl .when{font-family:var(--type);font-size:14px;color:var(--or)}
+.tl ul,.tl ol{margin:0;padding-left:22px;display:grid;gap:6px}
+.prose{display:grid;gap:12px;max-width:68ch}
+.prose ul{margin:0;padding-left:22px;display:grid;gap:7px}
+
+table.t{border-collapse:collapse;width:100%;font-size:17px}
+table.t th{font-family:var(--deco);font-weight:400;text-align:left;font-size:15px;letter-spacing:.06em;padding:8px;border-bottom:1px solid currentColor}
+table.t td{padding:9px 8px;border-bottom:1px solid rgba(208,169,92,.22);vertical-align:top}
+table.t td.r{text-align:right;font-family:var(--type);white-space:nowrap;color:var(--or)}
+.etiq table.t td{border-bottom-color:var(--rule)}
+.etiq table.t td.r{color:var(--wax)}
+.scroll{overflow-x:auto}
+
+.kit{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 22px;margin:0;padding:0;list-style:none;font-size:17px}
+.kit li{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dotted var(--or-dim);padding:5px 0}
+.kit li span:last-child{color:var(--muted);font-style:italic;text-align:right}
+@media (max-width:640px){.kit{grid-template-columns:1fr}}
+.copybox{padding:22px;display:grid;gap:12px}
+.copybox pre{margin:0;white-space:pre-wrap;font-family:var(--serif);font-size:17px}
+
+button{font-family:var(--deco);letter-spacing:.08em;cursor:pointer;border-radius:0;padding:10px 16px;font-size:15px;border:1px solid var(--or);background:var(--or);color:#1a1408}
+button.ghost{background:transparent;color:var(--or)}
+.etiq button{background:var(--ink);border-color:var(--ink);color:var(--label)}
+.etiq button.ghost{background:transparent;color:var(--ink)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* Rôles */
+.roles{display:grid;gap:24px}
+.role{padding:28px;display:grid;gap:16px}
+.role-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;align-items:baseline;border-bottom:1px solid var(--rule);padding-bottom:10px}
+.role-head h3{font-size:clamp(28px,4.4vw,36px);color:var(--ink)}
+.role-head .label{color:var(--ink-muted);letter-spacing:.12em;font-size:13px}
+.role .public{font-size:19px;font-style:italic}
+.role .meta{font-size:16px;color:var(--ink-muted)}
+.role .meta b{color:var(--ink);font-weight:600}
+.ask{display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:17px}
+.stopper{width:80px;height:80px;border-radius:50%;padding:0!important;display:grid;place-items:center;text-align:center;font-size:12px!important;line-height:1.2;letter-spacing:.1em;
+  background:radial-gradient(circle at 35% 30%, var(--wax2), var(--wax) 62%, #4d1a23)!important;border:none!important;color:#f7e9e2!important;box-shadow:0 3px 8px rgba(0,0,0,.35), inset 0 0 0 5px rgba(255,255,255,.10)}
+.secret{display:grid;gap:18px;border-top:1px dashed var(--rule);padding-top:18px}
+.secret h4{font-size:20px;margin-bottom:6px;color:var(--ink)}
+.secret ul{margin:0;padding-left:20px;display:grid;gap:5px}
+.secret li,.secret p{font-size:17px}
+.secret .say{background:rgba(255,255,255,.45);padding:12px 14px;border-left:3px solid var(--ink-muted)}
+.secret .reveal{background:rgba(208,169,92,.25);padding:12px 14px;border-left:3px solid var(--or-dim)}
+.secret .culprit{background:rgba(122,46,58,.12);padding:12px 14px;border-left:3px solid var(--wax)}
+.minutes{display:grid;grid-template-columns:auto 1fr;gap:5px 14px;font-size:17px;margin:0}
+.minutes dt{font-family:var(--type);font-size:15px;color:var(--wax);padding-top:2px}
+.minutes dd{margin:0}
+
+/* Preuves */
+.acts{display:grid;gap:40px}
+.act-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:baseline;border-bottom:1px solid var(--or);padding-bottom:10px}
+.act-head h3{font-size:28px;color:var(--or)}
+.act-head .label{color:var(--muted)}
+.pieces{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:760px){.pieces{grid-template-columns:1fr}}
+.piece{padding:22px 20px 20px;display:grid;gap:12px;align-content:start;min-width:0}
+.piece.wide{grid-column:1/-1}
+.piece-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.num{font-family:var(--type);font-size:13px;font-weight:700;border:1px solid var(--ink);padding:2px 8px;white-space:nowrap}
+.piece h4{font-size:21px;color:var(--ink)}
+.piece .body{display:grid;gap:10px;font-size:17px;min-width:0}
+.doc{background:rgba(255,255,255,.5);padding:14px;display:grid;gap:7px;font-size:17px;border:1px solid var(--rule)}
+.doc .type{font-size:14px;color:var(--ink-muted)}
+.doc ul{margin:0;padding-left:20px;display:grid;gap:4px}
+.telegram{font-family:var(--type);font-size:15px;letter-spacing:.06em;text-transform:uppercase;background:#efe6c8;border:1px solid var(--rule);padding:16px;display:grid;gap:6px}
+.carnet{background:repeating-linear-gradient(180deg, transparent 0 30px, rgba(80,100,160,.25) 30px 31px), #fbf7ec;padding:20px 18px 18px 46px;border-left:2px solid rgba(160,60,70,.45);position:relative;min-height:170px}
+.carnet .torn{position:absolute;left:0;top:0;bottom:0;width:10px;background:repeating-linear-gradient(180deg,#e9e0cc 0 6px, transparent 6px 12px)}
+.carnet .hand{font-family:var(--hand);font-size:28px;line-height:1.4;color:#2d2b4a;transform:rotate(-4deg) translateX(6px);display:block}
+.carnet .smear{display:block;margin-top:8px;font-family:var(--type);font-size:13px;color:var(--ink-muted)}
+.handnote{font-family:var(--hand);font-size:22px;color:#2d2b4a;background:#fff9e8;border:1px solid var(--rule);padding:10px 14px;transform:rotate(-1.5deg);justify-self:start}
+.orgue{display:grid;gap:12px}
+.orgue .rang{display:grid;gap:6px}
+.orgue .rang b{font-family:var(--deco);font-weight:400;font-size:17px}
+.orgue .fioles{display:flex;flex-wrap:wrap;gap:5px}
+.fiole{border:1px solid var(--ink);border-radius:10px 10px 4px 4px;padding:5px 7px;font-size:14px;background:rgba(255,255,255,.6);line-height:1.2}
+.orgue .fauteuil{font-family:var(--type);font-size:13px;color:var(--ink-muted);text-align:right}
+.mail .hd{font-family:var(--type);font-size:13px;color:var(--ink-muted)}
+.sep{border:0;border-top:1px solid var(--rule);margin:4px 0}
+.plan svg{width:100%;min-width:640px;height:auto;display:block}
+.plan svg text{font-family:"EB Garamond", Georgia, serif;fill:#1e1a26}
+.plan .legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 18px;margin:0;padding:0;list-style:none;font-size:16px}
+.plan .legend li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dotted var(--rule);padding:3px 0}
+.plan .legend li span:last-child{font-family:var(--type);font-size:14px;white-space:nowrap}
+@media (max-width:640px){.plan .legend{grid-template-columns:1fr}}
+
+/* Cadenas */
+.lock{grid-column:1/-1;padding:24px;display:grid;gap:12px;border:2px dashed var(--wax)}
+.lock h4{font-size:24px;color:var(--ink)}
+.lock .enigme{font-size:18px}
+.codeline{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.codeline input{font-family:var(--type);font-size:20px;letter-spacing:.18em;text-transform:uppercase;padding:9px 12px;border:1px solid var(--ink);background:#fbf7ec;color:var(--ink);border-radius:0;width:min(280px,100%)}
+.msg{font-family:var(--type);font-size:15px;min-height:1.2em}
+.msg.bad{color:var(--wax)}
+.hint{font-size:17px;font-style:italic;color:var(--ink-muted)}
+.locked-note{font-family:var(--type);font-size:15px;color:var(--muted);border:1px dashed var(--or-dim);padding:14px;grid-column:1/-1}
+
+/* Solo */
+.interro{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+@media (max-width:760px){.interro{grid-template-columns:1fr}}
+.interro article{padding:22px;display:grid;gap:10px;align-content:start}
+.interro h4{font-size:22px;color:var(--ink)}
+.interro .q{font-family:var(--type);font-size:14px;color:var(--ink-muted)}
+.interro p{font-size:17px}
+.ask-list{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.ask-list button{width:100%;text-align:left;font-family:var(--serif);letter-spacing:0;font-size:17px;padding:10px 14px}
+.answer{font-family:var(--deco);font-size:22px;color:var(--or)}
+.form{display:grid;gap:14px}
+.field{display:grid;gap:6px}
+.field label{font-family:var(--deco);font-size:17px;letter-spacing:.04em}
+.field select{font:inherit;font-size:17px;padding:9px 10px;border:1px solid var(--ink);background:#fbf7ec;color:var(--ink);border-radius:0;max-width:100%}
+.verdict{display:grid;gap:8px;padding:18px;background:rgba(255,255,255,.5);border:1px solid var(--rule)}
+.verdict .big{font-family:var(--deco);font-size:40px;color:var(--wax);line-height:1}
+
+/* Carnet d'enquête */
+.grid-wrap{overflow-x:auto}
+table.grid{border-collapse:collapse;min-width:760px;width:100%;font-size:15px}
+table.grid th{font-family:var(--deco);font-weight:400;font-size:15px;padding:8px 6px;text-align:left;border-bottom:1px solid var(--ink)}
+table.grid td{padding:4px;border-bottom:1px solid var(--rule)}
+table.grid td:first-child{font-family:var(--deco);font-size:16px;white-space:nowrap;padding-right:10px}
+table.grid input{width:100%;min-width:90px;font:inherit;font-size:15px;padding:6px;border:1px solid var(--rule);background:#fbf7ec;color:var(--ink)}
+textarea#cn-notes{width:100%;min-height:180px;font:inherit;font-size:17px;padding:12px;border:1px solid var(--ink);background:#fbf7ec;color:var(--ink)}
+
+.lockbox{padding:26px;display:grid;gap:16px;max-width:70ch;justify-items:start}
+.sol{display:grid;gap:22px;max-width:78ch}
+.sol h3{font-size:26px;color:var(--or)}
+.keys{display:grid;gap:12px;padding:0;margin:0;list-style:none}
+.keys li{display:grid;grid-template-columns:40px 1fr;gap:10px;font-size:17px}
+.keys .n{font-family:var(--deco);color:var(--or);font-size:22px;line-height:1.2}
+.falses{margin:0;padding-left:22px;display:grid;gap:8px}
+.decode{font-family:var(--type);font-size:15px;display:grid;gap:4px}
+footer{padding-block:28px 44px;color:var(--muted);font-size:15px;text-align:center;border-top:1px solid var(--or-dim)}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <svg class="flacon" viewBox="0 0 84 120" aria-hidden="true">
+      <rect x="34" y="4" width="16" height="16" fill="none" stroke="#d0a95c" stroke-width="1.5"/>
+      <rect x="30" y="20" width="24" height="8" fill="none" stroke="#d0a95c" stroke-width="1.5"/>
+      <path d="M14 40 L42 28 L70 40 L70 104 L42 116 L14 104 Z" fill="none" stroke="#d0a95c" stroke-width="1.5"/>
+      <path d="M42 28 L42 116 M14 40 L70 40 M14 104 L70 104" stroke="#8c7343" stroke-width="1"/>
+      <path d="M28 62 L56 62 L56 86 L28 86 Z" fill="none" stroke="#d0a95c" stroke-width="1"/>
+    </svg>
+    <span class="label">Grasse · Nuit du 14 au 15 août 1928</span>
+    <h1>La Dernière Note</h1>
+    <p class="tag">Avant de mourir, le plus grand nez de Grasse a désigné son assassin. <em>Avec une formule de parfum.</em></p>
+    <div class="deco-rule" aria-hidden="true">◆</div>
+    <div class="facts">
+      <span class="chip hot">niveau expert</span>
+      <span class="chip">de 1 à 6 joueuses</span>
+      <span class="chip">1 h 30</span>
+      <span class="chip">14 preuves · 5 cadenas</span>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Sections">
+  <div class="wrap">
+    <a href="#accueil">Le jeu</a>
+    <a href="#solo" id="nav-solo">L'enquête</a>
+    <a href="#hote" id="nav-hote">Guide de l'hôte</a>
+    <a href="#roles" id="nav-roles">Les rôles</a>
+    <a href="#ecran" id="nav-ecran">Mon écran</a>
+    <a href="#preuves">Les preuves</a>
+    <a href="#carnet">Mon carnet</a>
+    <a href="#solution">Solution</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ============ LE JEU ============ -->
+<section id="accueil" class="stack">
+  <div class="intro">
+    <h2>Le crime a une odeur</h2>
+    <p>Août 1928. Pendant la nuit de la cueillette du jasmin, Madeleine Aubier, la parfumeuse la plus célèbre de Grasse, meurt empoisonnée dans son laboratoire. Sur son carnet, une dernière ligne tremblée : une formule codée. Six femmes ont dormi à la bastide cette nuit-là. Toutes avaient une raison de la haïr.</p>
+  </div>
+
+  <div class="picker etiq">
+    <span class="label">Combien êtes-vous ?</span>
+    <div class="nums" role="group" aria-label="Nombre de joueuses">
+      <button type="button" data-n="1">1</button>
+      <button type="button" data-n="2">2</button>
+      <button type="button" data-n="3">3</button>
+      <button type="button" data-n="4">4</button>
+      <button type="button" data-n="5">5</button>
+      <button type="button" data-n="6">6</button>
+    </div>
+    <h3 id="pickTitle">4 joueuses : la murder party</h3>
+    <p id="pickInfo">Chacune incarne une suspecte avec ses secrets.</p>
+    <a class="go" id="pickGo" href="#hote">Commencer par le guide de l'hôte →</a>
+  </div>
+  <p class="note">De 1 à 6 joueuses, c'est la même enquête au même prix. La page s'adapte à votre nombre.</p>
+
+  <div class="box etiq ordre">
+    <span class="label">L'ordre de la partie</span>
+    <h3 id="ordreTitre">Dans quel ordre jouer</h3>
+    <ol id="ordre"></ol>
+    <p class="note">L'accusation se fait toujours à la fin, une fois toutes les preuves ouvertes.</p>
+  </div>
+
+  <div class="stats">
+    <div><b>14</b><span>preuves à recouper</span></div>
+    <div><b>5</b><span>cadenas à ouvrir</span></div>
+    <div><b>6</b><span>suspectes, 6 mobiles</span></div>
+    <div><b>1</b><span>formule à déchiffrer</span></div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <span class="label">Reconstituer</span>
+      <h3>Minute par minute</h3>
+      <p>Un plan de la bastide avec les temps de trajet, des dépositions, un carnet de photographe, une feuille de bridge. Personne ne vous dira qui était où : il faut le calculer.</p>
+    </div>
+    <div class="step">
+      <span class="label">Déverrouiller</span>
+      <h3>Cinq cadenas</h3>
+      <p>Chaque série de preuves est fermée par un cadenas. Le code ne se lit nulle part : il se déduit en croisant ce que vous avez déjà trouvé.</p>
+    </div>
+    <div class="step">
+      <span class="label">Déchiffrer</span>
+      <h3>La dernière note</h3>
+      <p>La formule du carnet se décode avec l'orgue à parfums et le registre de Madeleine. Deux pièges attendent les lectures trop rapides.</p>
+    </div>
+  </div>
+
+  <div class="stack" style="gap:16px">
+    <h3 class="sub">Les dames de la bastide</h3>
+    <div class="cast">
+      <div><b>Hortense Aubier</b><span>La fille</span></div>
+      <div><b>Colette Dumas</b><span>L'apprentie</span></div>
+      <div><b>Berthe Lacombe</b><span>La gouvernante</span></div>
+      <div><b>Lucie Fabre</b><span>La chimiste</span></div>
+      <div class="opt"><b>Irène Vasseur</b><span>La chroniqueuse parisienne</span></div>
+      <div class="opt"><b>Winifred Hale</b><span>L'entomologiste anglaise</span></div>
+    </div>
+  </div>
+
+  <div class="box etiq">
+    <span class="label">La règle d'or</span>
+    <h3>Une seule a le droit de mentir</h3>
+    <p>Les innocentes peuvent se taire, esquiver ou refuser de répondre, mais elles n'affirment jamais quelque chose de faux. Les témoins aussi disent vrai, mais ils voient mal, entendent mal et ne savent pas tout. Seule la coupable ment.</p>
+  </div>
+</section>
+
+<!-- ============ ENQUÊTE SOLO / ÉQUIPE ============ -->
+<section id="solo" class="stack" hidden>
+  <div class="intro">
+    <h2 id="soloTitle">L'enquête en solo</h2>
+    <p id="soloLead">15 août 1928, 6 h du matin. Vous êtes l'inspectrice Marthe Giraud, envoyée de Nice. Suivez les étapes dans l'ordre et n'ouvrez jamais l'onglet Les rôles : il contient les secrets des suspectes.</p>
+    <p>Gardez du papier à portée de main et remplissez l'onglet Mon carnet au fil des heures que vous découvrez. Personne ne vous donnera la réponse : il faut la calculer.</p>
+  </div>
+
+  <div class="stack" style="gap:16px">
+    <div class="act-head"><h3>Étape 1 · Le prologue</h3><span class="label">5 min</span></div>
+    <div class="readaloud etiq">
+      <p>Cette nuit, pendant le bal de la cueillette du jasmin, Madeleine Aubier, 58 ans, le plus grand nez de Grasse, est morte dans son laboratoire au fond du jardin. À 22 h, elle avait annoncé qu'elle présenterait à l'aube son dernier parfum, Nuit Blanche, et désignerait celle qui lui succéderait. Comme chaque soir, sa gouvernante lui a porté une tisane de tilleul. À 5 h 10, sa fille l'a trouvée morte au pied de son orgue à parfums. Sur son carnet, une dernière ligne tremblée.</p>
+    </div>
+  </div>
+
+  <div class="stack" style="gap:16px">
+    <div class="act-head"><h3>Étape 2 · Les interrogatoires</h3><span class="label">10 min</span></div>
+    <p class="note">Ce que chaque femme vous déclare à 6 h 30. Les innocentes ne mentent pas, mais se taisent quand ça les arrange. L'une d'elles ment.</p>
+    <div class="interro">
+      <article class="etiq">
+        <h4>Hortense Aubier, la fille</h4>
+        <p>« Vers 22 h 25, je dansais le charleston sur la terrasse, le photographe m'a même prise. À 22 h 30, ma mère et moi nous sommes disputées à la bibliothèque, pour de l'argent. À 22 h 40, bridge au salon bleu. À 22 h 55, je suis sortie fumer sur la terrasse. La fenêtre de la cuisine était couverte de buée : j'ai deviné une silhouette en robe claire penchée sur le fourneau, de dos. Puis Berthe est remontée de la cave avec un pot de miel. Je ne suis pas entrée. J'ai repris le bridge avec Lucie. »</p>
+        <p>« Maman notait toutes ses formules avec le code de son orgue : une lettre pour la rangée, un numéro de flacon, puis la dose. »</p>
+      </article>
+      <article class="etiq">
+        <h4>Colette Dumas, l'apprentie</h4>
+        <p>« Vers 22 h 18, j'ai quitté le bal pour me repoudrer dans ma chambre, dans l'aile ouest. Je ne me sentais pas bien, je n'en suis plus sortie de la nuit. Je ne suis pas allée dans l'aile est. Je n'ai pas mis les pieds à la cuisine. »</p>
+        <p>« Madame m'a recueillie quand j'avais six ans. C'était ma mère, presque. »</p>
+      </article>
+      <article class="etiq">
+        <h4>Berthe Lacombe, la gouvernante</h4>
+        <p>« J'ai commencé la tisane à 22 h 50, comme chaque soir. Je suis descendue à la cave chercher le miel. Puis je l'ai portée au laboratoire. Madame m'a dit d'aller me coucher. »</p>
+        <span class="q">« Qui était avec vous dans la cuisine ? »</span>
+        <p>« Je ne répondrai pas à cette question, Madame l'inspectrice. »</p>
+      </article>
+      <article class="etiq">
+        <h4>Lucie Fabre, la chimiste</h4>
+        <p>« Bridge à 22 h 40. À 22 h 48, j'ai filé à l'usine par le chemin de la terrasse vérifier une distillation. Le gardien m'a vue. Je suis revenue au bridge en même temps qu'Hortense. »</p>
+        <p>« Les amaretti du dessert sentent l'amande amère, le cyanure aussi. Ne vous fiez pas à votre nez, fiez-vous aux analyses. »</p>
+      </article>
+      <article class="etiq">
+        <h4>Irène Vasseur, la chroniqueuse</h4>
+        <p>« Vers 22 h 20, je suis montée dans ma chambre, la première de l'aile est. En ressortant, vers 22 h 25, j'ai vu une jeune femme quitter une chambre au bout du couloir. Je l'ai vue de dos, sous une seule lampe. Ensuite, bridge jusqu'à 23 h 30 : c'est moi qui tenais la feuille de marque. »</p>
+        <span class="q">« Et après minuit ? »</span>
+        <p>« Je préfère ne pas en parler pour l'instant. »</p>
+      </article>
+      <article class="etiq">
+        <h4>Winifred Hale, l'Anglaise</h4>
+        <p>« Bridge de 22 h 40 à 23 h 30, sans quitter la table. Ma chambre n'est jamais fermée à clé. En remontant, à 23 h 45, j'ai trouvé sur mon lit un livre que j'avais prêté, avec un petit mot. Et le couvercle de mon bocal à papillons était mal revissé. »</p>
+        <span class="q">« À qui aviez-vous prêté ce livre ? »</span>
+        <p>« À quelqu'un de la maison. Je préfère ne pas dire qui. »</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="stack" style="gap:16px">
+    <div class="act-head"><h3>Étape 3 · Le jeton de vérité</h3><span class="label">Une seule question</span></div>
+    <p>Avant d'ouvrir les preuves, vous avez droit à une seule question fermée. La réponse sera vraie, même venant de la coupable. Une fois posée, les autres disparaissent. Notez la réponse : elle servira plus tard.</p>
+    <ul class="ask-list" id="jeton">
+      <li><button type="button" class="ghost" data-a="Non.">Berthe, étiez-vous seule dans la cuisine à 22 h 50 ?</button></li>
+      <li><button type="button" class="ghost" data-a="Non.">Hortense, avez-vous quitté la table de bridge avant 22 h 55 ?</button></li>
+      <li><button type="button" class="ghost" data-a="Non.">Lucie, avez-vous ouvert l'armoire à poisons de l'usine cette nuit ?</button></li>
+      <li><button type="button" class="ghost" data-a="Oui.">Miss Hale, votre bocal était-il intact quand vous êtes descendue au bal ?</button></li>
+      <li><button type="button" class="ghost" data-a="Oui.">Irène, êtes-vous entrée au laboratoire cette nuit ?</button></li>
+      <li><button type="button" class="ghost" data-a="Non.">Colette, avez-vous quitté le bal avant le toast de 22 h ?</button></li>
+    </ul>
+    <p class="answer" id="jetonRep" aria-live="polite" hidden></p>
+  </div>
+
+  <div class="stack" style="gap:16px">
+    <div class="act-head"><h3>Étape 4 · Les preuves et les cadenas</h3><span class="label">55 min</span></div>
+    <p>Ouvrez l'onglet Les preuves. Lisez chaque preuve en prenant des notes. Chaque nouvelle série est fermée par un cadenas : le code se déduit en croisant les preuves déjà ouvertes et les interrogatoires ci-dessus. Gardez la preuve 14 pour la fin, si vous êtes bloquée. Quand les 4 cadenas sont ouverts, revenez ici pour la suite.</p>
+    <a class="next" href="#preuves">Aller aux preuves →</a>
+  </div>
+
+  <p class="locked-note" id="soloAttente">Étapes 5 et 6 verrouillées : ouvrez d'abord les 4 cadenas de l'onglet Les preuves. L'accusation se fait à la fin.</p>
+  <div class="stack" id="soloFin" style="gap:30px">
+  <div class="stack" style="gap:16px">
+    <div class="act-head"><h3>Étape 5 · Les aveux</h3><span class="label">Après le cadenas 4</span></div>
+    <p class="note">Face aux dernières preuves, chacune finit par avouer son secret. Ces aveux ne désignent pas la coupable : ils expliquent ce que chacune cachait.</p>
+    <div class="row"><button type="button" id="avOpen">Faire parler les suspectes</button></div>
+    <div class="interro" id="aveux" hidden>
+      <article class="etiq"><h4>Hortense</h4><p>« Je dois 200 000 francs au casino de Cannes. La semaine dernière, j'ai mis en gage le collier de perles de ma mère. »</p></article>
+      <article class="etiq"><h4>Colette</h4><p>« Miss Hale m'avait prêté son livre sur les papillons en juillet. Oui, je l'ai rendu hier soir. Et alors ? »</p></article>
+      <article class="etiq"><h4>Berthe</h4><p>« Colette est ma fille. Son père était Monsieur Henri. Madame l'a découvert hier après-midi et nous a chassées toutes les deux. »</p></article>
+      <article class="etiq"><h4>Lucie</h4><p>« Je fabriquais en secret un jasmin de synthèse pour des Américains. Madame l'avait découvert et allait me renvoyer ce matin. »</p></article>
+      <article class="etiq"><h4>Irène</h4><p>« À 00 h 30, je suis entrée au laboratoire pour voler la formule de Nuit Blanche. Madame était déjà morte. J'ai arraché la page et je n'ai prévenu personne. »</p></article>
+      <article class="etiq"><h4>Winifred</h4><p>« Madeleine et moi nous sommes aimées, il y a vingt ans. Avant-hier, elle a refusé de partir avec moi. »</p></article>
+    </div>
+  </div>
+
+
+  <div class="stack" style="gap:16px">
+    <div class="act-head"><h3>Étape 6 · Votre accusation</h3><span class="label">Sur 12 points</span></div>
+    <form class="form etiq" id="accuse" style="padding:24px">
+      <div class="field"><label for="f-qui">Qui a tué Madeleine Aubier ?</label>
+        <select id="f-qui" required><option value="">Choisir…</option><option>Hortense</option><option>Colette</option><option>Berthe</option><option>Lucie</option><option>Irène</option><option>Winifred</option></select></div>
+      <div class="field"><label for="f-sens">Comment se comptent les flacons de l'orgue ?</label>
+        <select id="f-sens" required><option value="">Choisir…</option><option>De gauche à droite, comme on lit</option><option value="ok">De droite à gauche, depuis son fauteuil</option><option>Du centre vers les bords, comme on accorde un orgue</option></select></div>
+      <div class="field"><label for="f-formule">La formule du carnet reprend le parfum de…</label>
+        <select id="f-formule" required><option value="">Choisir…</option><option>Hortense</option><option>Colette</option><option>Berthe</option><option>Lucie</option><option>Winifred</option><option>Personne, c'est une formule de travail</option></select></div>
+      <div class="field"><label for="f-source">D'où vient le poison ?</label>
+        <select id="f-source" required><option value="">Choisir…</option><option>L'armoire à poisons de l'usine, ouverte avec la clé de Lucie</option><option value="ok">Le bocal à papillons de Miss Hale, dans l'aile est</option><option>Les amaretti du dessert, préparés par Fine</option><option>Le pot de miel, rapporté de la cave par Berthe</option></select></div>
+      <div class="field"><label for="f-quand">Quand et où a-t-il été versé ?</label>
+        <select id="f-quand" required><option value="">Choisir…</option><option>Entre 22 h 20 et 22 h 25, dans le pot de miel, à la cave</option><option value="ok">Entre 22 h 52 et 22 h 56, dans la théière, à la cuisine</option><option>Entre 22 h 55 et 23 h 06, dans la théière, par la fenêtre de la terrasse</option><option>Entre 23 h et 23 h 02, dans la tasse, au laboratoire</option><option>À 00 h 30, dans la tasse, au laboratoire</option></select></div>
+      <div class="field"><label for="f-preuve">Quelle preuve matérielle trahit la coupable ?</label>
+        <select id="f-preuve" required><option value="">Choisir…</option><option>La page arrachée, tachée de tilleul</option><option value="ok">L'empreinte à la cicatrice en croissant, sur la théière</option><option>Le pot de miel, rapporté de la cave</option><option>La feuille de bridge et ses heures d'absence</option></select></div>
+      <div class="field"><label for="f-mobile">Quel était le mobile ?</label>
+        <select id="f-mobile" required><option value="">Choisir…</option><option>Des dettes de jeu et l'héritage de la Maison</option><option value="ok">Une mère et sa fille cachée, chassées et déshéritées à l'aube</option><option>Un jasmin de synthèse découvert et un renvoi annoncé</option><option>Une formule secrète promise à une maison rivale</option><option>Un amour ancien refusé la veille</option></select></div>
+      <div class="row"><button type="submit">Déposer mon accusation</button></div>
+      <div class="verdict" id="verdict" hidden aria-live="polite"></div>
+    </form>
+  </div>
+  </div>
+</section>
+
+<!-- ============ GUIDE DE L'HÔTE ============ -->
+<section id="hote" class="stack" hidden>
+  <div class="intro">
+    <h2>Guide de l'hôte</h2>
+    <p>L'hôte peut aussi jouer un personnage : ce guide ne dévoile pas la coupable. N'ouvrez l'onglet Solution qu'à la toute fin.</p>
+  </div>
+
+  <div class="prose">
+    <h3 class="sub">Préparer la soirée</h3>
+    <ul>
+      <li id="distrib">Distribuez les rôles : Hortense, Colette, Berthe et Lucie.</li>
+      <li>Vous êtes 7 à 10 ? Faites jouer certains rôles en binôme : deux joueuses partagent un personnage, ses secrets et ses objectifs. Commencez par Irène et Winifred, puis Lucie et Hortense. Les règles de vote et de points des binômes sont dans « Les points ».</li>
+      <li>Envoyez à chacune le lien de cette page et le nom de son personnage. Elle ouvre uniquement son rôle, deux ou trois jours avant, pour bien le connaître.</li>
+      <li><b>Un écran par joueuse</b> : chacune ouvre la page sur son téléphone, onglet Mon écran, et choisit son personnage. Ses missions changent à chaque acte : à chaque changement d'acte, annoncez-le et chacune touche le même acte sur son écran. Les preuves restent sur l'écran central de l'hôte.</li>
+      <li>En visio : un appel où vous pouvez partager votre écran pour les preuves et les cadenas.</li>
+      <li>Au salon : un écran au centre, du papier et des crayons pour chacune. Le niveau expert se joue en prenant des notes.</li>
+      <li>Ambiance : bougies, jazz des années 1920, sirop de fleur d'oranger allongé d'eau pétillante, avec ou sans champagne. Et des amaretti, évidemment.</li>
+      <li>Tenue : années folles. Robes droites, sautoirs, bandeaux, gants.</li>
+    </ul>
+  </div>
+
+  <div class="stack" style="gap:14px">
+    <h3 class="sub">Le kit du nez (facultatif)</h3>
+    <p class="prose">Toutes les notes de l'énigme existent dans une cuisine. Préparez quelques coupelles, ou demandez à chacune d'en préparer trois chez elle en visio.</p>
+    <ul class="kit">
+      <li><span>Bergamote</span><span>un sachet de thé Earl Grey</span></li>
+      <li><span>Fleur d'oranger</span><span>eau de fleur d'oranger</span></li>
+      <li><span>Vanille</span><span>extrait ou sucre vanillé</span></li>
+      <li><span>Amande amère</span><span>arôme amande amère ou un amaretti</span></li>
+      <li><span>Rose</span><span>eau de rose ou thé à la rose</span></li>
+      <li><span>Lavande</span><span>lavande séchée</span></li>
+      <li><span>Cannelle</span><span>bâton ou poudre</span></li>
+      <li><span>Clou de girofle</span><span>deux ou trois clous</span></li>
+      <li><span>Citron</span><span>un zeste</span></li>
+      <li><span>Jasmin</span><span>thé au jasmin</span></li>
+    </ul>
+  </div>
+
+  <div class="copybox etiq">
+    <span class="label">Invitation à envoyer</span>
+    <pre id="invit">Grasse, 14 août 1928. Bastide Aubier.
+Madame Madeleine Aubier vous convie au bal de la cueillette du jasmin. À l'aube, elle dévoilera son dernier parfum.
+Votre personnage : [NOM]. Ouvrez votre rôle ici : [LIEN], et ne regardez que le vôtre.
+Tenue : années folles.
+Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
+    <div class="row"><button type="button" id="copyInvit">Copier l'invitation</button><span class="note" id="copyMsg" aria-live="polite"></span></div>
+  </div>
+
+  <div class="stack" style="gap:18px">
+    <h3 class="sub">Déroulé de la soirée</h3>
+    <div class="timeline">
+      <div class="tl">
+        <span class="when">0:00 · 5 min</span>
+        <h3>Prologue</h3>
+        <div class="readaloud etiq">
+          <span class="label">À lire à voix haute</span>
+          <p>Grasse, nuit du 14 au 15 août 1928. À la bastide Aubier, on danse sur la terrasse : à l'aube commence la cueillette du jasmin. Madeleine Aubier, 58 ans, le nez le plus respecté de la ville, lève son verre à 22 h. « À l'aube, je vous présenterai Nuit Blanche, mon dernier parfum. Et je désignerai celle qui me succédera. »</p>
+          <p>Comme chaque soir, on lui porte une tisane de tilleul dans son laboratoire, au fond du jardin. À 5 h 10, sa fille la retrouve morte au pied de son orgue à parfums. Sur son carnet, ouvert, une dernière ligne d'une écriture tremblée.</p>
+          <p>Le docteur parle de poison. Les gendarmes ferment la bastide. Six femmes y ont passé la nuit. Toutes avaient une raison de la haïr. Une seule l'a tuée. Et Madeleine, avant de mourir, a écrit qui.</p>
+        </div>
+      </div>
+      <div class="tl">
+        <span class="when">0:05 · 15 min</span>
+        <h3>Acte I · La nuit</h3>
+        <ul>
+          <li>Chaque joueuse lit la présentation de son personnage (le texte en italique en haut de son rôle).</li>
+          <li>Montrez les preuves 1 à 3. Le plan de la bastide (preuve 3) servira toute la soirée : gardez-le à portée.</li>
+          <li>Questions libres, puis le cadenas 1 ouvre l'acte II.</li>
+        </ul>
+      </div>
+      <div class="tl">
+        <span class="when">0:20 · 35 min</span>
+        <h3>Acte II · Les alibis</h3>
+        <ul>
+          <li>Le cadenas 1 ouvre les preuves 4 à 7, le cadenas 2 les preuves 8 à 10. Laissez le groupe calculer : c'est le cœur du jeu.</li>
+          <li><b>L'épreuve du nez</b> (3 min) juste avant le cadenas 2 : la gagnante reçoit le jeton de vérité et doit l'utiliser avant l'ouverture du cadenas 2.</li>
+          <li>Les joueuses peuvent se prendre à part pour négocier, menacer ou échanger des informations.</li>
+        </ul>
+      </div>
+      <div class="tl">
+        <span class="when">0:55 · 20 min</span>
+        <h3>Acte III · Les secrets</h3>
+        <ul>
+          <li>Tour de table : chaque joueuse lit sa révélation obligatoire (l'encadré doré de son rôle).</li>
+          <li>Le cadenas 3 ouvre les preuves 11 et 12, le cadenas 4 la preuve 13. La preuve 14 ne s'ouvre que si le groupe se déclare bloqué.</li>
+        </ul>
+      </div>
+      <div class="tl">
+        <span class="when">1:15 · 10 min</span>
+        <h3>L'accusation</h3>
+        <p>Chaque joueuse note en secret : la coupable, le mobile, la méthode et le moment, la preuve matérielle, et la lecture de la formule. Puis chacune défend sa réponse en une minute.</p>
+      </div>
+      <div class="tl">
+        <span class="when">1:25 · 5 min</span>
+        <h3>Le dernier cadenas</h3>
+        <p>Le groupe tape le code du dernier flacon dans l'onglet Solution. Après trois erreurs, on peut abandonner et lire la vérité. Avec le kit, faites sentir le parfum désigné à la fin.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box etiq">
+    <span class="label">L'épreuve du nez</span>
+    <h3>Le jeton de vérité</h3>
+    <p>La gagnante pose, une seule fois, à la joueuse de son choix une question fermée sur un lieu et une heure : « Étais-tu dans [lieu] à [heure] ? ». La réponse est oui ou non, et elle doit être vraie, même pour la coupable. Le jeton se joue avant l'ouverture du cadenas 2, et seulement sur une pièce commune : grand salon, salon bleu, bibliothèque ou terrasse. Les chambres, la cuisine, la cave, l'aile est et le laboratoire sont interdits. Exemple : « Lucie, étais-tu sur la terrasse à 22 h 50 ? ». Interdit aussi de demander « Es-tu coupable ? ».</p>
+    <p><b>Au salon</b> : 5 coupelles numérotées, yeux fermés (Earl Grey, fleur d'oranger, amaretti, cannelle, lavande). <b>En visio</b> : lisez ces devinettes, la première qui répond marque un point.</p>
+    <ol style="margin:0;padding-left:22px;display:grid;gap:6px">
+      <li>Je pousse en Calabre et je parfume un célèbre thé anglais. <i>(la bergamote)</i></li>
+      <li>On me verse dans les pâtisseries d'Orient, et autrefois dans le biberon des bébés pour les endormir. <i>(la fleur d'oranger)</i></li>
+      <li>À Grasse, on me cueille à l'aube, en août, avant que le soleil me fane. <i>(le jasmin)</i></li>
+      <li>Je sens le gâteau de mamie, et pourtant les romans policiers m'adorent. <i>(l'amande amère)</i></li>
+      <li>On me pique dans une orange pour Noël. <i>(le clou de girofle)</i></li>
+    </ol>
+  </div>
+
+  <div class="stack" style="gap:12px">
+    <h3 class="sub">Les points</h3>
+    <div class="scroll">
+    <table class="t">
+      <tr><td>Désigner la bonne coupable</td><td class="r">3 pts</td></tr>
+      <tr><td>Décoder correctement la formule</td><td class="r">2 pts</td></tr>
+      <tr><td>Trouver le mobile</td><td class="r">2 pts</td></tr>
+      <tr><td>Trouver la méthode et le moment exact</td><td class="r">2 pts</td></tr>
+      <tr><td>Nommer la preuve matérielle</td><td class="r">1 pt</td></tr>
+      <tr><td>Chaque objectif personnel atteint (voir son rôle)</td><td class="r">1 pt</td></tr>
+      <tr><td>La coupable, si la majorité ne l'a pas désignée</td><td class="r">6 pts</td></tr>
+    </table>
+    </div>
+    <ul class="prose" style="padding-left:22px">
+      <li><b>Le vote est secret</b> : chacune écrit sa réponse sur un papier plié, puis toutes les révèlent en même temps.</li>
+      <li><b>La coupable est démasquée</b> si plus de la moitié des autres joueuses l'ont désignée. Sinon, elle gagne 6 points, qui s'ajoutent à ses objectifs personnels.</li>
+      <li><b>En cas d'égalité</b>, celle qui a décodé la formule l'emporte, puis celle qui a trouvé le moment exact du crime.</li>
+      <li><b>Les binômes</b> comptent comme un seul personnage : un seul vote, décidé à deux ; les points sont gagnés une fois et partagés par les deux joueuses. La majorité se compte en personnages, pas en joueuses.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ RÔLES ============ -->
+<section id="roles" class="stack" hidden>
+  <div class="intro">
+    <h2>Les rôles</h2>
+    <p>Débouche uniquement ton flacon. La présentation en italique se lit à voix haute à l'acte I ; tout le reste est pour toi seule.</p>
+  </div>
+
+  <div class="roles">
+
+    <!-- HORTENSE -->
+    <article class="role etiq">
+      <div class="role-head"><h3>Hortense Aubier</h3><span class="label">34 ans · fille de Madeleine</span></div>
+      <p class="public">« Je suis la fille de Madeleine Aubier. Je n'ai pas son nez, elle me l'a assez répété. Moi, j'ai le sens de la fête, des voitures rapides et du casino de Cannes. Ce soir, c'était aussi ma maison. »</p>
+      <p class="meta"><b>Ton allure :</b> robe argentée à franges, cheveux courts à la garçonne. <b>Ton parfum :</b> « Hortense ».</p>
+      <div class="ask" data-for="Hortense"></div>
+      <div class="secret" hidden>
+        <div>
+          <h4>Ta nuit minute par minute</h4>
+          <dl class="minutes">
+            <dt>22:00</dt><dd>Ta mère annonce qu'elle désignera « celle qui lui succédera ». Elle ne t'a pas regardée.</dd>
+            <dt>22:12</dt><dd>Tu vois Berthe sortir du bureau de ta mère en larmes. Quarante ans que tu ne l'as jamais vue pleurer.</dd>
+            <dt>22:24</dt><dd>Tu danses le charleston sur la terrasse jusqu'à 22 h 28. Le photographe du Journal de Grasse te prend deux fois.</dd>
+            <dt>22:30</dt><dd>À la bibliothèque, tu demandes de l'argent. Ta mère crie : « Pas un sou de plus. Et la Maison ne sera jamais à toi. »</dd>
+            <dt>22:40</dt><dd>Bridge au salon bleu avec Miss Hale, Irène et Lucie.</dd>
+            <dt>22:55</dt><dd>Tu sors fumer sur la terrasse. La fenêtre de la cuisine est couverte de buée : tu devines une silhouette en robe claire penchée sur le fourneau, de dos. Une minute plus tard, Berthe remonte de la cave avec un pot de miel. Tu n'entres pas.</dd>
+            <dt>23:06</dt><dd>Tu reprends le bridge en même temps que Lucie, jusqu'à 23 h 30.</dd>
+            <dt>05:10</dt><dd>Tu vois de la lumière au laboratoire. Tu trouves ta mère au pied de son orgue.</dd>
+          </dl>
+        </div>
+        <div>
+          <h4>Ton secret</h4>
+          <p>Tu dois 200 000 francs au casino de Cannes, à rembourser le 20 août. La semaine dernière, tu as mis en gage le collier de perles de ta mère.</p>
+        </div>
+        <div>
+          <h4>Ce que tu sais</h4>
+          <ul>
+            <li>Ta mère notait ses formules avec le code de son orgue : une lettre pour la rangée (T tête, C cœur, F fond), un numéro de flacon, puis la dose. Elle comptait toujours ses flacons depuis son fauteuil, de droite à gauche. Elle disait : « Un nez ne lit pas, il tend la main. »</li>
+            <li>En 1926, ta mère a voulu modifier ton parfum. Tu as refusé : tu portes toujours la formule de tes 18 ans.</li>
+            <li>Ta robe aussi est claire. Si on parle de la silhouette de la cuisine, on pensera à toi.</li>
+          </ul>
+        </div>
+        <div class="say">
+          <h4>Ce que tu peux dire</h4>
+          <p>Ta dispute est connue : assume-la. Jusqu'à ta révélation de l'acte III, tu peux refuser de répondre sur tes dettes et les perles, même si on te le demande directement. Tu ne mens jamais : tu te tais. Ce que tu sais de l'orgue, à toi de décider quand le partager : c'est peut-être ce qui te sauvera.</p>
+        </div>
+        <div>
+          <h4>Tes objectifs</h4>
+          <ul>
+            <li>Garder les perles secrètes jusqu'à l'acte III.</li>
+            <li>Expliquer au groupe le sens de lecture de l'orgue avant que quelqu'un d'autre le trouve.</li>
+            <li>Ne pas être désignée coupable, même si tout semble t'accuser.</li>
+          </ul>
+        </div>
+        <div class="reveal">
+          <h4>Révélation obligatoire · acte III</h4>
+          <p>« Je dois 200 000 francs au casino. La semaine dernière, j'ai mis en gage le collier de perles de ma mère. »</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- COLETTE -->
+    <article class="role etiq">
+      <div class="role-head"><h3>Colette Dumas</h3><span class="label">22 ans · apprentie parfumeuse</span></div>
+      <p class="public">« Madame Aubier m'a recueillie quand j'avais six ans. Elle m'a appris à reconnaître trois cents odeurs les yeux fermés. On dit que j'ai le meilleur nez de Grasse après le sien. Ce soir, je devais peut-être devenir son héritière. »</p>
+      <p class="meta"><b>Ton allure :</b> robe ivoire, cheveux courts, une petite cicatrice en croissant sur l'index droit. <b>Ton parfum :</b> « Petite Aube ».</p>
+      <div class="ask" data-for="Colette"></div>
+      <div class="secret" hidden>
+        <div class="culprit">
+          <h4>Tu es la coupable</h4>
+          <p>C'est toi qui as empoisonné Madeleine Aubier. Ton but : que la majorité désigne quelqu'un d'autre. Tu as le droit de mentir. Une seule exception : si on utilise le jeton de vérité sur toi, tu réponds honnêtement.</p>
+        </div>
+        <div>
+          <h4>Pourquoi</h4>
+          <p>Depuis un an, tu sais la vérité : tu es née à Nice le 3 mars 1906. Ta mère est Berthe, la gouvernante. Ton père était Henri Aubier, le mari de Madame, mort il y a trois ans. Cet après-midi, Madame a trouvé une lettre d'Henri. À 22 h 10, derrière la porte du bureau, tu l'as entendue dire à Berthe : « Quarante ans sous mon toit. Demain à l'aube, tu pars. Ta fille aussi. Et le notaire viendra vous rayer de mon testament. » Ta mère à la rue à 61 ans. Toi, chassée du seul métier que tu aimes. Tu as décidé que l'aube n'arriverait pas pour Madame.</p>
+        </div>
+        <div>
+          <h4>Ta vraie nuit</h4>
+          <dl class="minutes">
+            <dt>22:10</dt><dd>Tu entends Madame chasser Berthe, et toi avec elle.</dd>
+            <dt>22:18</dt><dd>Tu refuses une photo : « Je monte me repoudrer. » Tu prends l'escalier d'honneur vers l'aile est.</dd>
+            <dt>22:20</dt><dd>Dans la chambre de Miss Hale, au bout du couloir, tu prends des cristaux de cyanure dans son bocal à papillons avec ton mouchoir. Tu rends le livre qu'elle t'avait prêté en juillet, avec un mot non signé écrit sur ton papier à lettres, qui sent ta fleur d'oranger.</dd>
+            <dt>22:25</dt><dd>En sortant, tu aperçois une femme à l'autre bout du couloir. Tu files par l'escalier de service sans te retourner.</dd>
+            <dt>22:50</dt><dd>Par le couloir de service, tu entres dans la cuisine. Berthe commence la tisane. Tu lui dis : « Va chercher le miel, je surveille l'eau. »</dd>
+            <dt>22:52</dt><dd>Berthe descend à la cave. Tu soulèves le couvercle de la théière à main nue et tu verses les cristaux.</dd>
+            <dt>22:55</dt><dd>La buée couvre la fenêtre. Tu sens une présence sur la terrasse.</dd>
+            <dt>22:56</dt><dd>Berthe remonte. Tu repars par le couloir de service et montes te coucher. Tu ne dors pas.</dd>
+          </dl>
+        </div>
+        <div class="say">
+          <h4>Ce que tu racontes</h4>
+          <ul>
+            <li>À 22 h 18, tu es montée te repoudrer dans ta chambre, aile ouest, et tu n'en es plus sortie.</li>
+            <li>Tu n'es jamais allée dans l'aile est. Tu n'as pas mis les pieds à la cuisine.</li>
+            <li>Ta cicatrice ? Une brûlure d'alambic en juin, rien de plus. C'est vrai, et c'est sans danger tant que personne n'a vu l'empreinte.</li>
+            <li>Ne nie jamais être l'apprentie la plus douée : c'est connu.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Le carnet</h4>
+          <p>Madame a écrit ton parfum, avec l'amande amère à la place de ta fleur d'oranger. Elle comptait ses flacons de droite à gauche, tu le sais. Si le groupe lit de gauche à droite, laisse-le faire : il tombera sur le jasmin, le parfum de Lucie. Si quelqu'un lit dans le bon sens, fais remarquer que le parfum d'Hortense a lui aussi bergamote et vanille, et que le registre mentionne une version 20, 50, 30 de son parfum.</p>
+        </div>
+        <div>
+          <h4>Tes objectifs</h4>
+          <ul>
+            <li>Ne pas être désignée par la majorité.</li>
+            <li>Faire accuser Hortense ou Lucie par au moins deux joueuses.</li>
+            <li>Que personne n'accuse Berthe.</li>
+          </ul>
+        </div>
+        <div class="reveal">
+          <h4>Révélation obligatoire · acte III</h4>
+          <p>« Miss Hale m'avait prêté son livre sur les papillons en juillet. »</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- BERTHE -->
+    <article class="role etiq">
+      <div class="role-head"><h3>Berthe Lacombe</h3><span class="label">61 ans · gouvernante de la bastide</span></div>
+      <p class="public">« Quarante ans que je tiens cette maison. J'ai vu naître Hortense, j'ai vu mourir Monsieur Henri, j'ai porté à Madame sa tisane chaque soir. Ce soir aussi. »</p>
+      <p class="meta"><b>Ton allure :</b> robe noire, col blanc, chignon gris, trousseau de clés. <b>Ton parfum :</b> « Fidèle ».</p>
+      <div class="ask" data-for="Berthe"></div>
+      <div class="secret" hidden>
+        <div>
+          <h4>Ta nuit minute par minute</h4>
+          <dl class="minutes">
+            <dt>22:10</dt><dd>Madame t'appelle dans son bureau. Elle a trouvé une lettre de Monsieur Henri. Elle sait tout. « Demain à l'aube, tu pars. Ta fille aussi. Et le notaire viendra vous rayer de mon testament. »</dd>
+            <dt>22:12</dt><dd>Tu sors en larmes. Hortense te voit passer.</dd>
+            <dt>22:50</dt><dd>À la cuisine, tu prépares la tisane de tilleul. Colette entre par le couloir de service : « Va chercher le miel, je surveille l'eau. »</dd>
+            <dt>22:52</dt><dd>Tu descends à la cave. Colette reste seule avec la théière.</dd>
+            <dt>22:56</dt><dd>Tu remontes avec le miel. Colette part aussitôt, les yeux rouges.</dd>
+            <dt>22:57</dt><dd>Tu quittes la cuisine avec le plateau par l'allée des jasmins.</dd>
+            <dt>23:00</dt><dd>Au laboratoire, en posant la théière, tu dis sans réfléchir : « C'est la petite qui l'a préparée ce soir, Madame. » Elle répond : « Pose-le et va-t'en, Berthe. Profite de ta dernière nuit. »</dd>
+            <dt>23:02</dt><dd>Tu rentres et tu fais tes bagages toute la nuit.</dd>
+          </dl>
+        </div>
+        <div>
+          <h4>Ton secret</h4>
+          <p>Colette est ta fille, née à Nice le 3 mars 1906. Son père était Monsieur Henri Aubier. Quand elle avait six ans, tu as convaincu Madame de recueillir « une orpheline » pour l'avoir près de toi.</p>
+        </div>
+        <div>
+          <h4>Ce que tu sais</h4>
+          <ul>
+            <li>Madame comptait ses flacons de droite à gauche, depuis son fauteuil. Tu les époussettes depuis quarante ans.</li>
+            <li>Miss Hale garde dans sa chambre un bocal pour tuer ses papillons. Elle t'a dit : « Ne l'ouvrez jamais, Berthe, c'est du cyanure. »</li>
+            <li>En juin, Colette s'est brûlé l'index droit à l'alambic. C'est Lucie qui l'a soignée.</li>
+          </ul>
+        </div>
+        <div class="say">
+          <h4>Ce que tu peux dire</h4>
+          <p>Tu n'as jamais menti de ta vie. Mais tu peux refuser de répondre. Tu as préparé et porté la tisane : c'est connu. Qui était avec toi dans la cuisine, tu n'es pas obligée de le dire.</p>
+        </div>
+        <div>
+          <h4>Tes objectifs</h4>
+          <ul>
+            <li>Protéger Colette le plus longtemps possible, sans jamais mentir.</li>
+            <li>Ne pas être désignée : tu as porté la tisane, tu es la suspecte idéale.</li>
+            <li>Comprendre ce que Madame a écrit dans son carnet.</li>
+          </ul>
+        </div>
+        <div class="reveal">
+          <h4>Révélation obligatoire · acte III</h4>
+          <p>« Madame m'a chassée hier soir à 22 h 10, après quarante ans. Elle avait découvert un secret sur Monsieur Henri et moi. »</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- LUCIE -->
+    <article class="role etiq">
+      <div class="role-head"><h3>Lucie Fabre</h3><span class="label">31 ans · chimiste de l'usine Aubier</span></div>
+      <p class="public">« Je suis chimiste. Madame Aubier m'a engagée pour contrôler la pureté de ses essences. Elle sentait le monde, moi je l'analyse. Elle disait que la chimie allait tuer le parfum. Je crois qu'elle avait peur de l'avenir. »</p>
+      <p class="meta"><b>Ton allure :</b> tailleur gris, chignon, lunettes rondes. <b>Ton parfum :</b> « Éprouvette ».</p>
+      <div class="ask" data-for="Lucie"></div>
+      <div class="secret" hidden>
+        <div>
+          <h4>Ta nuit minute par minute</h4>
+          <dl class="minutes">
+            <dt>20:30</dt><dd>Au dîner, Madame te lance devant tout le monde : « Je sais ce que vous fabriquez la nuit à l'usine. Demain, vous ne travaillerez plus ici. »</dd>
+            <dt>22:40</dt><dd>Bridge au salon bleu avec Miss Hale, Irène et Hortense.</dd>
+            <dt>22:48</dt><dd>Tu t'excuses et pars à l'usine par le chemin de la terrasse, sans passer par la cuisine.</dd>
+            <dt>22:52</dt><dd>Le gardien t'ouvre. Tu vérifies ta distillation secrète.</dd>
+            <dt>23:02</dt><dd>Tu ressors et rentres par le même chemin.</dd>
+            <dt>23:06</dt><dd>Tu reprends le bridge en même temps qu'Hortense, jusqu'à 23 h 30.</dd>
+          </dl>
+        </div>
+        <div>
+          <h4>Ton secret</h4>
+          <p>Depuis six mois, tu mets au point en cachette un jasmin de synthèse, bien moins cher que le vrai. Une société américaine, Ambrose &amp; Co., t'a promis 80 000 francs pour la formule. Madame l'a découvert hier.</p>
+        </div>
+        <div>
+          <h4>Ce que tu sais</h4>
+          <ul>
+            <li>Le cyanure dégage une odeur d'amande amère. Les amaretti aussi, naturellement, sans danger.</li>
+            <li>Tu as la clé de l'armoire à poisons de l'usine. Ce soir, tu ne l'as pas ouverte.</li>
+            <li>Tu tiens le registre de l'infirmerie de l'usine. En juin, tu as soigné une brûlure d'alambic à l'index droit de Colette, en forme de croissant.</li>
+            <li>Si quelqu'un lit l'orgue de gauche à droite, la formule tombe sur le jasmin, ta note. Méfie-toi.</li>
+          </ul>
+        </div>
+        <div class="say">
+          <h4>Ce que tu peux dire</h4>
+          <p>Le gardien confirme tes heures. Tu peux expliquer l'odeur d'amande amère. Ton jasmin de synthèse, tu peux le taire jusqu'à l'acte III.</p>
+        </div>
+        <div>
+          <h4>Tes objectifs</h4>
+          <ul>
+            <li>Garder ton jasmin de synthèse secret jusqu'à l'acte III.</li>
+            <li>Prouver, plan à l'appui, que tu n'as pas pu passer par la cuisine.</li>
+            <li>Désigner la bonne coupable.</li>
+          </ul>
+        </div>
+        <div class="reveal">
+          <h4>Révélation obligatoire · acte III</h4>
+          <p>« Je fabriquais en secret un jasmin de synthèse pour des Américains. Madame allait me renvoyer ce matin. »</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- IRÈNE -->
+    <article class="role etiq" data-min="5">
+      <div class="role-head"><h3>Irène Vasseur</h3><span class="label">40 ans · chroniqueuse parisienne · dès 5 joueuses</span></div>
+      <p class="public">« J'écris pour Le Miroir des Élégances, à Paris. Madame Aubier m'avait promis l'exclusivité : être la première à sentir Nuit Blanche. J'ai fait mille kilomètres de train pour ça. »</p>
+      <p class="meta"><b>Ton allure :</b> robe noire, cloche à plumes, carnet de presse.</p>
+      <div class="ask" data-for="Irène"></div>
+      <div class="secret" hidden>
+        <div>
+          <h4>Ta nuit minute par minute</h4>
+          <dl class="minutes">
+            <dt>22:20</dt><dd>Tu montes à ta chambre, la première de l'aile est, chercher ton petit nécessaire de crochets pour ouvrir le laboratoire plus tard.</dd>
+            <dt>22:25</dt><dd>En ressortant, tu vois au bout du couloir une jeune femme en robe claire, cheveux courts, sortir de la dernière chambre et disparaître par l'escalier de service. Tu ne la vois que de dos, sous une seule lampe.</dd>
+            <dt>22:40</dt><dd>Bridge au salon bleu. Tu tiens la feuille de marque. Tu ne quittes pas la table avant 23 h 30.</dd>
+            <dt>00:30</dt><dd>Tu ouvres le laboratoire avec tes crochets. Madame est au sol, la tasse renversée. Elle est morte. Tu paniques, arraches la page de Nuit Blanche dans son carnet et t'enfuis sans prévenir personne.</dd>
+          </dl>
+        </div>
+        <div>
+          <h4>Ton secret</h4>
+          <p>La maison parisienne Delorme te paie 50 000 francs pour voler la formule de Nuit Blanche. La page arrachée est cachée dans ta malle.</p>
+        </div>
+        <div class="say">
+          <h4>Ce que tu peux dire</h4>
+          <p>Ce que tu as vu à 22 h 25, tel quel : tu n'as pas vu le visage. Le bridge te donne un alibi solide. Ta visite au laboratoire et la page volée, tu peux les taire jusqu'à l'acte III.</p>
+        </div>
+        <div>
+          <h4>Tes objectifs</h4>
+          <ul>
+            <li>Garder la page volée secrète jusqu'à l'acte III.</li>
+            <li>Faire comprendre au groupe que Madame était déjà morte à 00 h 30.</li>
+            <li>Identifier la silhouette du couloir.</li>
+          </ul>
+        </div>
+        <div class="reveal">
+          <h4>Révélation obligatoire · acte III</h4>
+          <p>« À 00 h 30, je suis entrée au laboratoire pour voler la formule de Nuit Blanche. Madame était déjà morte. J'ai arraché la page. »</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WINIFRED -->
+    <article class="role etiq" data-min="6">
+      <div class="role-head"><h3>Winifred Hale</h3><span class="label">45 ans · entomologiste anglaise · à 6 joueuses</span></div>
+      <p class="public">« Je suis Winifred Hale, de Cambridge. Je chasse les papillons de Provence chaque été depuis vingt ans, et chaque été, Madeleine m'ouvre sa maison. C'est ma plus vieille amie. »</p>
+      <p class="meta"><b>Ton allure :</b> chemisier blanc, jupe-culotte kaki, long chignon. <b>Ton parfum :</b> « Miss Hale ».</p>
+      <div class="ask" data-for="Winifred"></div>
+      <div class="secret" hidden>
+        <div>
+          <h4>Ta nuit minute par minute</h4>
+          <dl class="minutes">
+            <dt>18:00</dt><dd>Ta chambre, la dernière de l'aile est, n'est jamais fermée. Ton bocal de chasse est sur la commode : du cyanure de potassium sous du plâtre. Il était intact.</dd>
+            <dt>21:40</dt><dd>Le photographe te prend avec Madeleine dans le grand salon.</dd>
+            <dt>22:40</dt><dd>Bridge au salon bleu jusqu'à 23 h 30, sans quitter la table.</dd>
+            <dt>23:45</dt><dd>Sur ton lit, le livre « Papillons de Provence » que tu avais prêté en juillet à Colette, avec un mot non signé qui sent la fleur d'oranger. Le plâtre de ton bocal a été gratté. Tu ne dis rien : une étrangère avec du poison, la police ne cherchera pas plus loin.</dd>
+          </dl>
+        </div>
+        <div>
+          <h4>Ton secret</h4>
+          <p>Il y a vingt ans, Madeleine et toi vous êtes aimées. Avant-hier soir, tu lui as demandé de partir avec toi à Cambridge. Elle a ri doucement : « Trop tard, Winnie. »</p>
+        </div>
+        <div class="say">
+          <h4>Ce que tu peux dire</h4>
+          <p>Ton alibi du bridge est solide. À qui tu as prêté le livre, tu peux le dire ou le taire : tu aimes bien cette petite. Ton amour pour Madeleine, tu peux le taire jusqu'à l'acte III.</p>
+        </div>
+        <div>
+          <h4>Tes objectifs</h4>
+          <ul>
+            <li>Faire comprendre que ta chambre était ouverte à tous pendant le bal.</li>
+            <li>Garder ton histoire avec Madeleine secrète jusqu'à l'acte III.</li>
+            <li>Désigner la bonne coupable.</li>
+          </ul>
+        </div>
+        <div class="reveal">
+          <h4>Révélation obligatoire · acte III</h4>
+          <p>« Madeleine et moi nous sommes aimées, il y a vingt ans. Avant-hier, elle a refusé de partir avec moi. »</p>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============ MON ÉCRAN (multi-écrans) ============ -->
+<section id="ecran" class="stack" hidden>
+  <div class="intro">
+    <h2>Mon écran</h2>
+    <p>Chaque joueuse ouvre cette page sur son propre téléphone. Choisissez votre personnage : vos missions s'affichent acte par acte. Elles vous obligent à interroger les autres, à négocier et à vous défendre. Personne d'autre ne les voit.</p>
+  </div>
+
+  <div class="etiq picker" id="ecranChoix">
+    <span class="label">Qui êtes-vous ?</span>
+    <div class="nums persos" id="ecranPersos" role="group" aria-label="Choisir mon personnage"></div>
+    <p class="note" id="ecranConfirm"></p>
+  </div>
+
+  <div class="stack" id="ecranJeu" hidden style="gap:20px">
+    <div class="etiq box" style="max-width:none">
+      <span class="label" id="ecranQui"></span>
+      <h3 id="ecranNom"></h3>
+      <p id="ecranRappel"></p>
+      <div class="row"><a class="next" href="#roles">Relire mon rôle complet</a><button type="button" class="ghost" id="ecranChanger">Changer de personnage</button></div>
+    </div>
+
+    <div class="stack" style="gap:10px">
+      <span class="label">L'hôte annonce l'acte : touchez le même ici</span>
+      <div class="row actes" id="ecranActes" role="group" aria-label="Acte en cours">
+        <button type="button" class="ghost" data-acte="0">Acte I</button>
+        <button type="button" class="ghost" data-acte="1">Acte II</button>
+        <button type="button" class="ghost" data-acte="2">Acte III</button>
+        <button type="button" class="ghost" data-acte="3">Accusation</button>
+      </div>
+    </div>
+
+    <div class="etiq box missions" style="max-width:none">
+      <span class="label" id="ecranActeTitre"></span>
+      <h3>Mes missions</h3>
+      <ul id="ecranMissions"></ul>
+      <p class="note" id="ecranScore"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PREUVES ============ -->
+<section id="preuves" class="stack" hidden>
+  <div class="intro">
+    <h2>Les preuves</h2>
+    <p>Chaque nouvelle série de preuves est fermée par un cadenas. Le code ne se lit nulle part : il se déduit en croisant les preuves déjà ouvertes. Un indice est disponible pour chaque cadenas. En visio, l'hôte partage son écran et tape le code que le groupe lui donne.</p>
+    <p class="progress" id="progression" aria-live="polite"></p>
+    <div class="row"><button type="button" class="ghost" id="hideAll">Tout recommencer (preuves et cadenas)</button></div>
+  </div>
+
+  <div class="acts">
+
+    <div class="stack" style="gap:18px">
+      <div class="act-head"><h3>Acte I · La nuit</h3><span class="label">Preuves 1 à 3</span></div>
+      <div class="pieces">
+
+        <article class="piece etiq wide" data-piece="1">
+          <div class="piece-head"><h4>Le rapport du docteur</h4><span class="num">N° 1</span></div>
+          <div class="body" hidden>
+            <div class="doc">
+              <span class="type">Docteur A. Roustan · Grasse · 15 août 1928, 5 h 40</span>
+              <p>Madame Madeleine Aubier, 58 ans, retrouvée au sol devant son orgue à parfums. Décès survenu entre 23 h et 23 h 30. Odeur d'amande amère sur les lèvres, mais la victime a mangé des amaretti au dîner, qui ont la même odeur. Tasse renversée au sol, théière sur le plateau.</p>
+              <p>La gouvernante, Berthe Lacombe, déclare avoir posé le plateau au laboratoire à 23 h et en être repartie à 23 h 02.</p>
+            </div>
+            <div class="doc">
+              <span class="type">Analyses du laboratoire de Nice · 11 h</span>
+              <p>Théière et tasse : cyanure de potassium. Pot de miel et amaretti restants : aucune trace. Le poison a donc été mis dans la théière, avant que la tisane ne soit versée.</p>
+            </div>
+          </div>
+          <button type="button" class="ghost show">Montrer la preuve 1</button>
+        </article>
+
+        <article class="piece etiq" data-piece="2">
+          <div class="piece-head"><h4>Le carnet de Madeleine</h4><span class="num">N° 2</span></div>
+          <div class="body" hidden>
+            <div class="carnet">
+              <span class="torn" aria-hidden="true"></span>
+              <span class="hand">T-12 · 20</span>
+              <span class="hand">C-07 · 50</span>
+              <span class="hand">F-03 · 30</span>
+              <span class="smear">Dernière ligne écrite, à l'encre, d'une main tremblante. La page précédente a été arrachée : il reste un talon déchiré.</span>
+            </div>
+          </div>
+          <button type="button" class="ghost show">Montrer la preuve 2</button>
+        </article>
+
+        <article class="piece etiq wide plan" data-piece="3">
+          <div class="piece-head"><h4>Plan de la bastide Aubier</h4><span class="num">N° 3</span></div>
+          <div class="body" hidden>
+            <div class="scroll">
+            <svg viewBox="0 0 680 430" role="img" aria-label="Plan de la bastide : rez-de-chaussée, étage et jardin">
+              <g fill="none" stroke="#1e1a26" stroke-width="1.4">
+                <rect x="10" y="30" width="330" height="200"/>
+                <line x1="170" y1="30" x2="170" y2="130"/><line x1="260" y1="30" x2="260" y2="230"/>
+                <line x1="10" y1="130" x2="340" y2="130"/><line x1="130" y1="130" x2="130" y2="230"/>
+                <rect x="10" y="232" width="330" height="26" stroke-dasharray="4 3"/>
+                <rect x="360" y="30" width="310" height="200"/>
+                <line x1="500" y1="30" x2="500" y2="230"/>
+                <line x1="360" y1="96" x2="500" y2="96"/><line x1="360" y1="162" x2="500" y2="162"/>
+                <rect x="515" y="110" width="140" height="40" stroke-dasharray="3 3"/>
+                <rect x="40" y="320" width="150" height="80"/>
+                <rect x="470" y="320" width="180" height="80"/>
+                <path d="M70 258 C 70 290, 110 300, 115 320" stroke-dasharray="5 4"/>
+                <path d="M300 258 C 360 300, 470 300, 520 320" stroke-dasharray="5 4"/>
+              </g>
+              <g font-size="14">
+                <text x="10" y="20" font-size="15" font-weight="600">REZ-DE-CHAUSSÉE</text>
+                <text x="360" y="20" font-size="15" font-weight="600">ÉTAGE</text>
+                <text x="60" y="78">Grand salon</text><text x="60" y="96" font-size="12">(le bal)</text>
+                <text x="180" y="78">Salon bleu</text><text x="182" y="96" font-size="12">(bridge)</text>
+                <text x="266" y="78">Biblio-</text><text x="266" y="94">thèque</text>
+                <text x="266" y="178">Bureau de</text><text x="266" y="194">Madeleine</text>
+                <text x="36" y="172">Cuisine</text><text x="20" y="192" font-size="12">porte sur terrasse</text><text x="20" y="208" font-size="12">escalier de la cave</text>
+                <text x="140" y="172" font-size="13">Couloir de service</text><text x="140" y="190" font-size="12">escalier de service</text><text x="140" y="206" font-size="12">vers les deux ailes</text>
+                <text x="150" y="250" font-size="13">Terrasse</text>
+                <text x="372" y="60">Aile ouest</text>
+                <text x="372" y="80" font-size="12">Hortense</text><text x="372" y="134" font-size="12">Colette</text><text x="372" y="200" font-size="12">Berthe</text>
+                <text x="520" y="46" font-size="12">Palier · escalier d'honneur</text>
+                <text x="520" y="66">Aile est · couloir</text>
+                <text x="520" y="84" font-size="12">1re porte : Irène</text>
+                <text x="520" y="102" font-size="12">2e porte : chambre vide</text>
+                <text x="520" y="134" font-size="12">Dernière porte :</text><text x="520" y="148" font-size="12">Miss Hale</text>
+                <text x="520" y="180" font-size="12">Au bout : escalier</text><text x="520" y="196" font-size="12">de service</text>
+                <text x="64" y="356">Laboratoire</text><text x="64" y="376" font-size="12">(pavillon du jardin)</text>
+                <text x="80" y="300" font-size="12">allée des jasmins</text>
+                <text x="510" y="356">Usine Aubier</text><text x="510" y="376" font-size="12">(gardien à l'entrée)</text>
+                <text x="330" y="318" font-size="12">chemin de la terrasse</text>
+              </g>
+            </svg>
+            </div>
+            <ul class="legend">
+              <li><span>Cuisine → laboratoire</span><span>3 min</span></li>
+              <li><span>Cuisine → usine</span><span>4 min</span></li>
+              <li><span>Salon bleu → usine (par la terrasse)</span><span>4 min</span></li>
+              <li><span>Salon bleu → cuisine</span><span>1 min</span></li>
+              <li><span>Grand salon → aile est (escalier d'honneur)</span><span>1 min</span></li>
+              <li><span>Aile est → cuisine (escalier de service)</span><span>1 min</span></li>
+              <li><span>Terrasse → aile est (par le grand salon)</span><span>2 min</span></li>
+            </ul>
+          </div>
+          <button type="button" class="ghost show">Montrer la preuve 3</button>
+        </article>
+
+
+              </div>
+    </div>
+
+    <div class="stack" style="gap:18px">
+      <div class="act-head"><h3>Acte II · Les alibis</h3><span class="label">Preuves 4 à 10</span></div>
+      <div class="pieces">
+
+
+        <article class="piece etiq" data-piece="4">
+          <div class="piece-head"><h4>Déposition de Fine, la cuisinière</h4><span class="num">N° 4</span></div>
+          <div class="body" hidden>
+            <div class="doc">
+              <span class="type">Gendarmerie de Grasse · 15 août, 7 h 15</span>
+              <p>« À 22 h 50, j'ai laissé Berthe à sa tisane et je suis montée me coucher par l'escalier de service. J'étais encore dans l'escalier quand quelqu'un est entré dans la cuisine par le couloir. Je n'ai pas vu qui. J'ai seulement entendu : « Va chercher le miel, je surveille l'eau. » Une voix de jeune femme, douce. Pas la voix d'une dame d'un certain âge, ça non. »</p>
+            </div>
+          </div>
+          <button type="button" class="ghost show">Montrer la preuve 4</button>
+        </article>
+
+        <article class="piece etiq wide" data-piece="5">
+          <div class="piece-head"><h4>Les alibis : bridge et usine</h4><span class="num">N° 5</span></div>
+          <div class="body" hidden>
+            <div class="doc">
+              <span class="type">Salon bleu · 14 août · écriture d'Irène Vasseur</span>
+              <div class="scroll">
+              <table class="t">
+                <tr><td class="type">22:40</td><td>Début. Miss Hale et Mme Vasseur contre Mlle Hortense et Mlle Fabre.</td></tr>
+                <tr><td class="type">22:48</td><td>Mlle Fabre s'excuse (l'usine). Partie suspendue.</td></tr>
+                <tr><td class="type">22:55</td><td>Mlle Hortense sort fumer.</td></tr>
+                <tr><td class="type">23:06</td><td>Reprise. Mlle Fabre et Mlle Hortense reviennent ensemble.</td></tr>
+                <tr><td class="type">23:30</td><td>Fin. Miss Hale et Mme Vasseur gagnent.</td></tr>
+              </table>
+              </div>
+              <p>Note des gendarmes : Augustin, le valet qui servait au salon bleu, confirme que Miss Hale et Mme Vasseur n'ont pas quitté la table entre 22 h 40 et 23 h 30, et que Mlle Hortense y est restée assise jusqu'à 22 h 55.</p>
+            </div>
+            <div class="doc">
+              <span class="type">Usine Aubier · registre de Marius, gardien de nuit</span>
+              <p class="type">22:52 · Mlle Fabre entre (laboratoire de chimie). Arrivée essoufflée, par le chemin de la terrasse.</p>
+              <p class="type">23:02 · Mlle Fabre ressort.</p>
+              <p>Inventaire de l'armoire à poisons fait par les gendarmes à 8 h : flacon de cyanure plein, scellé de cire intact.</p>
+            </div>
+          </div>
+          <button type="button" class="ghost show">Montrer la preuve 5</button>
+        </article>
+
+
+        <article class="piece etiq" data-piece="6">
+          <div class="piece-head"><h4>Le carnet du photographe</h4><span class="num">N° 6</span></div>
+          <div class="body" hidden>
+            <div class="doc">
+              <span class="type">M. Bérard, photographe du Journal de Grasse · plaques au magnésium</span>
+              <div class="scroll">
+              <table class="t">
+                <tr><td class="type">21:40</td><td>N° 4. Grand salon. Madame Aubier et Miss Hale.</td></tr>
+                <tr><td class="type">22:05</td><td>N° 7. Le toast, toutes les dames. Mlle Hortense en robe argentée à franges, cheveux courts. Mlle Dumas en robe ivoire, cheveux courts. Mlle Fabre en tailleur gris, chignon. Mme Vasseur en robe noire et cloche à plumes. Miss Hale en chemisier blanc, long chignon. Berthe au fond, robe noire, chignon gris.</td></tr>
+                <tr><td class="type">22:18</td><td>Mlle Dumas refuse la photo : « Je monte me repoudrer. »</td></tr>
+                <tr><td class="type">22:24</td><td>N° 9. Terrasse. Mlle Hortense danse le charleston.</td></tr>
+                <tr><td class="type">22:28</td><td>N° 9 bis. Toujours la terrasse, Mlle Hortense danse encore. Elle file ensuite vers la bibliothèque.</td></tr>
+                <tr><td class="type">22:31</td><td>N° 10. Porte de la bibliothèque entrouverte : Madame et Mlle Hortense, en colère.</td></tr>
+                <tr><td class="type">22:42</td><td>N° 11. Salon bleu, la table de bridge au complet.</td></tr>
+                <tr><td class="type">23:15</td><td>Plus de magnésium. Je range mon matériel.</td></tr>
+              </table>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="ghost show">Montrer la preuve 6</button>
+        </article>
+
+        <article class="piece etiq" data-piece="7">
+          <div class="piece-head"><h4>Déposition d'Irène Vasseur</h4><span class="num">N° 7</span></div>
+          <div class="body" hidden>
+            <div class="doc">
+              <span class="type">Gendarmerie de Grasse · 15 août, 7 h 40</span>
+              <p>« Vers 22 h 20, je suis montée dans ma chambre, la première porte de l'aile est. En ressortant, vers 22 h 25, j'ai vu au bout du couloir une jeune femme en robe claire, cheveux courts, sortir de la dernière chambre et disparaître par l'escalier de service. Je ne l'ai vue que de dos. Il n'y avait qu'une lampe allumée. »</p>
+            </div>
+          </div>
+          <button type="button" class="ghost show">Montrer la preuve 7</button>
+        </article>
+
+        <article class="piece etiq" data-piece="8">
+          <div class="piece-head"><h4>Le bocal et le livre</h4><span class="num">N° 8</span></div>
+          <div class="body" hidden>
+            <div class="doc">
+              <span class="type">Saisis dans la chambre de Miss Hale</span>
+              <p>Bocal de chasse à papillons. Au fond, du cyanure de potassium sous une couche de plâtre. Le plâtre a été gratté, il manque des cristaux.</p>
+              <p>Sur le lit, « Papillons de Provence », tome II. Glissé dedans, un mot sans signature : « Merci pour le prêt. Il m'a beaucoup appris. » Le papier sent la fleur d'oranger.</p>
+            </div>
+          </div>
+          <button type="button" class="ghost show">Montrer la preuve 8</button>
+        </article>
+
+        <article class="piece etiq" data-piece="9">
+          <div class="piece-head"><h4>L'orgue à parfums</h4><span class="num">N° 9</span></div>
+          <div class="body" hidden>
+            <p class="note">Relevé du laboratoire par les gendarmes, flacons dessinés de gauche à droite. Le fauteuil de Madeleine est placé contre l'extrémité droite de l'orgue.</p>
+            <div class="orgue">
+              <div class="rang"><b>Rangée du haut · Tête</b><div class="fioles">
+                <span class="fiole">Bergamote</span><span class="fiole">Néroli</span><span class="fiole">Mandarine</span><span class="fiole">Citron</span><span class="fiole">Pamplemousse</span><span class="fiole">Menthe</span><span class="fiole">Lavande</span><span class="fiole">Basilic</span><span class="fiole">Petit-grain</span><span class="fiole">Cardamome</span><span class="fiole">Coriandre</span><span class="fiole">Poivre rose</span>
+              </div></div>
+              <div class="rang"><b>Rangée du milieu · Cœur</b><div class="fioles">
+                <span class="fiole">Iris</span><span class="fiole">Tubéreuse</span><span class="fiole">Rose</span><span class="fiole">Muguet</span><span class="fiole">Ylang-ylang</span><span class="fiole">Amande amère</span><span class="fiole">Jasmin</span><span class="fiole">Violette</span><span class="fiole">Œillet</span><span class="fiole">Géranium</span><span class="fiole">Fleur d'oranger</span><span class="fiole">Mimosa</span>
+              </div></div>
+              <div class="rang"><b>Rangée du bas · Fond</b><div class="fioles">
+                <span class="fiole">Ambre</span><span class="fiole">Musc</span><span class="fiole">Santal</span><span class="fiole">Vétiver</span><span class="fiole">Patchouli</span><span class="fiole">Cannelle</span><span class="fiole">Clou de girofle</span><span class="fiole">Vanille</span><span class="fiole">Benjoin</span><span class="fiole">Tonka</span>
+              </div></div>
+            </div>
+            <p class="handnote">« Un nez ne lit pas, il tend la main. Je compte mes flacons depuis mon fauteuil. » M.A.</p>
+            <p class="note">Carte épinglée au-dessus de l'orgue, de la main de Madeleine.</p>
+          </div>
+          <button type="button" class="ghost show">Montrer la preuve 9</button>
+        </article>
+
+        <article class="piece etiq" data-piece="10">
+          <div class="piece-head"><h4>Le registre des parfums personnels</h4><span class="num">N° 10</span></div>
+          <div class="body" hidden>
+            <p class="note">Registre relié de cuir, écriture de Madeleine. Doses en pourcentage.</p>
+            <div class="scroll">
+            <table class="t">
+              <tr><th>Parfum</th><th>Pour</th><th>Tête</th><th>Cœur</th><th>Fond</th></tr>
+              <tr><td><i>Hortense</i></td><td>Hortense, ses 18 ans, 1912</td><td>Bergamote 30</td><td>Rose 40</td><td>Vanille 30</td></tr>
+              <tr><td><i>Petite Aube</i></td><td>Colette, ses 18 ans, 3 mars 1924</td><td>Bergamote 20</td><td>Fleur d'oranger 50</td><td>Vanille 30</td></tr>
+              <tr><td><i>Fidèle</i></td><td>Berthe, trente ans de service, 1918</td><td>Lavande 40</td><td>Rose 30</td><td>Cannelle 30</td></tr>
+              <tr><td><i>Éprouvette</i></td><td>Lucie, 1927</td><td>Citron 30</td><td>Jasmin 40</td><td>Clou de girofle 30</td></tr>
+              <tr><td><i>Miss Hale</i></td><td>Winifred, 1908</td><td>Menthe 20</td><td>Violette 50</td><td>Vanille 30</td></tr>
+            </table>
+            </div>
+            <p class="handnote">En marge de la ligne « Hortense » : « Essai 1926 : Bergamote 20, Rose 50, Vanille 30. Refusé par H. Formule inchangée. »</p>
+          </div>
+          <button type="button" class="ghost show">Montrer la preuve 10</button>
+        </article>
+      </div>
+    </div>
+
+    <div class="stack" style="gap:18px">
+      <div class="act-head"><h3>Acte III · Les secrets</h3><span class="label">Preuves 11 à 14</span></div>
+      <div class="pieces">
+
+        <article class="piece etiq wide" data-piece="11">
+          <div class="piece-head"><h4>Le bureau de Madeleine</h4><span class="num">N° 11</span></div>
+          <div class="body" hidden>
+            <div class="telegram">
+              <span>Grasse 14 août 1928 · 18 h 05</span>
+              <span>À Maître Isnard, notaire, Nice</span>
+              <span>Venez demain à l'aube stop modifier testament stop exclure B. Lacombe et sa fille stop discrétion absolue stop Aubier</span>
+            </div>
+            <p class="note">Copie du télégramme, retrouvée sous le sous-main.</p>
+            <div class="doc mail">
+              <span class="hd">Trouvée sur le bureau de Madeleine · « Nice, le 3 mars 1906 »</span>
+              <p>« Ma Berthe, notre petite est née ce matin. Elle a tes yeux et, je le jure, déjà mon nez. Madeleine ne doit jamais savoir. Nous trouverons un moyen de l'élever près de toi. Ton Henri. »</p>
+              <hr class="sep">
+              <p>Ajouté au crayon, écriture de Madeleine : « Trouvée cet après-midi dans le secrétaire d'Henri. 14 août. »</p>
+            </div>
+          </div>
+          <button type="button" class="ghost show">Montrer la preuve 11</button>
+        </article>
+
+        <article class="piece etiq wide" data-piece="12">
+          <div class="piece-head"><h4>Empreintes et infirmerie</h4><span class="num">N° 12</span></div>
+          <div class="body" hidden>
+            <div class="doc">
+              <span class="type">Service de l'identité judiciaire de Nice · 15 août, 14 h</span>
+              <p>Couvercle de la théière : deux séries d'empreintes.</p>
+              <ul>
+                <li>Pouce et index de Mme Berthe Lacombe (empreintes relevées ce matin avec son accord).</li>
+                <li>Index droit, partiel, d'une autre personne. Une cicatrice récente en forme de croissant traverse la pulpe du doigt.</li>
+              </ul>
+              <p>Les autres dames ont refusé de donner leurs empreintes avant l'arrivée de leur avocat.</p>
+            </div>
+            <div class="doc">
+              <span class="type">Usine Aubier · infirmerie · tenu par Mlle L. Fabre</span>
+              <div class="scroll">
+              <table class="t">
+                <tr><td class="type">12 juin</td><td>Un cueilleur, coupure au sécateur, main gauche.</td></tr>
+                <tr><td class="type">27 juin</td><td>Mlle C. Dumas, brûlure à l'alambic, index droit, en forme de croissant.</td></tr>
+                <tr><td class="type">3 juillet</td><td>Mlle L. Fabre, coupure à la paume gauche (verrerie).</td></tr>
+                <tr><td class="type">2 août</td><td>Mlle H. Aubier, entorse de la cheville (« le charleston »).</td></tr>
+              </table>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="ghost show">Montrer la preuve 12</button>
+        </article>
+
+        <article class="piece etiq wide" data-piece="13">
+          <div class="piece-head"><h4>La fouille des chambres</h4><span class="num">N° 13</span></div>
+          <div class="body" hidden>
+            <div class="doc">
+              <span class="type">Fouille de la chambre d'Irène Vasseur</span>
+              <p>Une page arrachée : la formule complète de Nuit Blanche, de la main de Madeleine. Le bas de la page est taché de tilleul, comme si on l'avait arrachée après que la tasse s'était renversée.</p>
+              <p>Une lettre de la maison Delorme, Paris : « 50 000 francs à la remise de la formule. »</p>
+              <p>Un petit nécessaire de crochets de serrurier.</p>
+            </div>
+            <div class="doc mail">
+              <span class="hd">Carnet de terrain de W. Hale · deux pages</span>
+              <p>« 18 juillet. J'ai prêté le tome II à la petite apprentie de Madeleine. Elle a l'œil, et le nez. Elle m'a demandé pourquoi le bocal sentait l'amande. »</p>
+              <hr class="sep">
+              <p>« 13 août. Je lui ai demandé de venir à Cambridge. Elle a ri doucement : Trop tard, Winnie. »</p>
+            </div>
+          </div>
+          <button type="button" class="ghost show">Montrer la preuve 13</button>
+        </article>
+
+        <article class="piece etiq" data-piece="14">
+          <div class="piece-head"><h4>Le mouchoir · seulement si le groupe est bloqué</h4><span class="num">N° 14</span></div>
+          <div class="body" hidden>
+            <div class="doc">
+              <span class="type">Retrouvé au fond d'un panier de linge sale, aile ouest</span>
+              <p>Mouchoir brodé d'un « C ». Il sent la fleur d'oranger. Dans ses plis, une poussière blanche : du plâtre et des traces de cyanure.</p>
+            </div>
+          </div>
+          <button type="button" class="ghost show">Montrer la preuve 14</button>
+        </article>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="box etiq" id="finPreuves" hidden>
+    <span class="label">Toutes les preuves sont ouvertes</span>
+    <h3>Étape suivante</h3>
+    <p id="finTexte"></p>
+    <a class="next" id="finLien" href="#solo">Continuer →</a>
+  </div>
+</section>
+
+<!-- ============ CARNET D'ENQUÊTE ============ -->
+<section id="carnet" class="stack" hidden>
+  <div class="intro">
+    <h2>Mon carnet d'enquête</h2>
+    <p>Notez où se trouvait chaque femme aux heures qui comptent. Ce carnet reste sur votre appareil, personne d'autre ne le voit.</p>
+  </div>
+  <div class="etiq" style="padding:20px">
+    <div class="grid-wrap">
+      <table class="grid" id="grid"></table>
+    </div>
+  </div>
+  <div class="field">
+    <label for="cn-notes" class="label">Notes libres</label>
+    <textarea id="cn-notes" placeholder="Pistes, calculs, codes essayés…"></textarea>
+  </div>
+  <div class="row"><button type="button" class="ghost" id="cnClear">Effacer mon carnet</button></div>
+</section>
+
+<!-- ============ SOLUTION ============ -->
+<section id="solution" class="stack" hidden>
+  <div class="intro">
+    <h2>Solution</h2>
+    <p>À ouvrir uniquement après l'accusation.</p>
+  </div>
+
+  <div class="lockbox etiq" id="solLock">
+    <span class="label">Cadenas 5 sur 5</span>
+    <h3 style="color:var(--ink);font-size:26px">Le dernier flacon</h3>
+    <p>Tapez le nom du parfum que Madeleine a recopié dans son carnet, avec une seule note changée. Le flacon s'ouvrira sur la vérité.</p>
+    <div class="codeline"><input id="code-final" type="text" autocomplete="off" spellcheck="false" aria-label="Code du dernier flacon"><button type="button" id="solTry">Ouvrir</button></div>
+    <p class="msg" id="solMsg" aria-live="polite"></p>
+    <div class="row"><button type="button" class="ghost" id="solHint">Un indice</button><button type="button" class="ghost" id="solGive" hidden>Abandonner et lire la solution</button></div>
+    <p class="hint" id="solHintTxt" hidden>Décodez les trois lignes du carnet en comptant les flacons comme Madeleine, assise, de droite à gauche. Puis comparez notes et doses avec le registre, en lisant aussi la marge.</p>
+  </div>
+
+  <div class="sol" id="solBody" hidden>
+    <div class="readaloud etiq">
+      <span class="label">À lire à voix haute</span>
+      <p>C'est Colette Dumas qui a tué Madeleine Aubier.</p>
+      <p>Colette est née à Nice le 3 mars 1906, de Berthe et d'Henri Aubier. Cet après-midi, Madeleine a découvert la lettre d'Henri. À 18 h, elle a télégraphié au notaire pour rayer « B. Lacombe et sa fille » de son testament. À 22 h 10, elle a chassé Berthe. Colette écoutait derrière la porte.</p>
+      <p>À 22 h 18, Colette refuse une photo et monte « se repoudrer ». À 22 h 20, dans la chambre de Miss Hale, elle prend du cyanure dans le bocal à papillons, enveloppé dans son mouchoir, et rend le livre emprunté en juillet avec un mot qui sent sa fleur d'oranger. Irène aperçoit de dos sa robe claire et ses cheveux courts à 22 h 25.</p>
+      <p>À 22 h 50, Colette entre dans la cuisine : « Va chercher le miel, je surveille l'eau. » À 22 h 52, Berthe descend à la cave. Colette soulève le couvercle de la théière de son index brûlé et verse le poison. À 22 h 55, Hortense devine sa silhouette à travers la buée. À 22 h 57, Berthe part avec le plateau. À 23 h, elle dit à Madeleine : « C'est la petite qui l'a préparée ce soir. »</p>
+      <p>Madeleine boit, sent l'amande amère et comprend. Il lui reste quelques instants. Alors elle fait ce qu'elle a toujours fait : elle écrit une formule. Le parfum de Colette, « Petite Aube ». Mais à la place du cœur de fleur d'oranger, elle met l'amande amère. L'odeur du poison. Sa dernière note.</p>
+    </div>
+
+    <div class="stack" style="gap:14px">
+      <h3>Décoder la formule</h3>
+      <div class="decode etiq" style="padding:18px">
+        <span>Madeleine comptait depuis son fauteuil, placé à l'extrémité droite de l'orgue : de droite à gauche.</span>
+        <hr class="sep">
+        <span>T-12 · 20 → 12e flacon de la tête en partant de la droite → Bergamote 20</span>
+        <span>C-07 · 50 → 7e flacon du cœur en partant de la droite → Amande amère 50</span>
+        <span>F-03 · 30 → 3e flacon du fond en partant de la droite → Vanille 30</span>
+        <hr class="sep">
+        <span>Piège 1, lecture de gauche à droite : Poivre rose, Jasmin, Santal. Ne correspond à aucun parfum, mais le jasmin fait accuser Lucie.</span>
+        <span>Piège 2, la marge du registre : l'essai 20/50/30 d'Hortense a été refusé. Son parfum reste 30/40/30.</span>
+        <span>Seule correspondance : Petite Aube, Bergamote 20 · Fleur d'oranger 50 · Vanille 30. Seul le cœur change.</span>
+      </div>
+    </div>
+
+    <div class="stack" style="gap:14px">
+      <h3>Le raisonnement complet</h3>
+      <ol class="keys">
+        <li><span class="n">I</span><span><b>Le poison était dans la théière</b> (1), donc versé à la cuisine. La tisane part à 22 h 57 : arrivée à 23 h (1) moins 3 minutes de trajet (3).</span></li>
+        <li><span class="n">II</span><span><b>La voix de 22 h 50</b> est celle d'une jeune femme (4). À 22 h 50, Hortense, Irène et Miss Hale sont au bridge (5). Lucie arrive à l'usine à 22 h 52 (5) : par la cuisine, il lui aurait fallu en sortir à 22 h 48, l'heure même où elle quitte la table. Berthe n'est pas une jeune femme. Reste Colette, qui a quitté le bal à 22 h 18 (6).</span></li>
+        <li><span class="n">III</span><span><b>Le poison vient du bocal de Miss Hale</b> (8). La silhouette de 22 h 25 sort de sa chambre (3, 7) : robe claire, cheveux courts. Miss Hale a un long chignon, Hortense danse sur la terrasse de 22 h 24 à 22 h 28 (6) et il faut 2 minutes pour rejoindre l'aile est. Reste Colette, à qui Miss Hale avait prêté le livre (13), et dont le mot sent la fleur d'oranger, sa note (8, 10).</span></li>
+        <li><span class="n">IV</span><span><b>La formule</b> (2, 9, 10) ne correspond qu'à Petite Aube, le parfum de Colette.</span></li>
+        <li><span class="n">V</span><span><b>La preuve matérielle</b> : l'index à la cicatrice en croissant sur la théière, c'est la brûlure de Colette du 27 juin (12).</span></li>
+        <li><span class="n">VI</span><span><b>Le mobile</b> : la fille de Berthe née le 3 mars 1906 (11) est Colette, dont les 18 ans tombent le 3 mars 1924 (10). Le télégramme les déshérite toutes les deux (11).</span></li>
+      </ol>
+    </div>
+
+    <div class="stack" style="gap:14px">
+      <h3>Les fausses pistes</h3>
+      <ul class="falses">
+        <li><b>Hortense</b> : robe claire, sur la terrasse près de la cuisine à 22 h 55, 200 000 francs de dettes, un parfum « 20/50/30 » dans la marge. Mais elle était au bridge à 22 h 50, son essai a été refusé, et elle n'a jamais été au bout de l'aile est à 22 h 25.</li>
+        <li><b>Berthe</b> : elle a porté la tisane et avait le même mobile. Mais la voix de 22 h 50 n'est pas la sienne, et son empreinte n'a pas de cicatrice.</li>
+        <li><b>Lucie</b> : du cyanure à l'usine, un renvoi annoncé, et le jasmin si l'on lit l'orgue à l'envers. Mais l'armoire est intacte et le plan rend impossible un détour par la cuisine.</li>
+        <li><b>Irène</b> : elle a forcé le laboratoire et volé une page. Mais à 00 h 30, Madeleine était morte depuis plus d'une heure, comme le prouve la tache de tilleul.</li>
+        <li><b>Miss Hale</b> : le poison est le sien et son cœur était brisé. Mais elle n'a pas quitté la table de bridge, et la tête de son parfum est la menthe.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">La Dernière Note · une enquête originale. Les personnages, la Maison Aubier, ses parfums, la maison Delorme et Ambrose &amp; Co. sont inventés.</div>
+</footer>
+
+<script>
+(function(){
+  var KEY = "derniere-note-expert-preuves";
+  var tabs = ["accueil","solo","hote","roles","ecran","preuves","carnet","solution"];
+  function show(){
+    var id = (location.hash || "").slice(1);
+    if (tabs.indexOf(id) < 0) id = "accueil";
+    tabs.forEach(function(t){ document.getElementById(t).hidden = (t !== id); });
+    document.querySelectorAll("nav.tabs a").forEach(function(a){
+      if (a.getAttribute("href") === "#" + id) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current");
+    });
+  }
+  window.addEventListener("hashchange", function(){ show(); window.scrollTo(0, document.querySelector("nav.tabs").offsetTop); });
+  function el(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt) e.textContent = txt; if (tag === "button") e.type = "button"; return e; }
+  function load(k, d){ try { var v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch(e) { return d; } }
+  function store(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
+
+  // Nombre de joueuses
+  var noms = ["Hortense", "Colette", "Berthe", "Lucie", "Irène", "Winifred"];
+  var curN = 4;
+  var ORDRE_SOLO = [
+    "<b>Prologue et interrogatoires</b>, dans l'onglet L'enquête. 15 min.",
+    "<b>Le jeton de vérité</b> : une seule question, avant d'ouvrir les preuves. 2 min.",
+    "<b>Les preuves</b> : ouvrez les 4 cadenas dans l'onglet Les preuves, en notant tout dans Mon carnet. 55 min.",
+    "<b>Aveux et accusation</b> : retour dans L'enquête, une fois les 4 cadenas ouverts. 13 min.",
+    "<b>La solution</b> : tapez le code du dernier cadenas. 5 min."
+  ];
+  var ORDRE_GROUPE = [
+    "<b>Avant la soirée</b> : chacune lit son rôle dans l'onglet Les rôles. C'est ce qui fait tenir la partie en 1 h 30.",
+    "<b>Au début</b> : chacune ouvre l'onglet Mon écran sur son téléphone et choisit son personnage. Ses missions s'affichent à chaque acte.",
+    "<b>Le prologue</b> : l'hôte le lit à voix haute, depuis l'onglet Guide de l'hôte. 5 min.",
+    "<b>Les actes I, II et III</b> : l'hôte montre les preuves, le groupe discute et ouvre les 4 cadenas dans l'onglet Les preuves. Les révélations se lisent à l'acte III. 1 h 10.",
+    "<b>L'accusation</b> : chacune note sur papier sa coupable, le mobile, la méthode et la formule, puis la défend. 10 min.",
+    "<b>La solution</b> : le groupe tape le code du dernier cadenas. 5 min."
+  ];
+  function updateFlow(){
+    var u = unlocked || [], n = u.length, fini = u.indexOf("L4") >= 0, groupe = curN >= 4;
+    var pr = document.getElementById("progression");
+    if (pr) pr.textContent = "Cadenas ouverts : " + n + " sur 4" + (fini ? ". Toutes les preuves sont ouvertes." : ".");
+    document.getElementById("soloAttente").hidden = fini;
+    document.getElementById("soloFin").hidden = !fini;
+    document.getElementById("finPreuves").hidden = !fini;
+    var ft = document.getElementById("finTexte"), fl = document.getElementById("finLien");
+    if (groupe){
+      ft.textContent = "Passez à l'accusation : chacune note sur papier sa coupable, le mobile, la méthode et la lecture de la formule, puis la défend en une minute. Ensuite seulement, ouvrez le dernier cadenas.";
+      fl.textContent = "Aller au dernier cadenas →"; fl.setAttribute("href", "#solution");
+    } else {
+      ft.textContent = "Retournez dans L'enquête pour les aveux et votre accusation. La solution vient après.";
+      fl.textContent = "Continuer l'enquête →"; fl.setAttribute("href", "#solo");
+    }
+  }
+  function setPlayers(n){
+    curN = n;
+    var ol = document.getElementById("ordre"); ol.innerHTML = "";
+    (n >= 4 ? ORDRE_GROUPE : ORDRE_SOLO).forEach(function(h){ var li = document.createElement("li"); li.innerHTML = "<span>" + h + "</span>"; ol.appendChild(li); });
+    document.getElementById("ordreTitre").textContent = n >= 4 ? "La murder party, dans l'ordre" : (n === 1 ? "L'enquête en solo, dans l'ordre" : "L'enquête en équipe, dans l'ordre");
+    if (typeof unlocked !== "undefined") updateFlow();
+    store("derniere-note-joueuses", n);
+    document.querySelectorAll(".picker .nums button").forEach(function(b){ b.setAttribute("aria-pressed", String(+b.getAttribute("data-n") === n)); });
+    var groupe = n >= 4;
+    document.getElementById("nav-solo").hidden = groupe;
+    document.getElementById("nav-hote").hidden = !groupe;
+    document.getElementById("nav-roles").hidden = !groupe;
+    document.getElementById("nav-ecran").hidden = !groupe;
+    if (typeof ecran !== "undefined" && ecran) renderEcran();
+    document.querySelectorAll("[data-min]").forEach(function(r){ r.hidden = n < +r.getAttribute("data-min"); });
+    var t = document.getElementById("pickTitle"), i = document.getElementById("pickInfo"), g = document.getElementById("pickGo");
+    var st = document.getElementById("soloTitle"), sl = document.getElementById("soloLead");
+    if (n === 1){
+      t.textContent = "Seule : vous êtes l'inspectrice";
+      i.textContent = "Vous interrogez les six suspectes, ouvrez les cinq cadenas, posez votre unique question de vérité et déposez une accusation notée sur 12. Environ 1 h 30.";
+      g.textContent = "Commencer l'enquête →"; g.setAttribute("href", "#solo");
+      st.textContent = "L'enquête en solo";
+      sl.textContent = "15 août 1928, 6 h du matin. Vous êtes l'inspectrice Marthe Giraud, envoyée de Nice. Suivez les étapes dans l'ordre et n'ouvrez jamais l'onglet Les rôles : il contient les secrets des suspectes.";
+    } else if (!groupe){
+      t.textContent = n + " joueuses : une équipe d'inspectrices";
+      i.textContent = "Vous enquêtez ensemble, sans incarner de suspecte. Partagez-vous les preuves, comparez vos calculs, choisissez ensemble votre question de vérité et déposez une accusation commune. Environ 1 h 30.";
+      g.textContent = "Commencer l'enquête →"; g.setAttribute("href", "#solo");
+      st.textContent = "L'enquête en équipe";
+      sl.textContent = "15 août 1928, 6 h du matin. Vous formez l'équipe de l'inspectrice Marthe Giraud, envoyée de Nice. Lisez chaque étape à voix haute à tour de rôle et n'ouvrez jamais l'onglet Les rôles : il contient les secrets des suspectes.";
+    } else {
+      var liste = noms.slice(0, n), txt = liste.slice(0, -1).join(", ") + " et " + liste[liste.length - 1];
+      t.textContent = n + " joueuses : la murder party";
+      i.textContent = "Chacune incarne une suspecte avec ses secrets : " + txt + ". Une joueuse fait aussi l'hôte. Environ 1 h 30, rôles lus avant la soirée.";
+      g.textContent = "Commencer par le guide de l'hôte →"; g.setAttribute("href", "#hote");
+      document.getElementById("distrib").textContent = "Vous êtes " + n + ". Distribuez ces rôles, un par joueuse : " + txt + "." + (n < 6 ? " Les personnages non joués existent quand même : ce qu'elles savent arrive par les preuves." : "");
+    }
+    var cur = (location.hash || "").slice(1);
+    if ((groupe && cur === "solo") || (!groupe && (cur === "hote" || cur === "roles" || cur === "ecran"))) location.hash = "accueil";
+  }
+  document.querySelectorAll(".picker .nums button").forEach(function(b){ b.addEventListener("click", function(){ setPlayers(+b.getAttribute("data-n")); }); });
+  var n0 = load("derniere-note-joueuses", 4); setPlayers(n0 >= 1 && n0 <= 6 ? n0 : 4);
+  show();
+
+  // Mon écran : missions par personnage et par acte
+  var MISSIONS = {
+    Hortense: { rappel: "La fille de Madeleine. Tu caches tes dettes et les perles. Tu sais comment ta mère comptait ses flacons.", actes: [
+      ["Raconte toi-même ta dispute de 22 h 30, avant qu'on te la reproche.", "Demande à Berthe pourquoi elle pleurait en sortant du bureau à 22 h 12.", "Demande à chacune où elle était à 22 h 55."],
+      ["Explique au groupe comment ta mère comptait ses flacons, avant que quelqu'un d'autre le trouve.", "Fais dire à Lucie à quelle heure exacte elle a quitté la table de bridge.", "Raconte la silhouette en robe claire vue à travers la buée, au moment que tu choisis."],
+      ["Lis ta révélation à voix haute.", "Convaincs au moins une joueuse que tu ne pouvais pas être la silhouette de l'aile est.", "Défends-toi si on te parle de la marge du registre : ton essai a été refusé."],
+      ["Écris ta coupable, son mobile, la méthode et la formule sur un papier plié.", "Défends ton accusation en une minute."]
+    ]},
+    Colette: { rappel: "L'apprentie. Tu es la coupable : tu as le droit de mentir. Ne laisse jamais accuser Berthe.", actes: [
+      ["Dis à tout le monde que tu es montée te repoudrer à 22 h 18 et que tu n'es plus sortie.", "Pose une question sur l'argent d'Hortense, l'air de rien.", "Pleure Madame de façon crédible au moins une fois."],
+      ["Si on parle de la silhouette de l'aile est, rappelle que la robe d'Hortense aussi est claire.", "Demande à Lucie si elle a la clé de l'armoire à poisons.", "Si le groupe lit l'orgue de gauche à droite, laisse-le faire."],
+      ["Lis ta révélation à voix haute.", "Obtiens qu'au moins deux joueuses soupçonnent Hortense ou Lucie.", "Si on parle de ta cicatrice, reste calme : une brûlure d'alambic, rien de plus."],
+      ["Écris une coupable qui n'est pas toi sur un papier plié.", "Défends-la en une minute, avec conviction."]
+    ]},
+    Berthe: { rappel: "La gouvernante. Tu protèges Colette, ta fille, sans jamais mentir. Tu peux refuser de répondre.", actes: [
+      ["Rappelle que tu as servi Madame pendant quarante ans.", "Refuse poliment de dire qui était avec toi dans la cuisine.", "Demande à Hortense ce qu'elle faisait sur la terrasse à 22 h 55."],
+      ["Demande à Miss Hale, ou au groupe, ce que contient son bocal à papillons.", "Trouve qui, autour de la table, sait lire le carnet de Madame.", "Oriente au moins une fois la discussion vers Lucie ou Irène, sans mentir."],
+      ["Lis ta révélation à voix haute.", "Protège Colette jusqu'au bout sans dire un seul mensonge.", "Si on te demande directement si Colette était dans la cuisine, choisis : te taire ou dire la vérité."],
+      ["Écris ta coupable sur un papier plié.", "Défends ton accusation en une minute."]
+    ]},
+    Lucie: { rappel: "La chimiste. Tu caches ton jasmin de synthèse. Tu tiens le registre de l'infirmerie de l'usine.", actes: [
+      ["Explique que l'amande amère peut venir des amaretti, ou du cyanure.", "Demande à Hortense où elle était à 22 h 55.", "Demande qui savait que Miss Hale gardait du poison."],
+      ["Prouve avec le plan que tu ne pouvais pas passer par la cuisine.", "Glisse que tu tiens le registre de l'infirmerie, sans dire ce qu'il contient.", "Méfie-toi si quelqu'un lit le jasmin dans la formule : c'est ta note."],
+      ["Lis ta révélation à voix haute.", "Rapproche l'empreinte de la théière d'un nom du registre de l'infirmerie.", "Demande à Colette de montrer son index droit."],
+      ["Écris ta coupable sur un papier plié.", "Défends ton accusation en une minute."]
+    ]},
+    "Irène": { rappel: "La chroniqueuse parisienne. Tu caches la page volée et ta visite au laboratoire à 00 h 30.", actes: [
+      ["Pose une question à chaque joueuse, comme une journaliste en interview.", "Raconte la silhouette de 22 h 25, telle que tu l'as vue, sans plus.", "Note qui ment le plus mal, selon toi."],
+      ["Demande qui, au toast de 22 h, avait les cheveux courts et une robe claire.", "Détourne la conversation si quelqu'un parle du laboratoire après minuit.", "Propose d'identifier la chambre au bout du couloir avec le plan."],
+      ["Lis ta révélation à voix haute.", "Prouve que Madame était déjà morte à 00 h 30 grâce à la tache de tilleul.", "Demande à Colette où elle était exactement à 22 h 25."],
+      ["Écris ta coupable sur un papier plié.", "Défends ton accusation en une minute."]
+    ]},
+    Winifred: { rappel: "L'entomologiste anglaise. Ton bocal contient le poison. Tu caches ton amour pour Madeleine.", actes: [
+      ["Raconte tes vingt étés à Grasse avec Madeleine.", "Dis que ta chambre n'est jamais fermée à clé.", "Demande qui est monté dans l'aile est pendant le bal."],
+      ["Révèle ce que contient ton bocal à papillons, au moment que tu choisis.", "Décide si tu dis à qui tu as prêté ton livre en juillet, et dis-le à une seule joueuse en aparté.", "Demande à Irène ce qu'elle faisait dans l'aile est à 22 h 25."],
+      ["Lis ta révélation à voix haute.", "Raconte qui t'avait demandé pourquoi ton bocal sentait l'amande.", "Rappelle que la tête de ton parfum est la menthe, pas la bergamote."],
+      ["Écris ta coupable sur un papier plié.", "Défends ton accusation en une minute."]
+    ]}
+  };
+  var EKEY = "derniere-note-ecran";
+  var ecran = load(EKEY, { perso: "", acte: 0, faits: {} });
+  var ACTES = ["Acte I · La nuit", "Acte II · Les alibis", "Acte III · Les secrets", "L'accusation"];
+  function saveEcran(){ store(EKEY, ecran); }
+  function renderEcran(){
+    var box = document.getElementById("ecranPersos"); if (!box) return;
+    var dispo = noms.slice(0, Math.min(Math.max(curN, 4), 6));
+    if (ecran.perso && dispo.indexOf(ecran.perso) < 0) ecran.perso = "";
+    box.innerHTML = "";
+    dispo.forEach(function(nom){
+      var b = el("button", "", nom); b.setAttribute("aria-pressed", String(ecran.perso === nom));
+      b.addEventListener("click", function(){ choisir(nom); });
+      box.appendChild(b);
+    });
+    var jeu = document.getElementById("ecranJeu"), choix = document.getElementById("ecranChoix");
+    if (!ecran.perso){ jeu.hidden = true; choix.hidden = false; return; }
+    choix.hidden = true; jeu.hidden = false;
+    var M = MISSIONS[ecran.perso];
+    document.getElementById("ecranQui").textContent = "Vous jouez";
+    document.getElementById("ecranNom").textContent = ecran.perso;
+    document.getElementById("ecranRappel").textContent = M.rappel;
+    document.querySelectorAll("#ecranActes button").forEach(function(b){ b.setAttribute("aria-pressed", String(+b.getAttribute("data-acte") === ecran.acte)); });
+    document.getElementById("ecranActeTitre").textContent = ACTES[ecran.acte];
+    var ul = document.getElementById("ecranMissions"); ul.innerHTML = "";
+    var faites = 0;
+    M.actes[ecran.acte].forEach(function(txt, i){
+      var key = ecran.perso + "-" + ecran.acte + "-" + i, done = !!ecran.faits[key];
+      if (done) faites++;
+      var li = el("li", done ? "done" : ""), lab = el("label"), cb = el("input"); cb.type = "checkbox"; cb.checked = done; cb.id = "m-" + key.replace(/[^a-zA-Z0-9-]/g, "");
+      cb.addEventListener("change", function(){ ecran.faits[key] = cb.checked; saveEcran(); renderEcran(); });
+      lab.appendChild(cb); lab.appendChild(el("span", "", txt)); li.appendChild(lab); ul.appendChild(li);
+    });
+    document.getElementById("ecranScore").textContent = faites + " mission" + (faites > 1 ? "s" : "") + " accomplie" + (faites > 1 ? "s" : "") + " sur " + M.actes[ecran.acte].length + " pour cet acte.";
+  }
+  function choisir(nom){
+    var c = document.getElementById("ecranConfirm"); c.innerHTML = "";
+    c.appendChild(el("span", "", "Vous jouez bien " + nom + " ? "));
+    var y = el("button", "", "Oui, c'est moi"); y.style.marginLeft = "8px";
+    y.addEventListener("click", function(){ ecran.perso = nom; ecran.acte = 0; saveEcran(); c.innerHTML = ""; renderEcran(); });
+    c.appendChild(y);
+  }
+  document.querySelectorAll("#ecranActes button").forEach(function(b){
+    b.addEventListener("click", function(){ ecran.acte = +b.getAttribute("data-acte"); saveEcran(); renderEcran(); });
+  });
+  document.getElementById("ecranChanger").addEventListener("click", function(){ ecran.perso = ""; saveEcran(); renderEcran(); });
+  renderEcran();
+
+  // Rôles
+  document.querySelectorAll(".ask").forEach(function(box){
+    var name = box.getAttribute("data-for"), secret = box.parentElement.querySelector(".secret");
+    function initial(){
+      box.innerHTML = "";
+      var b = el("button", "stopper", "DÉBOUCHER"); b.setAttribute("aria-label", "Ouvrir le rôle secret de " + name);
+      b.onclick = confirmStep; box.appendChild(b); box.appendChild(el("span", "note", "Rôle secret de " + name));
+    }
+    function confirmStep(){
+      box.innerHTML = "";
+      var y = el("button", "", "Oui, c'est moi"), no = el("button", "ghost", "Annuler");
+      y.onclick = function(){ secret.hidden = false; box.innerHTML = ""; var h = el("button", "ghost", "Refermer mon rôle"); h.onclick = function(){ secret.hidden = true; initial(); }; box.appendChild(h); };
+      no.onclick = initial;
+      box.appendChild(el("span", "", "Tu joues bien " + name + " ?")); box.appendChild(y); box.appendChild(no);
+    }
+    initial();
+  });
+
+  // Preuves
+  var opened = load(KEY, []);
+  document.querySelectorAll(".piece").forEach(function(p){
+    var id = p.getAttribute("data-piece"), body = p.querySelector(".body"), btn = p.querySelector(".show");
+    function set(open){ body.hidden = !open; btn.hidden = open; }
+    set(opened.indexOf(id) >= 0);
+    btn.addEventListener("click", function(){ if (opened.indexOf(id) < 0) opened.push(id); store(KEY, opened); set(true); });
+    p._set = set;
+  });
+
+  // Cadenas
+  function norm(s){ return (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase().replace(/[^A-Z0-9]/g, ""); }
+  var LKEY = "derniere-note-expert-cadenas";
+  function dateOk(raw){
+    var t = norm(raw);
+    if (/^0?3MARS1906$/.test(t)) return true;
+    var m = (raw || "").match(/(\d{1,2})\D+(\d{1,2})\D+(\d{4})/);
+    if (m) return +m[1] === 3 && +m[2] === 3 && m[3] === "1906";
+    var d = (raw.match(/\d/g) || []).join("");
+    return d === "03031906" || d === "3031906" || d === "331906";
+  }
+  var LOCKS = [
+    { id:"L1", titre:"Le plateau", pieces:["4","5","6","7"], num:true, format:"une heure, par exemple 21 h 30",
+      enigme:"À quelle heure exacte la tisane a-t-elle quitté la cuisine ?", rep:["2257"],
+      indice:"La preuve 1 donne l'heure à laquelle Berthe a posé le plateau au laboratoire. Le plan donne le temps de trajet depuis la cuisine." },
+    { id:"L2", titre:"La porte de l'aile est", pieces:["8","9","10"], format:"un prénom",
+      enigme:"D'après la déposition d'Irène et le plan, de quelle chambre la silhouette est-elle sortie ? Tapez le prénom de son occupante.", rep:["WINIFRED","MISSHALE","HALE","WINIFREDHALE"],
+      indice:"Irène parle de la dernière chambre au bout du couloir de l'aile est. Regardez l'étage sur le plan." },
+    { id:"L3", titre:"Le cadran de l'usine", pieces:["11","12"], num:true, format:"une heure, par exemple 21 h 30",
+      enigme:"Lucie est arrivée à l'usine à l'heure notée par le gardien. Supposons qu'elle soit passée par la cuisine juste avant : à quelle heure, au plus tard, aurait-elle dû sortir de la cuisine ? Ne comptez que le trajet cuisine → usine.", rep:["2248"],
+      special:{"2247":"Presque : vous avez ajouté le trajet salon → cuisine. Ici, on cherche l'heure de sortie de la cuisine, donc seul le trajet cuisine → usine compte."},
+      indice:"Heure d'arrivée chez le gardien, moins le trajet de la cuisine à l'usine indiqué sur le plan. Comparez ensuite avec la feuille de bridge." },
+    { id:"L4", titre:"Le secrétaire d'Henri", pieces:["13"], format:"une date, par exemple 14/08/1928", date:true,
+      enigme:"Quelle est la date de naissance de la fille de Berthe ?", rep:["03031906","3031906"],
+      indice:"La lettre trouvée dans le bureau est datée du jour même de la naissance." }
+  ];
+  var unlocked = load(LKEY, []);
+  function pieceEl(id){ return document.querySelector('.piece[data-piece="' + id + '"]'); }
+  LOCKS.forEach(function(L, i){
+    var first = pieceEl(L.pieces[0]);
+    var box = el("article", "lock etiq");
+    box.innerHTML = '<span class="label">Cadenas ' + (i + 1) + ' sur 5</span><h4></h4><p class="enigme"></p><p class="note"></p>' +
+      '<div class="codeline"><input type="text" autocomplete="off" spellcheck="false"><button type="button">Ouvrir</button></div>' +
+      '<p class="msg" aria-live="polite"></p><div class="row"><button type="button" class="ghost">Un indice</button></div><p class="hint" hidden></p>';
+    box.querySelector("h4").textContent = L.titre;
+    box.querySelector(".enigme").textContent = L.enigme;
+    box.querySelector(".note").textContent = "Réponse attendue : " + L.format + ".";
+    var input = box.querySelector("input"); input.id = "code-" + L.id; input.setAttribute("aria-label", "Code du cadenas " + (i + 1));
+    var hint = box.querySelector(".hint"); hint.textContent = L.indice;
+    var msg = box.querySelector(".msg"), btns = box.querySelectorAll("button"), tries = 0;
+    function tryCode(){
+      var v = norm(input.value), d = (input.value.match(/\d/g) || []).join("");
+      var ok = L.rep.indexOf(v) >= 0 || (L.num && L.rep.indexOf(d) >= 0) || (L.date && dateOk(input.value));
+      if (ok){ if (unlocked.indexOf(L.id) < 0) unlocked.push(L.id); store(LKEY, unlocked); renderLocks(); return; }
+      tries++; msg.className = "msg bad";
+      if (!input.value.trim()) msg.textContent = "Tapez un code.";
+      else if (L.special && L.special[d]) msg.textContent = L.special[d];
+      else msg.textContent = "Le cadenas ne bouge pas. Essai " + tries + "." + (tries >= 3 && hint.hidden ? " Essayez l'indice." : "");
+    }
+    btns[0].addEventListener("click", tryCode);
+    input.addEventListener("keydown", function(e){ if (e.key === "Enter") tryCode(); });
+    btns[1].addEventListener("click", function(){ hint.hidden = false; });
+    var wait = el("p", "locked-note", "Cadenas " + (i + 1) + " : verrouillé. Ouvrez d'abord le cadenas précédent.");
+    first.parentNode.insertBefore(box, first); first.parentNode.insertBefore(wait, box);
+    L.box = box; L.wait = wait;
+  });
+  function renderLocks(){
+    LOCKS.forEach(function(L, i){
+      var ok = unlocked.indexOf(L.id) >= 0, prevOk = i === 0 || unlocked.indexOf(LOCKS[i - 1].id) >= 0;
+      L.box.hidden = ok || !prevOk; L.wait.hidden = ok || prevOk;
+      L.pieces.forEach(function(p){ pieceEl(p).hidden = !ok; });
+    });
+    var l5 = unlocked.indexOf("L4") >= 0, bloque = load("derniere-note-bloque", false);
+    secours.hidden = !l5 || bloque;
+    pieceEl("14").hidden = !(l5 && bloque);
+    updateFlow();
+  }
+  var secours = el("div", "locked-note");
+  secours.appendChild(el("p", "", "La preuve 14 est une aide de secours. Ne l'ouvrez que si vous êtes bloquées depuis 10 minutes."));
+  var bSec = el("button", "ghost", "Nous sommes bloquées : ouvrir la preuve 14");
+  bSec.style.marginTop = "10px";
+  bSec.addEventListener("click", function(){ store("derniere-note-bloque", true); renderLocks(); });
+  secours.appendChild(bSec);
+  pieceEl("14").parentNode.insertBefore(secours, pieceEl("14"));
+  renderLocks();
+  document.getElementById("hideAll").addEventListener("click", function(){
+    opened = []; store(KEY, opened);
+    document.querySelectorAll(".piece").forEach(function(p){ p._set(false); });
+    unlocked = []; store(LKEY, unlocked); store("derniere-note-bloque", false); renderLocks();
+    document.querySelectorAll(".lock input").forEach(function(x){ x.value = ""; });
+    document.querySelectorAll(".lock .msg").forEach(function(m){ m.textContent = ""; });
+  });
+
+  // Dernier cadenas
+  var solTries = 0;
+  function openSol(){ document.getElementById("solLock").hidden = true; document.getElementById("solBody").hidden = false; }
+  function trySol(){
+    var v = norm(document.getElementById("code-final").value), m = document.getElementById("solMsg");
+    if (v === "PETITEAUBE"){ openSol(); return; }
+    solTries++; m.className = "msg bad";
+    if (["COLETTE","COLETTEDUMAS","HORTENSE","BERTHE","LUCIE","IRENE","WINIFRED","MISSHALE"].indexOf(v) >= 0) m.textContent = "Le cadenas attend le nom d'un parfum, pas celui d'une personne. Cherchez dans le registre.";
+    else m.textContent = "Le flacon reste scellé. Essai " + solTries + ".";
+    if (solTries >= 3) document.getElementById("solGive").hidden = false;
+  }
+  document.getElementById("solTry").addEventListener("click", trySol);
+  document.getElementById("code-final").addEventListener("keydown", function(e){ if (e.key === "Enter") trySol(); });
+  document.getElementById("solHint").addEventListener("click", function(){ document.getElementById("solHintTxt").hidden = false; });
+  document.getElementById("solGive").addEventListener("click", openSol);
+
+  // Solo
+  document.getElementById("avOpen").addEventListener("click", function(){ document.getElementById("aveux").hidden = false; this.hidden = true; });
+  document.querySelectorAll("#jeton button").forEach(function(b){
+    b.addEventListener("click", function(){
+      var rep = document.getElementById("jetonRep");
+      rep.textContent = b.textContent + " " + b.getAttribute("data-a"); rep.hidden = false;
+      document.getElementById("jeton").hidden = true;
+    });
+  });
+  document.getElementById("accuse").addEventListener("submit", function(e){
+    e.preventDefault();
+    function v(id){ return document.getElementById(id).value; }
+    var pts = 0;
+    if (v("f-qui") === "Colette") pts += 3;
+    if (v("f-sens") === "ok") pts += 1;
+    if (v("f-formule") === "Colette") pts += 2;
+    if (v("f-source") === "ok") pts += 1;
+    if (v("f-quand") === "ok") pts += 2;
+    if (v("f-preuve") === "ok") pts += 1;
+    if (v("f-mobile") === "ok") pts += 2;
+    var details = [["Coupable", v("f-qui") === "Colette"], ["Sens de l'orgue", v("f-sens") === "ok"], ["Parfum de la formule", v("f-formule") === "Colette"], ["Source du poison", v("f-source") === "ok"], ["Moment et lieu", v("f-quand") === "ok"], ["Preuve matérielle", v("f-preuve") === "ok"], ["Mobile", v("f-mobile") === "ok"]];
+    var titre = pts === 12 ? "Le plus grand nez de Grasse" : pts >= 9 ? "Inspectrice de premier ordre" : pts >= 6 ? "Apprentie enquêtrice" : "L'assassin court toujours";
+    var out = document.getElementById("verdict"); out.innerHTML = "";
+    var big = el("span", "big", pts + " / 12");
+    var t = el("p", "", titre); t.style.fontFamily = "var(--deco)"; t.style.fontSize = "22px";
+    var l = el("p"); l.innerHTML = 'Ouvrez le dernier cadenas dans l\'onglet <a href="#solution">Solution</a> pour découvrir la vérité.';
+    var ul = el("ul"); ul.style.margin = "0"; ul.style.paddingLeft = "20px";
+    details.forEach(function(x){ ul.appendChild(el("li", "", x[0] + " : " + (x[1] ? "juste" : "faux"))); });
+    out.appendChild(big); out.appendChild(t); out.appendChild(ul); out.appendChild(l); out.hidden = false;
+  });
+
+  // Carnet d'enquête
+  var heures = ["22:05", "22:18", "22:25", "22:50", "22:55", "23:00", "00:30"];
+  var CKEY = "derniere-note-carnet";
+  var notes = load(CKEY, {});
+  var grid = document.getElementById("grid");
+  var thead = el("tr"); thead.appendChild(el("th", "", ""));
+  heures.forEach(function(h){ thead.appendChild(el("th", "", h)); });
+  grid.appendChild(thead);
+  noms.forEach(function(nom, r){
+    var tr = el("tr"); tr.appendChild(el("td", "", nom));
+    heures.forEach(function(h, c){
+      var td = el("td"), inp = el("input"); inp.type = "text"; inp.id = "cn-" + r + "-" + c;
+      inp.setAttribute("aria-label", nom + " à " + h); inp.value = notes[inp.id] || "";
+      inp.addEventListener("input", function(){ notes[inp.id] = inp.value; store(CKEY, notes); });
+      td.appendChild(inp); tr.appendChild(td);
+    });
+    grid.appendChild(tr);
+  });
+  var ta = document.getElementById("cn-notes"); ta.value = notes.libre || "";
+  ta.addEventListener("input", function(){ notes.libre = ta.value; store(CKEY, notes); });
+  document.getElementById("cnClear").addEventListener("click", function(){
+    notes = {}; store(CKEY, notes); document.querySelectorAll("#grid input").forEach(function(x){ x.value = ""; }); ta.value = "";
+  });
+
+  document.getElementById("copyInvit").addEventListener("click", function(){
+    var txt = document.getElementById("invit").textContent, msg = document.getElementById("copyMsg");
+    function fallback(){ var r = document.createRange(); r.selectNodeContents(document.getElementById("invit")); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); msg.textContent = "Texte sélectionné, copiez-le avec Cmd+C ou Ctrl+C."; }
+    try { navigator.clipboard.writeText(txt).then(function(){ msg.textContent = "Invitation copiée."; }, fallback); } catch(e) { fallback(); }
+  });
+})();
+</script>
+
+</body>
+</html>
