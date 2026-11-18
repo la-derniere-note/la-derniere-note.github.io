@@ -286,9 +286,9 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:15px;text-align:cent
     <p class="tag">Avant de mourir, le plus grand nez de Grasse a désigné son assassin. <em>Avec une formule de parfum.</em></p>
     <div class="deco-rule" aria-hidden="true">◆</div>
     <div class="facts">
-      <span class="chip hot">niveau expert</span>
+      <span class="chip hot">pour celles qui aiment chercher</span>
       <span class="chip">de 1 à 6 joueuses</span>
-      <span class="chip">1 h 30</span>
+      <span class="chip">environ 2 h</span>
       <span class="chip">14 preuves · 5 cadenas</span>
     </div>
   </div>
@@ -421,6 +421,7 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:15px;text-align:cent
     <p class="code-geant" id="salonCodeAff"></p>
     <p id="salonConsigne"></p>
     <ul class="salon-liste" id="salonListe"></ul>
+    <p class="note" id="salonExclusNote" hidden>Une joueuse découvre les jeux d'enquête ? Cochez « pas coupable » à côté de son prénom : le tirage ne lui donnera pas le rôle de la coupable.</p>
     <p class="msg bad" id="salonMsg2" aria-live="polite"></p>
     <div class="row"><button type="button" id="salonLancer" hidden>Lancer la partie</button><button type="button" class="ghost" id="salonQuitter">Quitter la partie</button></div>
   </div>
@@ -430,6 +431,12 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:15px;text-align:cent
     <h3 id="salonRoleNom"></h3>
     <p>Lisez votre rôle en silence pendant 5 minutes, puis suivez vos missions acte par acte. Les preuves et les cadenas s'affichent sur tous les téléphones en même temps : quand l'une ouvre un cadenas, toutes voient la suite.</p>
     <p class="note" id="salonHoteNote"></p>
+    <div class="readaloud" id="salonPrologue" hidden style="padding:0">
+      <span class="label">Prologue · à lire à voix haute</span>
+      <p>Grasse, nuit du 14 au 15 août 1928. À la bastide Aubier, on danse sur la terrasse : à l'aube commence la cueillette du jasmin. Madeleine Aubier, 58 ans, le nez le plus respecté de la ville, lève son verre à 22 h. « À l'aube, je vous présenterai Nuit Blanche, mon dernier parfum. Et je désignerai celle qui me succédera. »</p>
+      <p>Comme chaque soir, on lui porte une tisane de tilleul dans son laboratoire, au fond du jardin. À 5 h 10, sa fille la retrouve morte au pied de son orgue à parfums. Sur son carnet, ouvert, une dernière ligne d'une écriture tremblée.</p>
+      <p>Le docteur parle de poison. Les gendarmes ferment la bastide. Six femmes y ont passé la nuit. Toutes avaient une raison de la haïr. Une seule l'a tuée. Et Madeleine, avant de mourir, a écrit qui.</p>
+    </div>
     <div class="row"><a class="next" href="#ecran">Mon rôle et mes missions</a><a class="next" href="#preuves">Les preuves</a></div>
     <div class="row"><button type="button" class="ghost" id="salonQuitter2">Quitter la partie</button></div>
   </div>
@@ -505,7 +512,7 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:15px;text-align:cent
   </div>
 
   <div class="stack" style="gap:16px">
-    <div class="act-head"><h3>Étape 4 · Les preuves et les cadenas</h3><span class="label">55 min</span></div>
+    <div class="act-head"><h3>Étape 4 · Les preuves et les cadenas</h3><span class="label">1 h 20</span></div>
     <p>Ouvrez l'onglet Les preuves. Lisez chaque preuve en prenant des notes. Chaque nouvelle série est fermée par un cadenas : le code se déduit en croisant les preuves déjà ouvertes et les interrogatoires ci-dessus. Gardez la preuve 14 pour la fin, si vous êtes bloquée. Quand les 4 cadenas sont ouverts, revenez ici pour la suite.</p>
     <a class="next" href="#preuves">Aller aux preuves →</a>
   </div>
@@ -566,7 +573,7 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:15px;text-align:cent
       <li>Envoyez à chacune le lien de cette page et le nom de son personnage. Elle ouvre uniquement son rôle, deux ou trois jours avant, pour bien le connaître.</li>
       <li><b>Le plus simple : la partie en ligne.</b> Onglet Partie en ligne, créez la partie et envoyez le code à vos amies. Les rôles sont tirés au sort au lancement, et les actes, missions, preuves et cadenas se synchronisent sur tous les téléphones. Les points ci-dessous ne servent que si vous préférez distribuer les rôles vous-même.</li>
       <li>En visio : un appel où vous pouvez partager votre écran pour les preuves et les cadenas.</li>
-      <li>Au salon : un écran au centre, du papier et des crayons pour chacune. Le niveau expert se joue en prenant des notes.</li>
+      <li>Au salon : un écran au centre, du papier et des crayons pour chacune. L'enquête se joue en prenant des notes.</li>
       <li>Ambiance : bougies, jazz des années 1920, sirop de fleur d'oranger allongé d'eau pétillante, avec ou sans champagne. Et des amaretti, évidemment.</li>
       <li>Tenue : années folles. Robes droites, sautoirs, bandeaux, gants.</li>
     </ul>
@@ -603,7 +610,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     <h3 class="sub">Déroulé de la soirée</h3>
     <div class="timeline">
       <div class="tl">
-        <span class="when">0:00 · 5 min</span>
+        <span class="when">0:00 · 10 min</span>
         <h3>Prologue</h3>
         <div class="readaloud etiq">
           <span class="label">À lire à voix haute</span>
@@ -613,7 +620,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
         </div>
       </div>
       <div class="tl">
-        <span class="when">0:05 · 15 min</span>
+        <span class="when">0:10 · 20 min</span>
         <h3>Acte I · La nuit</h3>
         <ul>
           <li>Chaque joueuse lit la présentation de son personnage (le texte en italique en haut de son rôle).</li>
@@ -622,7 +629,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
         </ul>
       </div>
       <div class="tl">
-        <span class="when">0:20 · 35 min</span>
+        <span class="when">0:30 · 45 min</span>
         <h3>Acte II · Les alibis</h3>
         <ul>
           <li>Le cadenas 1 ouvre les preuves 4 à 7, le cadenas 2 les preuves 8 à 10. Laissez le groupe calculer : c'est le cœur du jeu.</li>
@@ -631,7 +638,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
         </ul>
       </div>
       <div class="tl">
-        <span class="when">0:55 · 20 min</span>
+        <span class="when">1:15 · 25 min</span>
         <h3>Acte III · Les secrets</h3>
         <ul>
           <li>Tour de table : chaque joueuse lit sa révélation obligatoire (l'encadré doré de son rôle).</li>
@@ -639,12 +646,12 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
         </ul>
       </div>
       <div class="tl">
-        <span class="when">1:15 · 10 min</span>
+        <span class="when">1:40 · 15 min</span>
         <h3>L'accusation</h3>
         <p>Chaque joueuse note en secret : la coupable, le mobile, la méthode et le moment, la preuve matérielle, et la lecture de la formule. Puis chacune défend sa réponse en une minute.</p>
       </div>
       <div class="tl">
-        <span class="when">1:25 · 5 min</span>
+        <span class="when">1:55 · 5 min</span>
         <h3>Le dernier cadenas</h3>
         <p>Le groupe tape le code du dernier flacon dans l'onglet Solution. Après trois erreurs, on peut abandonner et lire la vérité. Avec le kit, faites sentir le parfum désigné à la fin.</p>
       </div>
@@ -674,7 +681,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
       <tr><td>Trouver le mobile</td><td class="r">2 pts</td></tr>
       <tr><td>Trouver la méthode et le moment exact</td><td class="r">2 pts</td></tr>
       <tr><td>Nommer la preuve matérielle</td><td class="r">1 pt</td></tr>
-      <tr><td>Chaque objectif personnel atteint (voir son rôle)</td><td class="r">1 pt</td></tr>
+      <tr><td>Chaque objectif personnel atteint (voir son rôle). Les missions de Mon écran ne rapportent pas de points : elles servent à faire parler.</td><td class="r">1 pt</td></tr>
       <tr><td>La coupable, si la majorité ne l'a pas désignée</td><td class="r">6 pts</td></tr>
     </table>
     </div>
@@ -1384,7 +1391,8 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     <p>Tapez le nom du parfum que Madeleine a recopié dans son carnet, avec une seule note changée. Le flacon s'ouvrira sur la vérité.</p>
     <div class="codeline"><input id="code-final" type="text" autocomplete="off" spellcheck="false" aria-label="Code du dernier flacon"><button type="button" id="solTry">Ouvrir</button></div>
     <p class="msg" id="solMsg" aria-live="polite"></p>
-    <div class="row"><button type="button" class="ghost" id="solHint">Un indice</button><button type="button" class="ghost" id="solGive" hidden>Abandonner et lire la solution</button></div>
+    <div class="row"><button type="button" class="ghost" id="solHint">Un indice</button><button type="button" class="ghost" id="solHint2" hidden>Un indice de plus</button><button type="button" class="ghost" id="solGive" hidden>Abandonner et lire la solution</button></div>
+    <p class="hint" id="solHintTxt2" hidden>Le cadenas attend le nom d'un des cinq parfums du registre : Hortense, Petite Aube, Fidèle, Éprouvette ou Miss Hale. Un seul correspond à la formule, à une note près.</p>
     <p class="hint" id="solHintTxt" hidden>Décodez les trois lignes du carnet en comptant les flacons comme Madeleine, assise, de droite à gauche. Puis comparez notes et doses avec le registre, en lisant aussi la marge.</p>
   </div>
 
@@ -1469,16 +1477,17 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
   var ORDRE_SOLO = [
     "<b>Prologue et interrogatoires</b>, dans l'onglet L'enquête. 15 min.",
     "<b>Le jeton de vérité</b> : une seule question, avant d'ouvrir les preuves. 2 min.",
-    "<b>Les preuves</b> : ouvrez les 4 cadenas dans l'onglet Les preuves, en notant tout dans Mon carnet. 55 min.",
+    "<b>Les preuves</b> : ouvrez les 4 cadenas dans l'onglet Les preuves, en notant tout dans Mon carnet. 1 h 20.",
     "<b>Aveux et accusation</b> : retour dans L'enquête, une fois les 4 cadenas ouverts. 13 min.",
     "<b>La solution</b> : tapez le code du dernier cadenas. 5 min."
   ];
   var ORDRE_GROUPE = [
-    "<b>L'organisatrice crée la partie</b> dans l'onglet Partie en ligne et envoie le code à ses amies.",
+    "<b>L'organisatrice crée la partie</b> dans l'onglet Partie en ligne et envoie le lien du site et le code à ses amies.",
     "<b>Chacune la rejoint</b> sur son téléphone avec ce code. Quand tout le monde est là, l'organisatrice lance la partie : les rôles sont tirés au sort.",
-    "<b>5 minutes de lecture</b> : chacune lit son rôle en silence dans Mon écran.",
-    "<b>Les actes I, II et III</b> : l'organisatrice change d'acte, les missions et les preuves suivent sur tous les téléphones. Le groupe ouvre les 4 cadenas ensemble. 1 h 05.",
-    "<b>L'accusation</b> : chacune note sur papier sa coupable, le mobile, la méthode et la formule, puis la défend. 10 min.",
+    "<b>Le prologue</b> : il s'affiche sur le téléphone de l'organisatrice, qui le lit à voix haute. 3 min.",
+    "<b>La lecture des rôles</b> : chacune lit le sien en silence dans Mon écran. 5 min.",
+    "<b>Les actes I, II et III</b> : l'organisatrice change d'acte, les missions et les preuves suivent sur tous les téléphones. Le groupe ouvre les 4 cadenas ensemble. 1 h 20.",
+    "<b>L'accusation</b> : chacune note sur papier sa coupable, le mobile, la méthode et la formule, puis la défend. 15 min.",
     "<b>La solution</b> : le groupe tape le code du dernier cadenas. 5 min."
   ];
   function updateFlow(){
@@ -1517,20 +1526,20 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     var st = document.getElementById("soloTitle"), sl = document.getElementById("soloLead");
     if (n === 1){
       t.textContent = "Seule : vous êtes l'inspectrice";
-      i.textContent = "Vous interrogez les six suspectes, ouvrez les cinq cadenas, posez votre unique question de vérité et déposez une accusation notée sur 12. Environ 1 h 30.";
+      i.textContent = "Vous interrogez les six suspectes, ouvrez les cinq cadenas, posez votre unique question de vérité et déposez une accusation notée sur 12. Environ 2 h.";
       g.textContent = "Commencer l'enquête →"; g.setAttribute("href", "#solo");
       st.textContent = "L'enquête en solo";
       sl.textContent = "15 août 1928, 6 h du matin. Vous êtes l'inspectrice Marthe Giraud, envoyée de Nice. Suivez les étapes dans l'ordre et n'ouvrez jamais l'onglet Les rôles : il contient les secrets des suspectes.";
     } else if (!groupe){
       t.textContent = n + " joueuses : une équipe d'inspectrices";
-      i.textContent = "Vous enquêtez ensemble, sans incarner de suspecte. Partagez-vous les preuves, comparez vos calculs, choisissez ensemble votre question de vérité et déposez une accusation commune. Environ 1 h 30.";
+      i.textContent = "Vous enquêtez ensemble, sans incarner de suspecte. Partagez-vous les preuves, comparez vos calculs, choisissez ensemble votre question de vérité et déposez une accusation commune. Environ 2 h.";
       g.textContent = "Commencer l'enquête →"; g.setAttribute("href", "#solo");
       st.textContent = "L'enquête en équipe";
       sl.textContent = "15 août 1928, 6 h du matin. Vous formez l'équipe de l'inspectrice Marthe Giraud, envoyée de Nice. Lisez chaque étape à voix haute à tour de rôle et n'ouvrez jamais l'onglet Les rôles : il contient les secrets des suspectes.";
     } else {
       var liste = noms.slice(0, n), txt = liste.slice(0, -1).join(", ") + " et " + liste[liste.length - 1];
       t.textContent = n + " joueuses : la murder party";
-      i.textContent = "Chacune joue sur son téléphone. L'organisatrice crée la partie, les autres la rejoignent avec un code, et les rôles (" + txt + ") sont tirés au sort. Environ 1 h 30.";
+      i.textContent = "Chacune joue sur son téléphone. L'organisatrice crée la partie, les autres la rejoignent avec un code, et les rôles (" + txt + ") sont tirés au sort. Environ 2 h.";
       g.textContent = "Créer ou rejoindre une partie →"; g.setAttribute("href", "#salon");
       document.getElementById("distrib").textContent = "Vous êtes " + n + ". Distribuez ces rôles, un par joueuse : " + txt + "." + (n < 6 ? " Les personnages non joués existent quand même : ce qu'elles savent arrive par les preuves." : "");
     }
@@ -1564,13 +1573,13 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     Lucie: { rappel: "La chimiste. Tu caches ton jasmin de synthèse. Tu tiens le registre de l'infirmerie de l'usine.", actes: [
       ["Explique que l'amande amère peut venir des amaretti, ou du cyanure.", "Demande à Hortense où elle était à 22 h 55.", "Demande qui savait que Miss Hale gardait du poison."],
       ["Prouve avec le plan que tu ne pouvais pas passer par la cuisine.", "Glisse que tu tiens le registre de l'infirmerie, sans dire ce qu'il contient.", "Méfie-toi si quelqu'un lit le jasmin dans la formule : c'est ta note."],
-      ["Lis ta révélation à voix haute.", "Rapproche l'empreinte de la théière d'un nom du registre de l'infirmerie.", "Demande à Colette de montrer son index droit."],
+      ["Lis ta révélation à voix haute.", "Rapproche l'empreinte de la théière d'un nom du registre de l'infirmerie.", "Demande à toutes les joueuses de montrer leur index droit."],
       ["Écris ta coupable sur un papier plié.", "Défends ton accusation en une minute."]
     ]},
     "Irène": { rappel: "La chroniqueuse parisienne. Tu caches la page volée et ta visite au laboratoire à 00 h 30.", actes: [
       ["Pose une question à chaque joueuse, comme une journaliste en interview.", "Raconte la silhouette de 22 h 25, telle que tu l'as vue, sans plus.", "Note qui ment le plus mal, selon toi."],
       ["Demande qui, au toast de 22 h, avait les cheveux courts et une robe claire.", "Détourne la conversation si quelqu'un parle du laboratoire après minuit.", "Propose d'identifier la chambre au bout du couloir avec le plan."],
-      ["Lis ta révélation à voix haute.", "Prouve que Madame était déjà morte à 00 h 30 grâce à la tache de tilleul.", "Demande à Colette où elle était exactement à 22 h 25."],
+      ["Lis ta révélation à voix haute.", "Prouve que Madame était déjà morte à 00 h 30 grâce à la tache de tilleul.", "Demande à chaque joueuse où elle était exactement à 22 h 25."],
       ["Écris ta coupable sur un papier plié.", "Défends ton accusation en une minute."]
     ]},
     Winifred: { rappel: "L'entomologiste anglaise. Ton bocal contient le poison. Tu caches ton amour pour Madeleine.", actes: [
@@ -1669,17 +1678,21 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
   var LOCKS = [
     { id:"L1", titre:"Le plateau", pieces:["4","5","6","7"], num:true, format:"une heure, par exemple 21 h 30",
       enigme:"À quelle heure exacte la tisane a-t-elle quitté la cuisine ?", rep:["2257"],
-      indice:"La preuve 1 donne l'heure à laquelle Berthe a posé le plateau au laboratoire. Le plan donne le temps de trajet depuis la cuisine." },
+      indice:"La preuve 1 donne l'heure à laquelle Berthe a posé le plateau au laboratoire. Le plan donne le temps de trajet depuis la cuisine.",
+      indice2:"Berthe pose le plateau à 23 h. Le trajet cuisine → laboratoire dure 3 minutes. Retirez 3 minutes à 23 h." },
     { id:"L2", titre:"La porte de l'aile est", pieces:["8","9","10"], format:"un prénom",
       enigme:"D'après la déposition d'Irène et le plan, de quelle chambre la silhouette est-elle sortie ? Tapez le prénom de son occupante.", rep:["WINIFRED","MISSHALE","HALE","WINIFREDHALE"],
-      indice:"Irène parle de la dernière chambre au bout du couloir de l'aile est. Regardez l'étage sur le plan." },
+      indice:"Irène parle de la dernière chambre au bout du couloir de l'aile est. Regardez l'étage sur le plan.",
+      indice2:"Sur le plan, la dernière porte de l'aile est est celle de Miss Hale. Tapez son prénom, indiqué dans la liste des invitées sur l'accueil." },
     { id:"L3", titre:"Le cadran de l'usine", pieces:["11","12"], num:true, format:"une heure, par exemple 21 h 30",
       enigme:"Lucie est arrivée à l'usine à l'heure notée par le gardien. Supposons qu'elle soit passée par la cuisine juste avant : à quelle heure, au plus tard, aurait-elle dû sortir de la cuisine ? Ne comptez que le trajet cuisine → usine.", rep:["2248"],
       special:{"2247":"Presque : vous avez ajouté le trajet salon → cuisine. Ici, on cherche l'heure de sortie de la cuisine, donc seul le trajet cuisine → usine compte."},
-      indice:"Heure d'arrivée chez le gardien, moins le trajet de la cuisine à l'usine indiqué sur le plan. Comparez ensuite avec la feuille de bridge." },
+      indice:"Heure d'arrivée chez le gardien, moins le trajet de la cuisine à l'usine indiqué sur le plan. Comparez ensuite avec la feuille de bridge.",
+      indice2:"Le gardien note l'arrivée de Lucie à 22 h 52. La cuisine est à 4 minutes de l'usine. Retirez 4 minutes à 22 h 52." },
     { id:"L4", titre:"Le secrétaire d'Henri", pieces:["13"], format:"une date, par exemple 14/08/1928", date:true,
       enigme:"Quelle est la date de naissance de la fille de Berthe ?", rep:["03031906","3031906"],
-      indice:"La lettre trouvée dans le bureau est datée du jour même de la naissance." }
+      indice:"La lettre trouvée dans le bureau est datée du jour même de la naissance.",
+      indice2:"Relisez l'en-tête de la lettre d'Henri, preuve 11 : « Nice, le … ». Tapez cette date, par exemple sous la forme 14/08/1928." }
   ];
   var unlocked = load(LKEY, []);
   function pieceEl(id){ return document.querySelector('.piece[data-piece="' + id + '"]'); }
@@ -1688,12 +1701,13 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     var box = el("article", "lock etiq");
     box.innerHTML = '<span class="label">Cadenas ' + (i + 1) + ' sur 5</span><h4></h4><p class="enigme"></p><p class="note"></p>' +
       '<div class="codeline"><input type="text" autocomplete="off" spellcheck="false"><button type="button">Ouvrir</button></div>' +
-      '<p class="msg" aria-live="polite"></p><div class="row"><button type="button" class="ghost">Un indice</button></div><p class="hint" hidden></p>';
+      '<p class="msg" aria-live="polite"></p><div class="row"><button type="button" class="ghost">Un indice</button><button type="button" class="ghost" hidden>Un indice de plus</button></div><p class="hint" hidden></p><p class="hint" hidden></p>';
     box.querySelector("h4").textContent = L.titre;
     box.querySelector(".enigme").textContent = L.enigme;
     box.querySelector(".note").textContent = "Réponse attendue : " + L.format + ".";
     var input = box.querySelector("input"); input.id = "code-" + L.id; input.setAttribute("aria-label", "Code du cadenas " + (i + 1));
     var hint = box.querySelector(".hint"); hint.textContent = L.indice;
+    var hint2 = box.querySelectorAll(".hint")[1]; hint2.textContent = L.indice2 || "";
     var msg = box.querySelector(".msg"), btns = box.querySelectorAll("button"), tries = 0;
     function tryCode(){
       var v = norm(input.value), d = (input.value.match(/\d/g) || []).join("");
@@ -1706,7 +1720,8 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     }
     btns[0].addEventListener("click", tryCode);
     input.addEventListener("keydown", function(e){ if (e.key === "Enter") tryCode(); });
-    btns[1].addEventListener("click", function(){ hint.hidden = false; });
+    btns[1].addEventListener("click", function(){ hint.hidden = false; btns[1].hidden = true; if (L.indice2) btns[2].hidden = false; });
+    btns[2].addEventListener("click", function(){ hint2.hidden = false; btns[2].hidden = true; });
     var wait = el("p", "locked-note", "Cadenas " + (i + 1) + " : verrouillé. Ouvrez d'abord le cadenas précédent.");
     first.parentNode.insertBefore(box, first); first.parentNode.insertBefore(wait, box);
     L.box = box; L.wait = wait;
@@ -1751,7 +1766,8 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
   }
   document.getElementById("solTry").addEventListener("click", trySol);
   document.getElementById("code-final").addEventListener("keydown", function(e){ if (e.key === "Enter") trySol(); });
-  document.getElementById("solHint").addEventListener("click", function(){ document.getElementById("solHintTxt").hidden = false; });
+  document.getElementById("solHint").addEventListener("click", function(){ document.getElementById("solHintTxt").hidden = false; this.hidden = true; document.getElementById("solHint2").hidden = false; });
+  document.getElementById("solHint2").addEventListener("click", function(){ document.getElementById("solHintTxt2").hidden = false; this.hidden = true; });
   document.getElementById("solGive").addEventListener("click", openSol);
 
   // Solo
@@ -1816,7 +1832,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
   });
 
   // ===== Partie en ligne (PeerJS) =====
-  var S = { hote:false, code:"", nom:"", n:4, joueurs:[], roles:null, role:null, peer:null, conn:null, conns:{}, applying:false };
+  var S = { hote:false, code:"", nom:"", n:4, joueurs:[], roles:null, role:null, peer:null, conn:null, conns:{}, applying:false, exclus:[] };
   var PID = load("ldn-pid", "");
   if (!PID){ PID = Math.random().toString(36).slice(2, 10); store("ldn-pid", PID); }
   var BKEY = "derniere-note-bloque", HKEY = "ldn-salon-hote", JKEY = "ldn-salon-joueuse";
@@ -1862,7 +1878,17 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     $("salonCodeAff").textContent = S.code;
     $("salonCodeRole").textContent = S.code;
     var ul = $("salonListe"); ul.innerHTML = "";
-    S.joueurs.forEach(function(j){ ul.appendChild(el("li", "", j.nom + (j.pid === PID ? " (vous)" : ""))); });
+    S.joueurs.forEach(function(j){
+      var li = el("li", "", j.nom + (j.pid === PID ? " (vous)" : ""));
+      if (S.hote && !S.roles){
+        var lab = el("label"), cb = el("input"); cb.type = "checkbox"; cb.checked = S.exclus.indexOf(j.pid) >= 0;
+        cb.id = "excl-" + j.pid; cb.style.marginLeft = "12px";
+        cb.addEventListener("change", function(){ S.exclus = S.exclus.filter(function(x){ return x !== j.pid; }); if (cb.checked) S.exclus.push(j.pid); });
+        lab.appendChild(cb); lab.appendChild(el("span", "note", " pas coupable")); li.appendChild(lab);
+      }
+      ul.appendChild(li);
+    });
+    $("salonExclusNote").hidden = !(S.hote && !S.roles);
     $("salonEtat").textContent = S.joueurs.length ? (S.joueurs.length + " sur " + S.n + " joueuses connectées") : "Connexion à la partie…";
     var plein = S.joueurs.length === S.n;
     if (S.hote){
@@ -1875,7 +1901,8 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     }
     if (S.role){
       $("salonRoleNom").textContent = "Vous jouez " + S.role;
-      $("salonHoteNote").textContent = S.hote ? "Vous menez la partie : changez d'acte dans Mon écran, tous les téléphones suivent." : "L'organisatrice change d'acte : vos missions se mettent à jour toutes seules.";
+      $("salonHoteNote").textContent = S.hote ? "Vous menez la partie : lisez d'abord le prologue ci-dessous à voix haute, puis changez d'acte dans Mon écran, tous les téléphones suivent. Gardez cette page ouverte et votre écran allumé : c'est votre téléphone qui relie les autres." : "L'organisatrice lit le prologue, puis change d'acte : vos missions se mettent à jour toutes seules.";
+      $("salonPrologue").hidden = !S.hote;
     }
   }
 
@@ -1909,6 +1936,11 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
   function lancer(){
     if (S.joueurs.length !== S.n) return;
     var persos = melange(noms.slice(0, S.n));
+    var ic = persos.indexOf("Colette");
+    if (S.exclus.indexOf(S.joueurs[ic].pid) >= 0){
+      var libres = S.joueurs.map(function(j, i){ return i; }).filter(function(i){ return S.exclus.indexOf(S.joueurs[i].pid) < 0; });
+      if (libres.length){ var k = libres[Math.floor(Math.random() * libres.length)]; persos[ic] = persos[k]; persos[k] = "Colette"; }
+    }
     S.roles = {}; S.joueurs.forEach(function(j, i){ S.roles[j.pid] = persos[i]; });
     ecran.acte = 0; saveEcran();
     appliquerDepart();
@@ -2014,6 +2046,15 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
   $("salonQuitter").addEventListener("click", function(){ quitter(false); });
   $("salonQuitter2").addEventListener("click", function(){ quitter(false); });
 
+  var verrouEcran = null;
+  function garderAllume(){
+    if (!S.hote || !S.code || !("wakeLock" in navigator) || document.visibilityState !== "visible") return;
+    navigator.wakeLock.request("screen").then(function(w){ verrouEcran = w; }, function(){});
+  }
+  document.addEventListener("visibilitychange", garderAllume);
+  $("salonCreer").addEventListener("click", function(){ setTimeout(garderAllume, 200); });
+  $("salonLancer").addEventListener("click", garderAllume);
+
   // Reprise après rechargement de la page
   var h = load(HKEY, null), jj = load(JKEY, null);
   if (window.Peer && h && h.code){
@@ -2021,6 +2062,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     S.nom = (S.joueurs[0] || {}).nom || "";
     if (S.roles){ S.role = S.roles[PID]; preparerEcran(); }
     ouvrirHote(true);
+    garderAllume();
   } else if (window.Peer && jj && jj.code){
     S.role = jj.role || null; S.n = jj.n || 4;
     if (S.role) preparerEcran();
