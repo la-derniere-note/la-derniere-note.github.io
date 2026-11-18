@@ -1886,6 +1886,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     var lab = $("ecranActes").parentNode.querySelector(".label");
     if (lab) lab.textContent = S.hote ? "Vous menez la partie : changez d'acte ici, tous les téléphones suivent" : "L'organisatrice change d'acte, votre écran suit tout seul";
     document.getElementById("nav-roles").hidden = true;
+    var relire = document.querySelector('#ecranJeu a.next[href="#roles"]'); if (relire) relire.hidden = true;
     var old = $("ecranCarte"); if (old) old.parentNode.removeChild(old);
     var src = document.querySelector('.ask[data-for="' + S.role + '"]');
     if (!src) return;
