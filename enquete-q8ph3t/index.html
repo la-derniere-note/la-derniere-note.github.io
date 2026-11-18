@@ -114,6 +114,17 @@ h3.sub{font-size:26px;color:var(--or)}
 .persos button{width:auto!important;height:auto!important;padding:10px 14px!important;font-size:18px!important}
 .actes button[aria-pressed="true"]{background:var(--or);color:#1a1408}
 .missions ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.champ-texte{width:100%;font:inherit;font-size:18px;padding:11px 12px;border:1px solid var(--ink);background:#fbf7ec;color:var(--ink);border-radius:0}
+.champ-texte.code{font-family:var(--type);font-size:26px;letter-spacing:.3em;text-transform:uppercase;text-align:center}
+.salon-deux{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+@media (max-width:640px){.salon-deux{grid-template-columns:1fr}}
+.salon-deux h3{font-size:24px;color:var(--ink)}
+.salon-deux>div{border-top:1px solid var(--rule);padding-top:14px}
+.code-geant{font-family:var(--type);font-weight:700;font-size:clamp(48px,14vw,72px);letter-spacing:.25em;color:var(--wax);margin:0;line-height:1}
+.salon-liste{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.salon-liste li{font-size:19px;border-bottom:1px dotted var(--rule);padding:4px 0}
+#salonN button[aria-pressed="true"]{background:var(--ink);color:var(--label)}
+#ecranCarte{box-shadow:none}
 .missions li label{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;font-size:18px;cursor:pointer}
 .missions input[type=checkbox]{width:22px;height:22px;margin-top:3px;accent-color:var(--wax)}
 .missions li.done span{text-decoration:line-through;color:var(--ink-muted)}
@@ -286,6 +297,7 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:15px;text-align:cent
 <nav class="tabs" aria-label="Sections">
   <div class="wrap">
     <a href="#accueil">Le jeu</a>
+    <a href="#salon" id="nav-salon">Partie en ligne</a>
     <a href="#solo" id="nav-solo">L'enquête</a>
     <a href="#hote" id="nav-hote">Guide de l'hôte</a>
     <a href="#roles" id="nav-roles">Les rôles</a>
@@ -369,6 +381,57 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:15px;text-align:cent
     <span class="label">La règle d'or</span>
     <h3>Une seule a le droit de mentir</h3>
     <p>Les innocentes peuvent se taire, esquiver ou refuser de répondre, mais elles n'affirment jamais quelque chose de faux. Les témoins aussi disent vrai, mais ils voient mal, entendent mal et ne savent pas tout. Seule la coupable ment.</p>
+  </div>
+</section>
+
+<!-- ============ PARTIE EN LIGNE ============ -->
+<section id="salon" class="stack" hidden>
+  <div class="intro">
+    <h2>Partie en ligne</h2>
+    <p>Chacune joue sur son propre téléphone. L'organisatrice crée la partie et envoie le code ; les autres le tapent. Quand tout le monde est là, les rôles sont tirés au sort et la partie commence.</p>
+  </div>
+
+  <div class="etiq box" id="salonChoix" style="max-width:none">
+    <label class="label" for="salonNom">Votre prénom</label>
+    <input type="text" id="salonNom" class="champ-texte" maxlength="20" autocomplete="given-name" placeholder="Votre prénom">
+    <div class="salon-deux">
+      <div class="stack" style="gap:12px">
+        <h3>Créer la partie</h3>
+        <p class="note">Combien de joueuses en tout, vous comprise ?</p>
+        <div class="row" id="salonN" role="group" aria-label="Nombre de joueuses">
+          <button type="button" class="ghost" data-n="4">4</button>
+          <button type="button" class="ghost" data-n="5">5</button>
+          <button type="button" class="ghost" data-n="6">6</button>
+        </div>
+        <button type="button" id="salonCreer">Créer la partie</button>
+      </div>
+      <div class="stack" style="gap:12px">
+        <h3>Rejoindre une partie</h3>
+        <p class="note">Tapez le code donné par l'organisatrice.</p>
+        <input type="text" id="salonCode" class="champ-texte code" maxlength="4" placeholder="CODE" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Code de la partie">
+        <button type="button" id="salonRejoindre">Rejoindre</button>
+      </div>
+    </div>
+    <p class="msg bad" id="salonMsg" aria-live="polite"></p>
+  </div>
+
+  <div class="etiq box" id="salonAttente" hidden style="max-width:none">
+    <span class="label" id="salonEtat"></span>
+    <p class="note">Code de la partie</p>
+    <p class="code-geant" id="salonCodeAff"></p>
+    <p id="salonConsigne"></p>
+    <ul class="salon-liste" id="salonListe"></ul>
+    <p class="msg bad" id="salonMsg2" aria-live="polite"></p>
+    <div class="row"><button type="button" id="salonLancer" hidden>Lancer la partie</button><button type="button" class="ghost" id="salonQuitter">Quitter la partie</button></div>
+  </div>
+
+  <div class="etiq box" id="salonRole" hidden style="max-width:none">
+    <span class="label">La partie a commencé · code <span id="salonCodeRole"></span></span>
+    <h3 id="salonRoleNom"></h3>
+    <p>Lisez votre rôle en silence pendant 5 minutes, puis suivez vos missions acte par acte. Les preuves et les cadenas s'affichent sur tous les téléphones en même temps : quand l'une ouvre un cadenas, toutes voient la suite.</p>
+    <p class="note" id="salonHoteNote"></p>
+    <div class="row"><a class="next" href="#ecran">Mon rôle et mes missions</a><a class="next" href="#preuves">Les preuves</a></div>
+    <div class="row"><button type="button" class="ghost" id="salonQuitter2">Quitter la partie</button></div>
   </div>
 </section>
 
@@ -501,7 +564,7 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:15px;text-align:cent
       <li id="distrib">Distribuez les rôles : Hortense, Colette, Berthe et Lucie.</li>
       <li>Vous êtes 7 à 10 ? Faites jouer certains rôles en binôme : deux joueuses partagent un personnage, ses secrets et ses objectifs. Commencez par Irène et Winifred, puis Lucie et Hortense. Les règles de vote et de points des binômes sont dans « Les points ».</li>
       <li>Envoyez à chacune le lien de cette page et le nom de son personnage. Elle ouvre uniquement son rôle, deux ou trois jours avant, pour bien le connaître.</li>
-      <li><b>Un écran par joueuse</b> : chacune ouvre la page sur son téléphone, onglet Mon écran, et choisit son personnage. Ses missions changent à chaque acte : à chaque changement d'acte, annoncez-le et chacune touche le même acte sur son écran. Les preuves restent sur l'écran central de l'hôte.</li>
+      <li><b>Le plus simple : la partie en ligne.</b> Onglet Partie en ligne, créez la partie et envoyez le code à vos amies. Les rôles sont tirés au sort au lancement, et les actes, missions, preuves et cadenas se synchronisent sur tous les téléphones. Les points ci-dessous ne servent que si vous préférez distribuer les rôles vous-même.</li>
       <li>En visio : un appel où vous pouvez partager votre écran pour les preuves et les cadenas.</li>
       <li>Au salon : un écran au centre, du papier et des crayons pour chacune. Le niveau expert se joue en prenant des notes.</li>
       <li>Ambiance : bougies, jazz des années 1920, sirop de fleur d'oranger allongé d'eau pétillante, avec ou sans champagne. Et des amaretti, évidemment.</li>
@@ -1381,10 +1444,12 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
   <div class="wrap">La Dernière Note · une enquête originale. Les personnages, la Maison Aubier, ses parfums, la maison Delorme et Ambrose &amp; Co. sont inventés.</div>
 </footer>
 
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script>
 (function(){
+  var syncHook = null;
   var KEY = "derniere-note-expert-preuves";
-  var tabs = ["accueil","solo","hote","roles","ecran","preuves","carnet","solution"];
+  var tabs = ["accueil","salon","solo","hote","roles","ecran","preuves","carnet","solution"];
   function show(){
     var id = (location.hash || "").slice(1);
     if (tabs.indexOf(id) < 0) id = "accueil";
@@ -1396,7 +1461,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
   window.addEventListener("hashchange", function(){ show(); window.scrollTo(0, document.querySelector("nav.tabs").offsetTop); });
   function el(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt) e.textContent = txt; if (tag === "button") e.type = "button"; return e; }
   function load(k, d){ try { var v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch(e) { return d; } }
-  function store(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
+  function store(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} if (syncHook) syncHook(k); }
 
   // Nombre de joueuses
   var noms = ["Hortense", "Colette", "Berthe", "Lucie", "Irène", "Winifred"];
@@ -1409,10 +1474,10 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     "<b>La solution</b> : tapez le code du dernier cadenas. 5 min."
   ];
   var ORDRE_GROUPE = [
-    "<b>Avant la soirée</b> : chacune lit son rôle dans l'onglet Les rôles. C'est ce qui fait tenir la partie en 1 h 30.",
-    "<b>Au début</b> : chacune ouvre l'onglet Mon écran sur son téléphone et choisit son personnage. Ses missions s'affichent à chaque acte.",
-    "<b>Le prologue</b> : l'hôte le lit à voix haute, depuis l'onglet Guide de l'hôte. 5 min.",
-    "<b>Les actes I, II et III</b> : l'hôte montre les preuves, le groupe discute et ouvre les 4 cadenas dans l'onglet Les preuves. Les révélations se lisent à l'acte III. 1 h 10.",
+    "<b>L'organisatrice crée la partie</b> dans l'onglet Partie en ligne et envoie le code à ses amies.",
+    "<b>Chacune la rejoint</b> sur son téléphone avec ce code. Quand tout le monde est là, l'organisatrice lance la partie : les rôles sont tirés au sort.",
+    "<b>5 minutes de lecture</b> : chacune lit son rôle en silence dans Mon écran.",
+    "<b>Les actes I, II et III</b> : l'organisatrice change d'acte, les missions et les preuves suivent sur tous les téléphones. Le groupe ouvre les 4 cadenas ensemble. 1 h 05.",
     "<b>L'accusation</b> : chacune note sur papier sa coupable, le mobile, la méthode et la formule, puis la défend. 10 min.",
     "<b>La solution</b> : le groupe tape le code du dernier cadenas. 5 min."
   ];
@@ -1445,6 +1510,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     document.getElementById("nav-hote").hidden = !groupe;
     document.getElementById("nav-roles").hidden = !groupe;
     document.getElementById("nav-ecran").hidden = !groupe;
+    document.getElementById("nav-salon").hidden = !groupe;
     if (typeof ecran !== "undefined" && ecran) renderEcran();
     document.querySelectorAll("[data-min]").forEach(function(r){ r.hidden = n < +r.getAttribute("data-min"); });
     var t = document.getElementById("pickTitle"), i = document.getElementById("pickInfo"), g = document.getElementById("pickGo");
@@ -1464,12 +1530,12 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     } else {
       var liste = noms.slice(0, n), txt = liste.slice(0, -1).join(", ") + " et " + liste[liste.length - 1];
       t.textContent = n + " joueuses : la murder party";
-      i.textContent = "Chacune incarne une suspecte avec ses secrets : " + txt + ". Une joueuse fait aussi l'hôte. Environ 1 h 30, rôles lus avant la soirée.";
-      g.textContent = "Commencer par le guide de l'hôte →"; g.setAttribute("href", "#hote");
+      i.textContent = "Chacune joue sur son téléphone. L'organisatrice crée la partie, les autres la rejoignent avec un code, et les rôles (" + txt + ") sont tirés au sort. Environ 1 h 30.";
+      g.textContent = "Créer ou rejoindre une partie →"; g.setAttribute("href", "#salon");
       document.getElementById("distrib").textContent = "Vous êtes " + n + ". Distribuez ces rôles, un par joueuse : " + txt + "." + (n < 6 ? " Les personnages non joués existent quand même : ce qu'elles savent arrive par les preuves." : "");
     }
     var cur = (location.hash || "").slice(1);
-    if ((groupe && cur === "solo") || (!groupe && (cur === "hote" || cur === "roles" || cur === "ecran"))) location.hash = "accueil";
+    if ((groupe && cur === "solo") || (!groupe && (cur === "hote" || cur === "roles" || cur === "ecran" || cur === "salon"))) location.hash = "accueil";
   }
   document.querySelectorAll(".picker .nums button").forEach(function(b){ b.addEventListener("click", function(){ setPlayers(+b.getAttribute("data-n")); }); });
   var n0 = load("derniere-note-joueuses", 4); setPlayers(n0 >= 1 && n0 <= 6 ? n0 : 4);
@@ -1748,6 +1814,218 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     function fallback(){ var r = document.createRange(); r.selectNodeContents(document.getElementById("invit")); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); msg.textContent = "Texte sélectionné, copiez-le avec Cmd+C ou Ctrl+C."; }
     try { navigator.clipboard.writeText(txt).then(function(){ msg.textContent = "Invitation copiée."; }, fallback); } catch(e) { fallback(); }
   });
+
+  // ===== Partie en ligne (PeerJS) =====
+  var S = { hote:false, code:"", nom:"", n:4, joueurs:[], roles:null, role:null, peer:null, conn:null, conns:{}, applying:false };
+  var PID = load("ldn-pid", "");
+  if (!PID){ PID = Math.random().toString(36).slice(2, 10); store("ldn-pid", PID); }
+  var BKEY = "derniere-note-bloque", HKEY = "ldn-salon-hote", JKEY = "ldn-salon-joueuse";
+  var ALPHA = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789", choixN = 4;
+  function $(id){ return document.getElementById(id); }
+  function msg(t){ $("salonMsg").textContent = t || ""; $("salonMsg2").textContent = t || ""; }
+  function nouveauCode(){ var c = ""; for (var i = 0; i < 4; i++) c += ALPHA[Math.floor(Math.random() * ALPHA.length)]; return c; }
+  function peerId(code){ return "la-derniere-note-jeu-" + code.toLowerCase(); }
+  function fusion(a, b){ var r = (a || []).slice(); (b || []).forEach(function(x){ if (r.indexOf(x) < 0) r.push(x); }); return r; }
+  function etatLocal(){ return { acte: ecran.acte, unlocked: unlocked.slice(), opened: opened.slice(), bloque: !!load(BKEY, false) }; }
+  function appliquer(e){
+    if (!e) return;
+    S.applying = true;
+    try {
+      unlocked = fusion(unlocked, e.unlocked); store(LKEY, unlocked);
+      opened = fusion(opened, e.opened); store(KEY, opened);
+      if (e.bloque) store(BKEY, true);
+      document.querySelectorAll(".piece").forEach(function(p){ p._set(opened.indexOf(p.getAttribute("data-piece")) >= 0); });
+      if (typeof e.acte === "number" && !S.hote){ ecran.acte = e.acte; saveEcran(); }
+      renderLocks(); renderEcran();
+    } finally { S.applying = false; }
+  }
+  function sauver(){
+    if (S.hote) store(HKEY, { code:S.code, n:S.n, joueurs:S.joueurs, roles:S.roles });
+    else store(JKEY, { code:S.code, nom:S.nom, role:S.role, n:S.n });
+  }
+  function envoyerTous(m){ Object.keys(S.conns).forEach(function(k){ var c = S.conns[k]; if (c && c.open) { try { c.send(m); } catch(e) {} } }); }
+  function hoteDiffuse(){ envoyerTous({ t:"etat", etat: etatLocal() }); }
+  syncHook = function(k){
+    if (S.applying || !S.code || !S.role) return;
+    if ([KEY, LKEY, BKEY, EKEY].indexOf(k) < 0) return;
+    if (S.hote) hoteDiffuse();
+    else if (k !== EKEY && S.conn && S.conn.open) { try { S.conn.send({ t:"etat", etat: etatLocal() }); } catch(e) {} }
+  };
+
+  function renderSalon(){
+    var dedans = !!S.code;
+    $("salonChoix").hidden = dedans;
+    $("salonAttente").hidden = !dedans || !!S.role;
+    $("salonRole").hidden = !S.role;
+    document.querySelectorAll("#salonN button").forEach(function(b){ b.setAttribute("aria-pressed", String(+b.getAttribute("data-n") === choixN)); });
+    if (!dedans) return;
+    $("salonCodeAff").textContent = S.code;
+    $("salonCodeRole").textContent = S.code;
+    var ul = $("salonListe"); ul.innerHTML = "";
+    S.joueurs.forEach(function(j){ ul.appendChild(el("li", "", j.nom + (j.pid === PID ? " (vous)" : ""))); });
+    $("salonEtat").textContent = S.joueurs.length ? (S.joueurs.length + " sur " + S.n + " joueuses connectées") : "Connexion à la partie…";
+    var plein = S.joueurs.length === S.n;
+    if (S.hote){
+      $("salonConsigne").textContent = "Envoyez ce code et le lien du site à vos amies. Le rôle de chacune sera tiré au sort au lancement.";
+      $("salonLancer").hidden = false; $("salonLancer").disabled = !plein;
+      $("salonLancer").textContent = plein ? "Lancer la partie" : "En attente des joueuses…";
+    } else {
+      $("salonConsigne").textContent = "Vous êtes dans la partie. L'organisatrice la lancera quand tout le monde sera là.";
+      $("salonLancer").hidden = true;
+    }
+    if (S.role){
+      $("salonRoleNom").textContent = "Vous jouez " + S.role;
+      $("salonHoteNote").textContent = S.hote ? "Vous menez la partie : changez d'acte dans Mon écran, tous les téléphones suivent." : "L'organisatrice change d'acte : vos missions se mettent à jour toutes seules.";
+    }
+  }
+
+  function preparerEcran(){
+    if (!S.role) return;
+    $("ecranChanger").hidden = true;
+    $("ecranActes").hidden = !S.hote;
+    var lab = $("ecranActes").parentNode.querySelector(".label");
+    if (lab) lab.textContent = S.hote ? "Vous menez la partie : changez d'acte ici, tous les téléphones suivent" : "L'organisatrice change d'acte, votre écran suit tout seul";
+    document.getElementById("nav-roles").hidden = true;
+    var old = $("ecranCarte"); if (old) old.parentNode.removeChild(old);
+    var src = document.querySelector('.ask[data-for="' + S.role + '"]');
+    if (!src) return;
+    var art = src.parentElement.cloneNode(true);
+    art.id = "ecranCarte"; art.removeAttribute("data-min"); art.hidden = false;
+    var ask = art.querySelector(".ask"); if (ask) ask.parentNode.removeChild(ask);
+    var sec = art.querySelector(".secret"); if (sec) sec.hidden = false;
+    var jeu = $("ecranJeu"); jeu.insertBefore(art, jeu.children[1]);
+  }
+
+  function appliquerDepart(){
+    S.role = S.roles && S.roles[PID];
+    if (!S.role) { msg("La partie a commencé sans vous."); return; }
+    setPlayers(S.n);
+    ecran.perso = S.role; saveEcran();
+    preparerEcran(); sauver(); renderSalon(); renderEcran();
+  }
+  function melange(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function envoyerDepart(c){ if (c && c.open && S.roles) { try { c.send({ t:"depart", roles:S.roles, n:S.n, joueurs:S.joueurs }); } catch(e) {} } }
+  function lancer(){
+    if (S.joueurs.length !== S.n) return;
+    var persos = melange(noms.slice(0, S.n));
+    S.roles = {}; S.joueurs.forEach(function(j, i){ S.roles[j.pid] = persos[i]; });
+    ecran.acte = 0; saveEcran();
+    appliquerDepart();
+    Object.keys(S.conns).forEach(function(k){ envoyerDepart(S.conns[k]); });
+    hoteDiffuse();
+    location.hash = "salon";
+  }
+  function diffuserLobby(){ envoyerTous({ t:"lobby", joueurs:S.joueurs, n:S.n }); sauver(); renderSalon(); }
+
+  function ouvrirHote(reprise, essai){
+    essai = essai || 0;
+    S.peer = new Peer(peerId(S.code), { debug:0 });
+    S.peer.on("open", function(){ msg(""); renderSalon(); });
+    S.peer.on("connection", function(c){
+      c.on("data", function(d){
+        if (!d || typeof d !== "object") return;
+        if (d.t === "join"){
+          var pid = String(d.pid || "").slice(0, 20), nom = String(d.nom || "").trim().slice(0, 20) || "Joueuse";
+          var deja = S.joueurs.filter(function(j){ return j.pid === pid; })[0];
+          if (!deja){
+            if (S.roles || S.joueurs.length >= S.n){ try { c.send({ t:"plein" }); } catch(e) {} return; }
+            S.joueurs.push({ pid:pid, nom:nom });
+          }
+          S.conns[pid] = c; c._pid = pid;
+          diffuserLobby();
+          if (S.roles){ envoyerDepart(c); try { c.send({ t:"etat", etat: etatLocal() }); } catch(e) {} }
+        } else if (d.t === "etat" && c._pid && d.etat){
+          var loc = etatLocal();
+          appliquer({ unlocked: fusion(loc.unlocked, d.etat.unlocked), opened: fusion(loc.opened, d.etat.opened), bloque: loc.bloque || !!d.etat.bloque });
+          hoteDiffuse();
+        }
+      });
+    });
+    S.peer.on("error", function(err){
+      if (err.type === "unavailable-id"){
+        try { S.peer.destroy(); } catch(e) {}
+        if (!reprise){ S.code = nouveauCode(); sauver(); setTimeout(function(){ ouvrirHote(false, essai + 1); }, 300); }
+        else if (essai < 8){ setTimeout(function(){ ouvrirHote(true, essai + 1); }, 4000); }
+        else msg("Impossible de rouvrir la partie. Créez-en une nouvelle.");
+        return;
+      }
+      if (err.type === "peer-unavailable") return;
+      msg("Problème de connexion. Vérifiez votre réseau, puis réessayez.");
+    });
+    S.peer.on("disconnected", function(){ try { S.peer.reconnect(); } catch(e) {} });
+    renderSalon();
+  }
+
+  function connecter(){
+    if (!S.peer || S.peer.destroyed) return;
+    var c = S.peer.connect(peerId(S.code), { reliable:true });
+    S.conn = c;
+    c.on("open", function(){ msg(""); c.send({ t:"join", pid:PID, nom:S.nom }); });
+    c.on("data", function(d){
+      if (!d || typeof d !== "object") return;
+      if (d.t === "lobby"){ S.joueurs = d.joueurs || []; S.n = d.n || S.n; sauver(); renderSalon(); }
+      else if (d.t === "depart"){ S.roles = d.roles; S.n = d.n; S.joueurs = d.joueurs || S.joueurs; appliquerDepart(); }
+      else if (d.t === "etat"){ appliquer(d.etat); }
+      else if (d.t === "plein"){ msg("Cette partie est déjà complète."); quitter(true); }
+    });
+    c.on("close", function(){ if (S.code) { msg("Connexion perdue, reconnexion…"); setTimeout(function(){ if (S.code && (!S.conn || !S.conn.open)) connecter(); }, 3000); } });
+  }
+  function rejoindre(code, nom){
+    S.hote = false; S.code = code; S.nom = nom; sauver(); renderSalon();
+    S.peer = new Peer(undefined, { debug:0 });
+    S.peer.on("open", connecter);
+    S.peer.on("error", function(err){
+      if (err.type === "peer-unavailable"){
+        if (!S.role && !S.joueurs.length){ msg("Aucune partie ouverte avec ce code. Vérifiez-le auprès de l'organisatrice."); quitter(true); }
+        else { msg("L'organisatrice est déconnectée, nouvelle tentative…"); setTimeout(connecter, 4000); }
+        return;
+      }
+      msg("Problème de connexion. Vérifiez votre réseau, puis réessayez.");
+    });
+    S.peer.on("disconnected", function(){ try { S.peer.reconnect(); } catch(e) {} });
+  }
+  function quitter(garderMessage){
+    try { if (S.peer) S.peer.destroy(); } catch(e) {}
+    S.peer = null; S.conn = null; S.conns = {}; S.code = ""; S.role = null; S.roles = null; S.joueurs = []; S.hote = false;
+    store(HKEY, null); store(JKEY, null);
+    $("ecranActes").hidden = false; $("ecranChanger").hidden = false;
+    var c = $("ecranCarte"); if (c) c.parentNode.removeChild(c);
+    if (!garderMessage) msg("");
+    renderSalon();
+  }
+
+  document.querySelectorAll("#salonN button").forEach(function(b){ b.addEventListener("click", function(){ choixN = +b.getAttribute("data-n"); renderSalon(); }); });
+  $("salonCreer").addEventListener("click", function(){
+    if (!window.Peer){ msg("La partie en ligne ne fonctionne pas sur ce navigateur. Utilisez le guide de l'hôte."); return; }
+    var nom = $("salonNom").value.trim();
+    if (!nom){ msg("Indiquez votre prénom."); $("salonNom").focus(); return; }
+    S.hote = true; S.nom = nom; S.n = choixN; S.code = nouveauCode(); S.joueurs = [{ pid:PID, nom:nom }]; S.roles = null; S.role = null;
+    sauver(); ouvrirHote(false);
+  });
+  $("salonRejoindre").addEventListener("click", function(){
+    if (!window.Peer){ msg("La partie en ligne ne fonctionne pas sur ce navigateur."); return; }
+    var nom = $("salonNom").value.trim(), code = $("salonCode").value.trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
+    if (!nom){ msg("Indiquez votre prénom."); $("salonNom").focus(); return; }
+    if (code.length !== 4){ msg("Le code fait 4 caractères."); $("salonCode").focus(); return; }
+    msg(""); rejoindre(code, nom);
+  });
+  $("salonLancer").addEventListener("click", lancer);
+  $("salonQuitter").addEventListener("click", function(){ quitter(false); });
+  $("salonQuitter2").addEventListener("click", function(){ quitter(false); });
+
+  // Reprise après rechargement de la page
+  var h = load(HKEY, null), jj = load(JKEY, null);
+  if (window.Peer && h && h.code){
+    S.hote = true; S.code = h.code; S.n = h.n || 4; S.joueurs = h.joueurs || []; S.roles = h.roles || null;
+    S.nom = (S.joueurs[0] || {}).nom || "";
+    if (S.roles){ S.role = S.roles[PID]; preparerEcran(); }
+    ouvrirHote(true);
+  } else if (window.Peer && jj && jj.code){
+    S.role = jj.role || null; S.n = jj.n || 4;
+    if (S.role) preparerEcran();
+    rejoindre(jj.code, jj.nom || "Joueuse");
+  }
+  renderSalon();
 })();
 </script>
 
