@@ -61,7 +61,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
   <p class="tag">Avant de mourir, le plus grand nez de Grasse a désigné son assassin. <em>Avec une formule de parfum.</em></p>
   <div class="facts">
     <span class="chip">gratuit</span>
-    <span class="chip">seule ou de 4 à 6</span>
+    <span class="chip">de 1 à 6 joueuses</span>
     <span class="chip">environ 2 h</span>
     <span class="chip">téléphone ou ordinateur</span>
   </div>
@@ -69,12 +69,14 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 
   <form id="entree" novalidate>
     <h2>Entrer dans l'enquête</h2>
+    <p class="consent" style="display:block;margin:0">Invitée à une partie par une amie ? Entrez votre e-mail, puis ouvrez « Partie en ligne » et tapez le code qu'elle vous a donné.</p>
     <label class="champ" for="email">Votre e-mail</label>
     <input type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="prenom@exemple.fr" required>
     <label class="consent" for="ok">
-      <input type="checkbox" id="ok" required>
-      <span>J'accepte que La Dernière Note conserve mon e-mail pour me prévenir de la prochaine enquête. Il n'est ni vendu ni partagé. Pour être retirée de la liste, écrivez à jsjstshz@gmail.com.</span>
+      <input type="checkbox" id="ok">
+      <span>Prévenez-moi par e-mail de la prochaine enquête (facultatif).</span>
     </label>
+    <p class="consent" style="display:block;margin:0">Votre e-mail n'est ni vendu ni partagé. Pour le faire supprimer, écrivez à jsjstshz@gmail.com.</p>
     <button type="submit" id="go">Ouvrir le dossier</button>
     <p class="msg" id="msg" aria-live="polite"></p>
   </form>
@@ -95,11 +97,10 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
     e.preventDefault();
     var email = document.getElementById("email").value.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "Cette adresse e-mail ne semble pas valide."; return; }
-    if (!document.getElementById("ok").checked) { msg.textContent = "Cochez la case pour accepter que l'on conserve votre e-mail."; return; }
     msg.textContent = ""; go.disabled = true; go.textContent = "Ouverture du dossier…";
     var data = new URLSearchParams();
     data.append("entry.16199432", email);
-    data.append("entry.1066981188", "oui");
+    data.append("entry.1066981188", document.getElementById("ok").checked ? "oui" : "non");
     var parti = false;
     function entrer(){
       if (parti) return; parti = true;

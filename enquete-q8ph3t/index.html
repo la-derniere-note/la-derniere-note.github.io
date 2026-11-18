@@ -394,6 +394,10 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:15px;text-align:cent
   <div class="etiq box" id="salonChoix" style="max-width:none">
     <label class="label" for="salonNom">Votre prénom</label>
     <input type="text" id="salonNom" class="champ-texte" maxlength="20" autocomplete="given-name" placeholder="Votre prénom">
+    <label for="salonPasCoupable" style="display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;font-size:17px">
+      <input type="checkbox" id="salonPasCoupable" style="width:22px;height:22px;margin-top:2px;accent-color:var(--wax)">
+      <span>Je préfère ne pas être la coupable. <span class="note">Personne d'autre ne le saura, pas même l'organisatrice.</span></span>
+    </label>
     <div class="salon-deux">
       <div class="stack" style="gap:12px">
         <h3>Créer la partie</h3>
@@ -421,7 +425,6 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:15px;text-align:cent
     <p class="code-geant" id="salonCodeAff"></p>
     <p id="salonConsigne"></p>
     <ul class="salon-liste" id="salonListe"></ul>
-    <p class="note" id="salonExclusNote" hidden>Une joueuse découvre les jeux d'enquête ? Cochez « pas coupable » à côté de son prénom : le tirage ne lui donnera pas le rôle de la coupable.</p>
     <p class="msg bad" id="salonMsg2" aria-live="polite"></p>
     <div class="row"><button type="button" id="salonLancer" hidden>Lancer la partie</button><button type="button" class="ghost" id="salonQuitter">Quitter la partie</button></div>
   </div>
@@ -1392,7 +1395,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     <div class="codeline"><input id="code-final" type="text" autocomplete="off" spellcheck="false" aria-label="Code du dernier flacon"><button type="button" id="solTry">Ouvrir</button></div>
     <p class="msg" id="solMsg" aria-live="polite"></p>
     <div class="row"><button type="button" class="ghost" id="solHint">Un indice</button><button type="button" class="ghost" id="solHint2" hidden>Un indice de plus</button><button type="button" class="ghost" id="solGive" hidden>Abandonner et lire la solution</button></div>
-    <p class="hint" id="solHintTxt2" hidden>Le cadenas attend le nom d'un des cinq parfums du registre : Hortense, Petite Aube, Fidèle, Éprouvette ou Miss Hale. Un seul correspond à la formule, à une note près.</p>
+    <p class="hint" id="solHintTxt2" hidden>Le cadenas attend le nom d'un des cinq parfums du registre : Hortense, Petite Aube, Fidèle, Éprouvette ou Miss Hale. Un seul correspond à la formule, à une note près. Ne les essayez pas au hasard : votre accusation est déjà sur papier.</p>
     <p class="hint" id="solHintTxt" hidden>Décodez les trois lignes du carnet en comptant les flacons comme Madeleine, assise, de droite à gauche. Puis comparez notes et doses avec le registre, en lisant aussi la marge.</p>
   </div>
 
@@ -1762,11 +1765,11 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     solTries++; m.className = "msg bad";
     if (["COLETTE","COLETTEDUMAS","HORTENSE","BERTHE","LUCIE","IRENE","WINIFRED","MISSHALE"].indexOf(v) >= 0) m.textContent = "Le cadenas attend le nom d'un parfum, pas celui d'une personne. Cherchez dans le registre.";
     else m.textContent = "Le flacon reste scellé. Essai " + solTries + ".";
-    if (solTries >= 3) document.getElementById("solGive").hidden = false;
+    if (solTries >= 3){ document.getElementById("solGive").hidden = false; if (document.getElementById("solHint").hidden && document.getElementById("solHintTxt2").hidden) document.getElementById("solHint2").hidden = false; }
   }
   document.getElementById("solTry").addEventListener("click", trySol);
   document.getElementById("code-final").addEventListener("keydown", function(e){ if (e.key === "Enter") trySol(); });
-  document.getElementById("solHint").addEventListener("click", function(){ document.getElementById("solHintTxt").hidden = false; this.hidden = true; document.getElementById("solHint2").hidden = false; });
+  document.getElementById("solHint").addEventListener("click", function(){ document.getElementById("solHintTxt").hidden = false; this.hidden = true; if (solTries >= 3) document.getElementById("solHint2").hidden = false; });
   document.getElementById("solHint2").addEventListener("click", function(){ document.getElementById("solHintTxt2").hidden = false; this.hidden = true; });
   document.getElementById("solGive").addEventListener("click", openSol);
 
@@ -1832,7 +1835,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
   });
 
   // ===== Partie en ligne (PeerJS) =====
-  var S = { hote:false, code:"", nom:"", n:4, joueurs:[], roles:null, role:null, peer:null, conn:null, conns:{}, applying:false, exclus:[] };
+  var S = { hote:false, code:"", nom:"", n:4, joueurs:[], roles:null, role:null, peer:null, conn:null, conns:{}, applying:false, prefs:{} };
   var PID = load("ldn-pid", "");
   if (!PID){ PID = Math.random().toString(36).slice(2, 10); store("ldn-pid", PID); }
   var BKEY = "derniere-note-bloque", HKEY = "ldn-salon-hote", JKEY = "ldn-salon-joueuse";
@@ -1856,7 +1859,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     } finally { S.applying = false; }
   }
   function sauver(){
-    if (S.hote) store(HKEY, { code:S.code, n:S.n, joueurs:S.joueurs, roles:S.roles });
+    if (S.hote) store(HKEY, { code:S.code, n:S.n, joueurs:S.joueurs, roles:S.roles, prefs:S.prefs });
     else store(JKEY, { code:S.code, nom:S.nom, role:S.role, n:S.n });
   }
   function envoyerTous(m){ Object.keys(S.conns).forEach(function(k){ var c = S.conns[k]; if (c && c.open) { try { c.send(m); } catch(e) {} } }); }
@@ -1878,17 +1881,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     $("salonCodeAff").textContent = S.code;
     $("salonCodeRole").textContent = S.code;
     var ul = $("salonListe"); ul.innerHTML = "";
-    S.joueurs.forEach(function(j){
-      var li = el("li", "", j.nom + (j.pid === PID ? " (vous)" : ""));
-      if (S.hote && !S.roles){
-        var lab = el("label"), cb = el("input"); cb.type = "checkbox"; cb.checked = S.exclus.indexOf(j.pid) >= 0;
-        cb.id = "excl-" + j.pid; cb.style.marginLeft = "12px";
-        cb.addEventListener("change", function(){ S.exclus = S.exclus.filter(function(x){ return x !== j.pid; }); if (cb.checked) S.exclus.push(j.pid); });
-        lab.appendChild(cb); lab.appendChild(el("span", "note", " pas coupable")); li.appendChild(lab);
-      }
-      ul.appendChild(li);
-    });
-    $("salonExclusNote").hidden = !(S.hote && !S.roles);
+    S.joueurs.forEach(function(j){ ul.appendChild(el("li", "", j.nom + (j.pid === PID ? " (vous)" : ""))); });
     $("salonEtat").textContent = S.joueurs.length ? (S.joueurs.length + " sur " + S.n + " joueuses connectées") : "Connexion à la partie…";
     var plein = S.joueurs.length === S.n;
     if (S.hote){
@@ -1937,8 +1930,8 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     if (S.joueurs.length !== S.n) return;
     var persos = melange(noms.slice(0, S.n));
     var ic = persos.indexOf("Colette");
-    if (S.exclus.indexOf(S.joueurs[ic].pid) >= 0){
-      var libres = S.joueurs.map(function(j, i){ return i; }).filter(function(i){ return S.exclus.indexOf(S.joueurs[i].pid) < 0; });
+    if (S.prefs[S.joueurs[ic].pid]){
+      var libres = S.joueurs.map(function(j, i){ return i; }).filter(function(i){ return !S.prefs[S.joueurs[i].pid]; });
       if (libres.length){ var k = libres[Math.floor(Math.random() * libres.length)]; persos[ic] = persos[k]; persos[k] = "Colette"; }
     }
     S.roles = {}; S.joueurs.forEach(function(j, i){ S.roles[j.pid] = persos[i]; });
@@ -1965,6 +1958,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
             S.joueurs.push({ pid:pid, nom:nom });
           }
           S.conns[pid] = c; c._pid = pid;
+          if (!S.roles) S.prefs[pid] = !!d.pas;
           diffuserLobby();
           if (S.roles){ envoyerDepart(c); try { c.send({ t:"etat", etat: etatLocal() }); } catch(e) {} }
         } else if (d.t === "etat" && c._pid && d.etat){
@@ -1993,7 +1987,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     if (!S.peer || S.peer.destroyed) return;
     var c = S.peer.connect(peerId(S.code), { reliable:true });
     S.conn = c;
-    c.on("open", function(){ msg(""); c.send({ t:"join", pid:PID, nom:S.nom }); });
+    c.on("open", function(){ msg(""); c.send({ t:"join", pid:PID, nom:S.nom, pas: !!load("ldn-pas-coupable", false) }); });
     c.on("data", function(d){
       if (!d || typeof d !== "object") return;
       if (d.t === "lobby"){ S.joueurs = d.joueurs || []; S.n = d.n || S.n; sauver(); renderSalon(); }
@@ -2033,6 +2027,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     var nom = $("salonNom").value.trim();
     if (!nom){ msg("Indiquez votre prénom."); $("salonNom").focus(); return; }
     S.hote = true; S.nom = nom; S.n = choixN; S.code = nouveauCode(); S.joueurs = [{ pid:PID, nom:nom }]; S.roles = null; S.role = null;
+    S.prefs = {}; S.prefs[PID] = $("salonPasCoupable").checked;
     sauver(); ouvrirHote(false);
   });
   $("salonRejoindre").addEventListener("click", function(){
@@ -2040,6 +2035,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     var nom = $("salonNom").value.trim(), code = $("salonCode").value.trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
     if (!nom){ msg("Indiquez votre prénom."); $("salonNom").focus(); return; }
     if (code.length !== 4){ msg("Le code fait 4 caractères."); $("salonCode").focus(); return; }
+    store("ldn-pas-coupable", $("salonPasCoupable").checked);
     msg(""); rejoindre(code, nom);
   });
   $("salonLancer").addEventListener("click", lancer);
@@ -2058,7 +2054,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
   // Reprise après rechargement de la page
   var h = load(HKEY, null), jj = load(JKEY, null);
   if (window.Peer && h && h.code){
-    S.hote = true; S.code = h.code; S.n = h.n || 4; S.joueurs = h.joueurs || []; S.roles = h.roles || null;
+    S.hote = true; S.code = h.code; S.n = h.n || 4; S.joueurs = h.joueurs || []; S.roles = h.roles || null; S.prefs = h.prefs || {};
     S.nom = (S.joueurs[0] || {}).nom || "";
     if (S.roles){ S.role = S.roles[PID]; preparerEcran(); }
     ouvrirHote(true);
