@@ -1482,7 +1482,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     "<b>Le jeton de vérité</b> : une seule question, avant d'ouvrir les preuves. 2 min.",
     "<b>Les preuves</b> : ouvrez les 4 cadenas dans l'onglet Les preuves, en notant tout dans Mon carnet. 1 h 20.",
     "<b>Aveux et accusation</b> : retour dans L'enquête, une fois les 4 cadenas ouverts. 13 min.",
-    "<b>La solution</b> : tapez le prénom de la coupable dans le dernier cadenas. 5 min."
+    "<b>La solution</b> : après votre accusation, le bouton « Découvrir la vérité » ouvre la solution. 5 min."
   ];
   var ORDRE_GROUPE = [
     "<b>L'organisatrice crée la partie</b> dans l'onglet Partie en ligne et envoie le lien du site et le code à ses amies.",
@@ -1809,7 +1809,9 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     var out = document.getElementById("verdict"); out.innerHTML = "";
     var big = el("span", "big", pts + " / 12");
     var t = el("p", "", titre); t.style.fontFamily = "var(--deco)"; t.style.fontSize = "22px";
-    var l = el("p"); l.innerHTML = 'Ouvrez le dernier cadenas dans l\'onglet <a href="#solution">Solution</a> pour découvrir la vérité.';
+    var l = el("p"), bv = el("a", "", "Découvrir la vérité →"); bv.href = "#solution"; bv.className = "next";
+    bv.addEventListener("click", function(){ openSol(); });
+    l.appendChild(bv);
     var ul = el("ul"); ul.style.margin = "0"; ul.style.paddingLeft = "20px";
     details.forEach(function(x){ ul.appendChild(el("li", "", x[0] + " : " + (x[1] ? "juste" : "faux"))); });
     out.appendChild(big); out.appendChild(t); out.appendChild(ul); out.appendChild(l); out.hidden = false;
