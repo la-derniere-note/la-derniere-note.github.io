@@ -642,7 +642,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
         </ul>
       </div>
       <div class="tl">
-        <span class="when">0:30 · 45 min</span>
+        <span class="when">0:30 · 40 min</span>
         <h3>Acte II · Les alibis</h3>
         <ul>
           <li>Le cadenas 1 ouvre les preuves 4 à 7, le cadenas 2 les preuves 8 à 10. Laissez le groupe calculer : c'est le cœur du jeu.</li>
@@ -651,7 +651,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
         </ul>
       </div>
       <div class="tl">
-        <span class="when">1:15 · 25 min</span>
+        <span class="when">1:10 · 30 min</span>
         <h3>Acte III · Les secrets</h3>
         <ul>
           <li>D'abord le cadenas 3, le tournant : le groupe décode la formule du carnet avec l'orgue et le registre. Il ouvre les preuves 11 et 12.</li>
@@ -1793,6 +1793,7 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     opened = []; store(KEY, opened);
     document.querySelectorAll(".piece").forEach(function(p){ p._set(false); });
     unlocked = []; store(LKEY, unlocked); store("derniere-note-bloque", false); store(TKEY, {}); renderLocks();
+    setTimeout(function(){ location.reload(); }, 400);
     document.querySelectorAll(".lock input").forEach(function(x){ x.value = ""; });
     document.querySelectorAll(".lock .msg").forEach(function(m){ m.textContent = ""; });
   });
@@ -1850,7 +1851,8 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
   });
 
   // Carnet d'enquête
-  var heures = ["22:05", "22:18", "22:25", "22:50", "22:55", "23:00", "00:30"];
+  var heures = ["22:05", "22:18", "22:25", "22:48", "22:50", "22:55", "23:00", "00:30"];
+  var anciennes = ["22:05", "22:18", "22:25", "22:50", "22:55", "23:00", "00:30"];
   var CKEY = "derniere-note-carnet";
   var notes = load(CKEY, {});
   var grid = document.getElementById("grid");
@@ -1861,8 +1863,9 @@ Apportez votre meilleur nez, un crayon et votre mauvaise foi.</pre>
     var tr = el("tr"); tr.appendChild(el("td", "", nom));
     heures.forEach(function(h, c){
       var td = el("td"), inp = el("input"); inp.type = "text"; inp.id = "cn-" + r + "-" + c;
-      inp.setAttribute("aria-label", nom + " à " + h); inp.value = notes[inp.id] || "";
-      inp.addEventListener("input", function(){ notes[inp.id] = inp.value; store(CKEY, notes); });
+      var cle = "cn-" + r + "-" + h, vieille = anciennes.indexOf(h);
+      inp.setAttribute("aria-label", nom + " à " + h); inp.value = notes[cle] || (vieille >= 0 ? notes["cn-" + r + "-" + vieille] : "") || "";
+      inp.addEventListener("input", function(){ notes[cle] = inp.value; store(CKEY, notes); });
       td.appendChild(inp); tr.appendChild(td);
     });
     grid.appendChild(tr);
